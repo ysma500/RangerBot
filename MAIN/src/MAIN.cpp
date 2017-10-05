@@ -134,7 +134,7 @@ void timer_watch()
 	//...
 }
 
-void PID_watch(int* clicGauche,int* clicDroit)
+float PID_watch(int* clicGauche,int* clicDroit)
 {
 	//...
 }
@@ -157,6 +157,7 @@ void avancer_distance(int distance)
 		MOTOR_SetSpeed(8, Droit_speed);
 		Gauche_speed = PID_watch(&clicGauche,&clicDroit);
 	}
+
 }
 
 
