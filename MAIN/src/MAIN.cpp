@@ -158,7 +158,7 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 }
 
 
-//Fonction à Vérifier
+//Fonction à Vérifier (integrer PID)
 void rotation_angle(float fAngle)
 {
 	int iClicGauche;
@@ -166,11 +166,11 @@ void rotation_angle(float fAngle)
 	float fDistance = 0;
 	distance = angle*PI/180;
 
-	float x = (distance / 7) + 1
+	float x = (distance / 7) + 1 ;
 	while(iClicGauche < x && iClicDroit < x)
 	{
 		int speed = 0;
-		float fSpeed = PID(50)
+		float fSpeed = 50;
 		if (distance < 0)
 		{
 			MOTOR_SetSpeed(7, fSpeed);
@@ -202,7 +202,7 @@ void avancer_distance(int iDistance)
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
 			MOTOR_SetSpeed(8, fDroit_speed);
-			fGauche_speed = PID_watch(&iClicGauche,&iClicDroit);
+			fGauche_speed = fGauche_speed * PID_watch(&iClicGauche,&iClicDroit);
 		}
 	}
 	//Recule
@@ -213,7 +213,7 @@ void avancer_distance(int iDistance)
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
 			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fDroit_speed = PID_watch(&iClicGauche,&iClicDroit);
+			fGauche_speed = fGauche_speed * PID_watch(&iClicGauche,&iClicDroit);
 		}
 	}
 }
