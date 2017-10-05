@@ -141,7 +141,9 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 	int iClicGlive = 0;
 	int iClicDlive = 0;
 	int iVarClic = 0;
-	int iIvarClic = 0;
+	int iIVarClic = 0;
+	int GAINP = 0.5;
+	int GAINI = 0.5;
 	THREAD_MSleep(50);
 	iClicDlive = ENCODER_Read(2);
 	iClicGlive = ENCODER_Read(1);
@@ -151,7 +153,7 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 	iIVarClic = *iClicDroit - *iClicGauche;
 	iCorrP = GAINP * iVarClic;
 	iCorrI = GAINI * iIVarClic;
-	return (iCorrP + iCorrI)
+	return (iCorrP + iCorrI);
 }
 
 void rotation_angle(float fAngle)
