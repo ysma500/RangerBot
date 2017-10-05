@@ -9,6 +9,7 @@
 
 // Include Files
 #include <libarmus.h>
+#define PI 3.1416
 
 // Prototypes de fonctions de threads
 void bumper_watch();
@@ -144,7 +145,7 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 	int iIVarClic = 0;
 	int GAINP = 0.5;
 	int GAINI = 0.5;
-	THREAD_MSleep(50);
+	THREAD_MSleep(200);
 	iClicDlive = ENCODER_Read(2);
 	iClicGlive = ENCODER_Read(1);
 	iVarClic = iClicDlive - iClicGlive;
@@ -156,10 +157,45 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 	return (iCorrP + iCorrI);
 }
 
+
+//Fonction à Vérifier
 void rotation_angle(float fAngle)
 {
-	//...
+	void Avancer(int clicGauche, int clicDroit, float distance)
+	{
+		while(clicGauche && clicDroit < distance/7 + 1)
+		{
+			int speed = 0;
+			speed = PID(50);
+			MOTOR_SetSpeed(7, speed);
+			MOTOR_SetSpeed(8, speed);
+		}
+	}
+
+	void rotation_angle(float angle)
+	{
+		int iClicGauche;
+		int iClicDroit;
+		float fDistance = 0;
+		distance = angle*PI/180;
+
+		while(clicGauche && clicDroit < distance / 7 + 1)
+		{
+			int speed = 0;
+			speed = PID(50)
+			if (distance < 0)
+			{
+				MOTOR_SetSpeed(7, speed);
+				MOTOR_SetSpeed(8, -speed);
+			}
+			else
+			{
+				MOTOR_SetSpeed(7, -speed);
+				MOTOR_SetSpeed(8, speed);
+			}
+		}
 }
+
 
 void avancer_distance(int iDistance)
 {
