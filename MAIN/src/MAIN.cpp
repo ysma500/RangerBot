@@ -15,7 +15,7 @@ void bumper_watch();
 void timer_watch();
 
 // Prototypes de fonctions (Avancer, Tourner)
-void avancer_distance(int clicGauche, int clicDroit, int distance);
+void avancer_distance(int distance);
 void rotation_angle(float angle);
 void PID_watch();
 
@@ -39,46 +39,46 @@ int main()
 	thread_Timer = THREAD_CreateSimple(timer_watch);
 
 	// Depart du circuit
-	avancer_distance(iclicGauche, clicDroit, 2220);
+	avancer_distance(2220);
 
 	rotation_angle(90);
 
-	avancer_distance(clicGauche, clicDroit, 430);
+	avancer_distance(430);
 
 	rotation_angle(-90);
 
-	avancer_distance(iclicGauche, clicDroit, 450);
+	avancer_distance(450);
 
 	rotation_angle(-90);
 
-	avancer_distance(clicGauche, clicDroit, 430);
+	avancer_distance(430);
 
 	rotation_angle(90);
 
-	avancer_distance(clicGauche, clicDroit, 400);
+	avancer_distance(400);
 
 	rotation_angle(-45);
 
-	avancer_distance(clicGauche, clicDroit, 560);
+	avancer_distance(560);
 
 	rotation_angle(90);
 
-	avancer_distance(clicGauche, clicDroit, 820);
+	avancer_distance(820);
 
 	rotation_angle(-45);
 
-	avancer_distance(clicGauche, clicDroit, 500);
+	avancer_distance(500);
 
 	rotation_angle(-12.5);
 
-	avancer_distance(clicGauche, clicDroit, 460);
+	avancer_distance(460);
 
 	rotation_angle(180);
 
 	AUDIO_SetVolume(50);
-	//AUDIO_PlayMP3File("songno1.mp3");
+	//AUDIO_PlayFile("thug.wav");
 
-	avancer_distance(clicGauche, clicDroit, 460);
+	avancer_distance(460);
 
 	LCD_Printf("Le robot a atteint sa pleine vitesse\n");
 
@@ -93,7 +93,7 @@ int main()
 
 	// On detruit les threads
 	THREAD_Destroy(&thread_bumpers);
-	THREAD_Destroy(&thread_servos);
+	THREAD_Destroy(&thread_Timer);
 
 	// On arrete tout sur la carte d'entrees/sorties
 	FPGA_StopAll();
@@ -134,7 +134,7 @@ void timer_watch()
 	//...
 }
 
-void PID_watch()
+void PID_watch(int* clicGauche,int* clicDroit)
 {
 	//...
 }
@@ -144,15 +144,19 @@ void rotation_angle(float angle)
 	//...
 }
 
-void avancer_distance(int clicGauche, int clicDroit, int distance);
+void avancer_distance(int distance)
 {
-		while(clicGauche && clicDroit < distance/7 + 1)
-		{
-			int speed = 0;
-			speed = PID(50);
-			MOTOR_SetSpeed(7, speed);
-			MOTOR_SetSpeed(8, speed);
-		}
+	float Droit_speed = 50; float Gauche_speed = 50; int clicGauche = 0; int clicDroit = 0;
+	//Remise a 0
+	ENCODER_Read(2);
+	ENCODER_Read(1);
+	float x = distance / 7;
+	while(clicGauche < x && clicDroit < x )
+	{
+		MOTOR_SetSpeed(7, Gauche_speed);
+		MOTOR_SetSpeed(8, Droit_speed);
+		Gauche_speed = PID_watch(&clicGauche,&clicDroit);
+	}
 }
 
 
