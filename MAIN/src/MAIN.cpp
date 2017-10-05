@@ -12,7 +12,7 @@
 
 // Prototypes de fonctions de threads
 void bumper_watch();
-void servo_turn();
+void PID_watch();
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
 
 	// declarations des threads
 	THREAD thread_bumpers;
-	THREAD thread_servos;
+	THREAD thread_PID;
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
@@ -31,8 +31,7 @@ int main()
 
 	// depart des threads (voir les definitions des fonctions plus bas)
 	thread_bumpers = THREAD_CreateSimple(bumper_watch);
-	thread_servos  = THREAD_CreateSimple(servo_turn);
-
+	thread_PID; = THREAD_CreateSimple(PID_watch)
 	// depart des moteurs en acceleration
 	for (i=2; i<11; i++)
 	{
@@ -41,6 +40,7 @@ int main()
 		THREAD_MSleep (1000);
 	}
 	LCD_Printf("Le robot a atteint sa pleine vitesse\n");
+
 
 	AUDIO_SetVolume(50);
 
@@ -64,7 +64,7 @@ int main()
 }
 
 
-// Les threads suivant sont executes en parallele du main() a partir du moment ou ils sont cr��s
+// Les threads suivant sont executes en parallele du main() a partir du moment ou ils sont crees
 // 		avec la fonction THREAD_CreateSimple()
 
 void bumper_watch()
@@ -89,24 +89,9 @@ void bumper_watch()
 	}
 }
 
-void servo_turn()
+void PID_watch()
 {
-	while(1)
-	{
-		// Positionne les servomoteurs a 45 degres
-		SERVO_SetAngle(9,  45);
-		SERVO_SetAngle(10, 45);
-
-		// Attend 2,5 secondes
-		THREAD_MSleep(2500);
-
-		// Positionne les servomoteurs a 135 degres
-		SERVO_SetAngle(9,  135);
-		SERVO_SetAngle(10, 135);
-
-		// Attend 5 secondes
-		THREAD_MSleep(5000);
-	}
+	//...
 }
 
 
