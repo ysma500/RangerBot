@@ -17,7 +17,7 @@ void timer_watch();
 // Prototypes de fonctions (Avancer, Tourner)
 void avancer_distance(int iDistance);
 void rotation_angle(float iAngle);
-void PID_watch(int* iClicGauche,int* iClicDroit);
+float PID_watch(int* iClicGauche,int* iClicDroit);
 
 int main()
 {
