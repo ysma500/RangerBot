@@ -161,45 +161,36 @@ float PID_watch(int* iClicGauche,int* iClicDroit)
 //Fonction à Vérifier
 void rotation_angle(float fAngle)
 {
-	void Avancer(int clicGauche, int clicDroit, float distance)
+	int iClicGauche;
+	int iClicDroit;
+	float fDistance = 0;
+	distance = angle*PI/180;
+
+	float x = (distance / 7) + 1
+	while(iClicGauche < x && iClicDroit < x)
 	{
-		while(clicGauche && clicDroit < distance/7 + 1)
+		int speed = 0;
+		float fSpeed = PID(50)
+		if (distance < 0)
 		{
-			int speed = 0;
-			speed = PID(50);
-			MOTOR_SetSpeed(7, speed);
-			MOTOR_SetSpeed(8, speed);
+			MOTOR_SetSpeed(7, fSpeed);
+			MOTOR_SetSpeed(8, -fSpeed);
+		}
+		else
+		{
+			MOTOR_SetSpeed(7, -fSpeed);
+			MOTOR_SetSpeed(8, fSpeed);
 		}
 	}
-
-	void rotation_angle(float angle)
-	{
-		int iClicGauche;
-		int iClicDroit;
-		float fDistance = 0;
-		distance = angle*PI/180;
-
-		while(clicGauche && clicDroit < distance / 7 + 1)
-		{
-			int speed = 0;
-			speed = PID(50)
-			if (distance < 0)
-			{
-				MOTOR_SetSpeed(7, speed);
-				MOTOR_SetSpeed(8, -speed);
-			}
-			else
-			{
-				MOTOR_SetSpeed(7, -speed);
-				MOTOR_SetSpeed(8, speed);
-			}
-		}
 }
 
 
 void avancer_distance(int iDistance)
 {
-	float fDroit_speed = 50; float fGauche_speed = 50; int iClicGauche = 0; int iClicDroit = 0;
+	float fDroit_speed = 50;
+	float fGauche_speed = 50;
+	int iClicGauche = 0;
+	int iClicDroit = 0;
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
@@ -216,15 +207,15 @@ void avancer_distance(int iDistance)
 	}
 	//Recule
 	if (iDistance < 0)
+	{
+		float x = (iDistance / 7) - 1;
+		while(iClicGauche < x && iClicDroit < x )
 		{
-			float x = (iDistance / 7) - 1;
-			while(iClicGauche < x && iClicDroit < x )
-			{
-				MOTOR_SetSpeed(7, -(fGauche_speed));
-				MOTOR_SetSpeed(8, -(fDroit_speed));
-				fDroit_speed = PID_watch(&iClicGauche,&iClicDroit);
-			}
+			MOTOR_SetSpeed(7, -(fGauche_speed));
+			MOTOR_SetSpeed(8, -(fDroit_speed));
+			fDroit_speed = PID_watch(&iClicGauche,&iClicDroit);
 		}
+	}
 }
 
 
