@@ -14,6 +14,10 @@
 void bumper_watch();
 void PID_watch();
 
+// Prototypes de fonctions (Avancer, Tourner)
+void avancer_distance(int clicGauche, int clicDroit, int distance);
+void rotation_angle(float);
+
 int main()
 {
 	// variables locales
@@ -31,12 +35,17 @@ int main()
 
 	// depart des threads (voir les definitions des fonctions plus bas)
 	thread_bumpers = THREAD_CreateSimple(bumper_watch);
-	thread_PID; = THREAD_CreateSimple(PID_watch)
+	thread_PID = THREAD_CreateSimple(PID_watch);
+
+	//Depart du circuit
+	avancer_distance(int clicGauche, int clicDroit, int 2220);
+
+
 	// depart des moteurs en acceleration
 	for (i=2; i<11; i++)
 	{
-		MOTOR_SetSpeed(MOTOR_LEFT,  i*10);
-		MOTOR_SetSpeed(MOTOR_RIGHT, i*10);
+		MOTOR_SetSpeed(MOTOR_LEFT,  i*10 + PID);
+		MOTOR_SetSpeed(MOTOR_RIGHT, i*10 + PID);
 		THREAD_MSleep (1000);
 	}
 	LCD_Printf("Le robot a atteint sa pleine vitesse\n");
