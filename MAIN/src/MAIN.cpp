@@ -76,7 +76,7 @@ int main()
 	rotation_angle(180);
 
 	AUDIO_SetVolume(50);
-	//AUDIO_PlayFile("thug.wav");
+	AUDIO_PlayFile("thug.wav");
 
 	avancer_distance(460);
 
