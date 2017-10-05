@@ -15,9 +15,9 @@ void bumper_watch();
 void timer_watch();
 
 // Prototypes de fonctions (Avancer, Tourner)
-void avancer_distance(int distance);
-void rotation_angle(float angle);
-void PID_watch();
+void avancer_distance(int iDistance);
+void rotation_angle(float iAngle);
+void PID_watch(int* iClicGauche,int* iClicDroit);
 
 int main()
 {
@@ -79,11 +79,10 @@ int main()
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
 
-	avancer_distance(460);
+	avancer_distance(-460);
 
-	LCD_Printf("Le robot a atteint sa pleine vitesse\n");
+	LCD_Printf("Le robot a termine le parcour\n");
 
-	AUDIO_SetVolume(50);
 
 	// Vous devez inserez un fichier audio avec ce nom sur votre cle usb
 	//		dans le repertoire armus afin que cela fonctionne
@@ -135,30 +134,43 @@ void timer_watch()
 	//...
 }
 
-float PID_watch(int* clicGauche,int* clicDroit)
+float PID_watch(int* iClicGauche,int* iClicDroit)
+{
+	int iCorrP = 0;
+	int iCorrI = 0;
+}
+
+void rotation_angle(float fAngle)
 {
 	//...
 }
 
-void rotation_angle(float angle)
+void avancer_distance(int iDistance)
 {
-	//...
-}
-
-void avancer_distance(int distance)
-{
-	float Droit_speed = 50; float Gauche_speed = 50; int clicGauche = 0; int clicDroit = 0;
+	float fDroit_speed = 50; float fGauche_speed = 50; int iClicGauche = 0; int iClicDroit = 0;
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	float x = distance / 7;
-	while(clicGauche < x && clicDroit < x )
+	if (iDistance > 0)
 	{
-		MOTOR_SetSpeed(7, Gauche_speed);
-		MOTOR_SetSpeed(8, Droit_speed);
-		Gauche_speed = PID_watch(&clicGauche,&clicDroit);
+		float x = (iDistance / 7) + 1;
+		while(iClicGauche < x && iClicDroit < x )
+		{
+			MOTOR_SetSpeed(7, fGauche_speed);
+			MOTOR_SetSpeed(8, fDroit_speed);
+			fGauche_speed = PID_watch(&iClicGauche,&iClicDroit);
+		}
 	}
-
+	if (iDistance < 0)
+		{
+			float x = (iDistance / 7) - 1;
+			while(iClicGauche < x && iClicDroit < x )
+			{
+				MOTOR_SetSpeed(7, -(fGauche_speed));
+				MOTOR_SetSpeed(8, -(fDroit_speed));
+				fGauche_speed = -(PID_watch(&iClicGauche,&iClicDroit));
+			}
+		}
 }
 
 
