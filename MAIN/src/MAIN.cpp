@@ -167,6 +167,7 @@ void avancer_distance(int iDistance)
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
+	//Avance
 	if (iDistance > 0)
 	{
 		float x = (iDistance / 7) + 1;
@@ -177,6 +178,7 @@ void avancer_distance(int iDistance)
 			fGauche_speed = PID_watch(&iClicGauche,&iClicDroit);
 		}
 	}
+	//Recule
 	if (iDistance < 0)
 		{
 			float x = (iDistance / 7) - 1;
@@ -184,7 +186,7 @@ void avancer_distance(int iDistance)
 			{
 				MOTOR_SetSpeed(7, -(fGauche_speed));
 				MOTOR_SetSpeed(8, -(fDroit_speed));
-				fGauche_speed = -(PID_watch(&iClicGauche,&iClicDroit));
+				fDroit_speed = PID_watch(&iClicGauche,&iClicDroit);
 			}
 		}
 }
