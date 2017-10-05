@@ -77,6 +77,7 @@ int main()
 
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
+	THREAD_MSleep(10000);
 
 	avancer_distance(460);
 
