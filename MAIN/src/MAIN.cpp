@@ -19,9 +19,8 @@ float GAIN_P = 0.90;
 int iTicGauche = 0;
 int iTicGDroit = 0;
 
-// Prototypes de fonctions de threads
+// Prototypes de fonctions de configs
 void bumper_watch();
-//void timer_watch();
 
 // Prototypes de fonctions (Avancer, Tourner)
 void avancer_distance(int iDistance);
@@ -33,15 +32,13 @@ int main()
 	// variables locales
 	int i;
 	int j = 0;
-	// declarations des threads
-	//THREAD thread_bumpers;
-	//THREAD thread_Timer;
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
+	
 	while (j == 0)
 	{
 		if(DIGITALIO_Read(BMP_REAR))
@@ -49,11 +46,12 @@ int main()
 			j = 1;
 		}
 		THREAD_MSleep(1000);
-
 	}
-	// depart des threads (voir les definitions des fonctions plus bas)
+	
+	//Configuration
 	bumper_watch();
-	//thread_Timer = THREAD_CreateSimple(timer_watch);
+	
+	
 	j = 0;
 	while (j == 0)
 	{
