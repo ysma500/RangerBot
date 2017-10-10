@@ -11,7 +11,7 @@
 #include <libarmus.h>
 #define PI 3.1416
 
-float GAINI = 0.0;
+float GAINI = 0.05;
 float GAINP = 0.5;
 
 // Prototypes de fonctions de threads
@@ -39,7 +39,7 @@ int main()
 	LCD_ClearAndPrint("Depart du programme\n");
 
 	// depart des threads (voir les definitions des fonctions plus bas)
-	thread_bumpers = THREAD_CreateSimple(bumper_watch);
+	bumper_watch();
 	thread_Timer = THREAD_CreateSimple(timer_watch);
 
 	while (j == 0)
@@ -48,7 +48,7 @@ int main()
 		{
 			j = 1;
 		}
-		THREAD_MSleep(10000);
+		THREAD_MSleep(1000);
 
 	}
 	// Depart du circuit
@@ -123,15 +123,18 @@ int main()
 //Début de la fonction pour la modification des gain à suivre 
 void bumper_watch()
 {
-
-	while(1)
+	int i = 0, j = 0;
+	while(i==0 || j==0)
 	{
 		// si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT))
+		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
-			int i = 0;
+			LCD_Printf("Wait 1 sec");
+			// attend 1000 millisecondes
+			THREAD_MSleep(1000);
+			int k = 0;
 			LCD_Printf("ajustement de GAINP");
-			while(i == 0)
+			while(k == 0)
 			{
 				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
@@ -146,20 +149,23 @@ void bumper_watch()
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Appuyer une autre fois pour GAINI\n");
-					i = 1;
+					LCD_Printf("Fermeture des modification\n");
+					j = 1;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
 			}
 
 		}
-		if(DIGITALIO_Read(BMP_FRONT))
+		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))
 		{
-			int i = 0;
-			while(i == 0)
+			LCD_Printf("Wait 1 sec");
+			// attend 1000 millisecondes
+			THREAD_MSleep(1000);
+			int k = 0;
+			while(k == 0)
 			{
-				avancer_distance (500);
+				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					LCD_Printf("augmentation de 0,05 = %f\n", GAINI);
