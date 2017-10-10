@@ -11,12 +11,12 @@
 #include <libarmus.h>
 #define PI 3.1416
 
-float GAINI = 0.05;
-float GAINP = 0.5;
+float GAIN_I = 0.05;
+float GAIN_P = 0.5;
 
 // Prototypes de fonctions de threads
 void bumper_watch();
-void timer_watch();
+//void timer_watch();
 
 // Prototypes de fonctions (Avancer, Tourner)
 void avancer_distance(int iDistance);
@@ -124,8 +124,10 @@ int main()
 void bumper_watch()
 {
 	int i = 0, j = 0;
+
 	while(i==0 || j==0)
 	{
+		avancer_distance (500);
 		// si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
@@ -136,16 +138,15 @@ void bumper_watch()
 			LCD_Printf("ajustement de GAIN_P\n");
 			while(k == 0)
 			{
-				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("Augmentation de 0,05 = %f\n", GAINP);
-					GAINP += 0.05;
+					GAIN_P += 0.05;
+					LCD_Printf("Augmentation de 0,05 = %f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,05 = %f\n", GAINP);
-					GAINP -= 0.05;
+					GAIN_P -= 0.05;
+					LCD_Printf("Diminution de 0,05 = %f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
@@ -170,13 +171,13 @@ void bumper_watch()
 				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("Augmentation de 0,001 = %f\n", GAINI);
-					GAINI += 0.001;
+					GAIN_I += 0.001;
+					LCD_Printf("Augmentation de 0,001 = %0.4f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,001 = %f\n", GAINI);
-					GAINI -= 0.001;
+					GAIN_I -= 0.001;
+					LCD_Printf("Diminution de 0,001 = %0.4f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
@@ -194,7 +195,7 @@ void bumper_watch()
 }
 
 
-void timer_watch()
+/*void timer_watch()
 {
 	while (1)
 	{
@@ -202,7 +203,7 @@ void timer_watch()
 		int TIMER = TIMER + 50;
 		THREAD_MSleep(50);
 	}
-}
+}*/
 
 float PID_watch(int* iTicGauche,int* iTicGDroit)
 {
@@ -219,8 +220,8 @@ float PID_watch(int* iTicGauche,int* iTicGDroit)
 	*iTicGDroit += iClicDlive;
 	*iTicGauche += iClicGlive;
 	iIVarClic = *iTicGDroit - *iTicGauche;
-	iCorrP = GAINP * iVarClic;
-	iCorrI = GAINI * iIVarClic;
+	iCorrP = GAIN_P * iVarClic;
+	iCorrI = GAIN_I * iIVarClic;
 	return (iCorrP + iCorrI);
 }
 
