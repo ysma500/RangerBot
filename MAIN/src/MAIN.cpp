@@ -111,6 +111,8 @@ int main()
 //Début de la fonction pour la modification des gain à suivre 
 void bumper_watch()
 {
+	float GAINI = 0.5;
+	float GAINP = 0.5;
 	while(1)
 	{
 		// si la "bumper switch" avant de robus est enclanchee...
@@ -120,32 +122,28 @@ void bumper_watch()
 			LCD_Printf("ajustement de GAINP");
 			while(i = 0)
 			{
-				// part les moteurs pour avancer
-				MOTOR_SetSpeed(MOTOR_LEFT,  50);
-				MOTOR_SetSpeed(MOTOR_RIGHT, 50);
-				// attend 2 secondes
-				THREAD_MSleep(2000);
+				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("augmentation de 0,05 = %f\n", &GAINP);
-					&GAINP = &GAINP + 0.05;
+					LCD_Printf("augmentation de 0,05 = %f\n", GAINP);
+					GAINP = GAINP + 0.05;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,05 = %f\n", &GAINP);
-					i&GAINP = &GAINP - 0.05;
+					LCD_Printf("Diminution de 0,05 = %f\n", GAINP);
+					GAINP = GAINP - 0.05;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
 					LCD_Printf("Appuyer une autre fois pour GAINI\n");
 					i = 1;
 				}
+				// attend 50 millisecondes
+				THREAD_MSleep(50);
 			}
+
 		}
-		// attend 50 millisecondes
-		THREAD_MSleep(50);
-	}
-	if(DIGITALIO_Read(BMP_FRONT))
+		if(DIGITALIO_Read(BMP_FRONT))
 		{
 			int i = 0;
 			while(i = 0)
@@ -157,25 +155,26 @@ void bumper_watch()
 				THREAD_MSleep(2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("augmentation de 0,05 = %f\n", &GAINI);
-					&GAINI = &GAINI + 0.05;
+					LCD_Printf("augmentation de 0,05 = %f\n", GAINI);
+					GAINI = GAINI + 0.05;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,05 = %f\n", &GAINI);
-					&GAINI = &GAINI - 0.05;
+					LCD_Printf("Diminution de 0,05 = %f\n", GAINI);
+					GAINI = GAINI - 0.05;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
 					LCD_Printf("Fermeture des modification\n");
 					i = 1;
 				}
+				// attend 50 millisecondes
+				THREAD_MSleep(50);
 			}
 		}
-		// attend 50 millisecondes
-		THREAD_MSleep(50);
 	}
 }
+
 
 void timer_watch()
 {
@@ -216,14 +215,14 @@ void rotation_angle(float fAngle)
 	int iClicGauche;
 	int iClicDroit;
 	float fDistance = 0;
-	distance = angle*PI/180;
+	fDistance = fAngle*PI/180;
 
-	float x = (distance / 7) + 1 ;
+	float x = (fDistance / 7) + 1 ;
 	while(iClicGauche < x && iClicDroit < x)
 	{
 		int speed = 0;
 		float fSpeed = 50;
-		if (distance < 0)
+		if (fDistance < 0)
 		{
 			MOTOR_SetSpeed(7, fSpeed);
 			MOTOR_SetSpeed(8, -fSpeed);
