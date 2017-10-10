@@ -133,7 +133,7 @@ void bumper_watch()
 			// attend 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
-			LCD_Printf("ajustement de GAINP\n");
+			LCD_Printf("ajustement de GAIN_P\n");
 			while(k == 0)
 			{
 				avancer_distance (500);
@@ -149,7 +149,7 @@ void bumper_watch()
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Fermeture des modification de P\n");
+					LCD_Printf("Fermeture des modification de GAIN_P\n");
 					j = 1;
 				}
 				// attend 50 millisecondes
@@ -163,23 +163,23 @@ void bumper_watch()
 			// attend 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
-			LCD_Printf("ajustement de GAINI\n");
+			LCD_Printf("ajustement de GAIN_I\n");
 			while(k == 0)
 			{
 				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					LCD_Printf("Augmentation de 0,05 = %f\n", GAINI);
-					GAINI += 0.05;
+					GAINI += 0.01;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					LCD_Printf("Diminution de 0,05 = %f\n", GAINI);
-					GAINI -= 0.05;
+					GAINI -= 0.01;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Fermeture des modification de I\n");
+					LCD_Printf("Fermeture des modification de GAIN_I\n");
 					i = 1;
 				}
 				// attend 50 millisecondes
