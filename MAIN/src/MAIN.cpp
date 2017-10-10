@@ -139,17 +139,17 @@ void bumper_watch()
 				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("augmentation de 0,05 = %f\n", GAINP);
-					GAINP = GAINP + 0.05;
+					LCD_Printf("Augmentation de 0,05 = %f\n", GAINP);
+					GAINP += 0.05;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					LCD_Printf("Diminution de 0,05 = %f\n", GAINP);
-					GAINP = GAINP - 0.05;
+					GAINP -= 0.05;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Fermeture des modification\n");
+					LCD_Printf("Fermeture des modification de P\n");
 					j = 1;
 				}
 				// attend 50 millisecondes
@@ -169,17 +169,17 @@ void bumper_watch()
 				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("augmentation de 0,05 = %f\n", GAINI);
-					GAINI = GAINI + 0.05;
+					LCD_Printf("Augmentation de 0,05 = %f\n", GAINI);
+					GAINI += 0.05;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					LCD_Printf("Diminution de 0,05 = %f\n", GAINI);
-					GAINI = GAINI - 0.05;
+					GAINI -= 0.05;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Fermeture des modification\n");
+					LCD_Printf("Fermeture des modification de I\n");
 					i = 1;
 				}
 				// attend 50 millisecondes
