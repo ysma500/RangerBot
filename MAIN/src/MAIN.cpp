@@ -4,6 +4,9 @@
  Author :
  Version :0.81
  Description : Code Robus 1
+
+ robot 47 P: I:
+ robot 77 P: I:
 ============================================================================
 */
 
@@ -12,7 +15,9 @@
 #define PI 3.1416
 
 float GAIN_I = 0.05;
-float GAIN_P = 0.5;
+float GAIN_P = 0.45;
+int iTicGauche = 0;
+int iTicGDroit = 0;
 
 // Prototypes de fonctions de threads
 void bumper_watch();
@@ -21,7 +26,7 @@ void bumper_watch();
 // Prototypes de fonctions (Avancer, Tourner)
 void avancer_distance(int iDistance);
 void rotation_angle(float iAngle);
-float PID_watch(int* iTicGauche,int* iTicGDroit);
+float PID_watch(void);
 
 int main()
 {
@@ -140,19 +145,20 @@ void bumper_watch()
 			{
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					GAIN_P += 0.05;
-					LCD_Printf("Augmentation de 0,05 = %f\n", GAIN_P);
+					GAIN_P += 0.01;
+					LCD_Printf("Augmentation de 0,01 = %f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					GAIN_P -= 0.05;
-					LCD_Printf("Diminution de 0,05 = %f\n", GAIN_P);
+					GAIN_P -= 0.01;
+					LCD_Printf("Diminution de 0,01 = %f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
 					LCD_Printf("Fermeture des modification de GAIN_P\n");
-					j = 1;
-					k=1;
+					k = 1;
+					iTicGauche = 0;
+					iTicGDroit = 0;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
@@ -168,26 +174,33 @@ void bumper_watch()
 			LCD_Printf("ajustement de GAIN_I\n");
 			while(k == 0)
 			{
-				avancer_distance (2000);
+				//avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					GAIN_I += 0.001;
-					LCD_Printf("Augmentation de 0,001 = %0.4f\n", GAIN_I);
+					LCD_Printf("Augmentation de 0,001 = %f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					GAIN_I -= 0.001;
-					LCD_Printf("Diminution de 0,001 = %0.4f\n", GAIN_I);
+					LCD_Printf("Diminution de 0,001 = %f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
 					LCD_Printf("Fermeture des modification de GAIN_I\n");
-					i = 1;
 					k=1;
+					iTicGauche = 0;
+					iTicGDroit = 0;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
 			}
+		}
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			i = 1;
+			j = 1;
+			LCD_Printf("Sortie des configs\n");
 		}
 	}
 	MOTOR_SetSpeed(7, 0);
@@ -205,7 +218,7 @@ void bumper_watch()
 	}
 }*/
 
-float PID_watch(int* iTicGauche,int* iTicGDroit)
+float PID_watch()
 {
 	int iCorrP = 0;
 	int iCorrI = 0;
@@ -217,9 +230,9 @@ float PID_watch(int* iTicGauche,int* iTicGDroit)
 	iClicDlive = ENCODER_Read(2);
 	iClicGlive = ENCODER_Read(1);
 	iVarClic = iClicDlive - iClicGlive;
-	*iTicGDroit += iClicDlive;
-	*iTicGauche += iClicGlive;
-	iIVarClic = *iTicGDroit - *iTicGauche;
+	iTicGDroit += iClicDlive;
+	iTicGauche += iClicGlive;
+	iIVarClic = iTicGDroit - iTicGauche;
 	iCorrP = GAIN_P * iVarClic;
 	iCorrI = GAIN_I * iIVarClic;
 	return (iCorrP + iCorrI);
@@ -257,20 +270,18 @@ void avancer_distance(int iDistance)
 {
 	float fDroit_speed = 50;
 	float fGauche_speed = 50;
-	int iTicGauche = 0;
-	int iTicGDroit = 0;
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 	//Avance
 	if (iDistance > 0)
 	{
-		float x = (iDistance / 7) + 1;
+		float x = (iDistance / 7) + 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
 			MOTOR_SetSpeed(8, fDroit_speed);
-			fGauche_speed = fGauche_speed + PID_watch(&iTicGauche,&iTicGDroit);
+			fGauche_speed = fGauche_speed + PID_watch();
 		}
 	}
 	//Recule
@@ -281,7 +292,7 @@ void avancer_distance(int iDistance)
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
 			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fGauche_speed = fGauche_speed + PID_watch(&iTicGauche,&iTicGDroit);
+			fGauche_speed = fGauche_speed + PID_watch();
 		}
 	}
 }
