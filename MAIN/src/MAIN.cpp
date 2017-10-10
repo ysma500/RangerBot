@@ -14,8 +14,8 @@
 #include <libarmus.h>
 #define PI 3.1416
 
-float GAIN_I = 0.05;
-float GAIN_P = 0.45;
+float GAIN_I = 0.089;
+float GAIN_P = 0.90;
 int iTicGauche = 0;
 int iTicGDroit = 0;
 
@@ -42,11 +42,19 @@ int main()
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
+	while (j == 0)
+	{
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			j = 1;
+		}
+		THREAD_MSleep(1000);
 
+	}
 	// depart des threads (voir les definitions des fonctions plus bas)
 	bumper_watch();
 	//thread_Timer = THREAD_CreateSimple(timer_watch);
-
+	j = 0;
 	while (j == 0)
 	{
 		if(DIGITALIO_Read(BMP_REAR))
@@ -226,7 +234,7 @@ float PID_watch()
 	int iClicDlive = 0;
 	int iVarClic = 0;
 	int iIVarClic = 0;
-	THREAD_MSleep(200);
+	THREAD_MSleep(50);
 	iClicDlive = ENCODER_Read(2);
 	iClicGlive = ENCODER_Read(1);
 	iVarClic = iClicDlive - iClicGlive;
@@ -238,29 +246,35 @@ float PID_watch()
 	return (iCorrP + iCorrI);
 }
 
-
-//Fonction à Vérifier (integrer PID)
 void rotation_angle(float fAngle)
 {
-	int iTicGauche;
-	int iTicGDroit;
+	float fDroit_speed = 50;
+	float fGauche_speed = 50;
+	//Remise a 0
+	ENCODER_Read(2);
+	ENCODER_Read(1);
 	float fDistance = 0;
 	fDistance = fAngle*PI/180;
-
-	float x = (fDistance / 7) + 1 ;
-	while(iTicGauche < x && iTicGDroit < x)
+	//Gauche
+	if (fDistance > 0)
 	{
-		int speed = 0;
-		float fSpeed = 50;
-		if (fDistance < 0)
+		float x = (fDistance / 7) + 1 + iTicGauche;
+		while(iTicGauche < x && iTicGDroit < x )
 		{
-			MOTOR_SetSpeed(7, fSpeed);
-			MOTOR_SetSpeed(8, -fSpeed);
+			MOTOR_SetSpeed(7, -(fGauche_speed));
+			MOTOR_SetSpeed(8, fDroit_speed);
+			fGauche_speed = fGauche_speed + PID_watch();
 		}
-		else
+	}
+	//Droit
+	if (fDistance < 0)
+	{
+		float x = (fDistance / 7) - 1;
+		while(iTicGauche < x && iTicGDroit < x )
 		{
-			MOTOR_SetSpeed(7, -fSpeed);
-			MOTOR_SetSpeed(8, fSpeed);
+			MOTOR_SetSpeed(7, fGauche_speed);
+			MOTOR_SetSpeed(8, -(fDroit_speed));
+			fGauche_speed = fGauche_speed + PID_watch();
 		}
 	}
 }
