@@ -129,11 +129,11 @@ void bumper_watch()
 		// si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
-			LCD_Printf("Wait 1 sec");
+			LCD_Printf("Wait 1 sec\n");
 			// attend 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
-			LCD_Printf("ajustement de GAINP");
+			LCD_Printf("ajustement de GAINP\n");
 			while(k == 0)
 			{
 				avancer_distance (500);
@@ -159,10 +159,11 @@ void bumper_watch()
 		}
 		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))
 		{
-			LCD_Printf("Wait 1 sec");
+			LCD_Printf("Wait 1 sec\n");
 			// attend 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
+			LCD_Printf("ajustement de GAINI\n");
 			while(k == 0)
 			{
 				avancer_distance (2000);
