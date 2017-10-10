@@ -27,7 +27,7 @@ int main()
 {
 	// variables locales
 	int i;
-
+	int j;
 	// declarations des threads
 	THREAD thread_bumpers;
 	THREAD thread_Timer;
@@ -42,6 +42,15 @@ int main()
 	thread_bumpers = THREAD_CreateSimple(bumper_watch);
 	thread_Timer = THREAD_CreateSimple(timer_watch);
 
+	while (j = 0)
+	{
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			j = 1;
+		}
+		THREAD_MSleep(10000);
+
+	}
 	// Depart du circuit
 	avancer_distance(2220);
 
