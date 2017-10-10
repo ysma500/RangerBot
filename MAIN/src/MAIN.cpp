@@ -151,6 +151,7 @@ void bumper_watch()
 				{
 					LCD_Printf("Fermeture des modification de GAIN_P\n");
 					j = 1;
+					k=1;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
@@ -169,18 +170,19 @@ void bumper_watch()
 				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("Augmentation de 0,05 = %f\n", GAINI);
+					LCD_Printf("Augmentation de 0,01 = %f\n", GAINI);
 					GAINI += 0.01;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,05 = %f\n", GAINI);
+					LCD_Printf("Diminution de 0,01 = %f\n", GAINI);
 					GAINI -= 0.01;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
 					LCD_Printf("Fermeture des modification de GAIN_I\n");
 					i = 1;
+					k=1;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
