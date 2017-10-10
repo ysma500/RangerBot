@@ -29,8 +29,8 @@ int main()
 	int i;
 	int j = 0;
 	// declarations des threads
-	THREAD thread_bumpers;
-	THREAD thread_Timer;
+	//THREAD thread_bumpers;
+	//THREAD thread_Timer;
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
