@@ -40,7 +40,7 @@ int main()
 
 	// depart des threads (voir les definitions des fonctions plus bas)
 	bumper_watch();
-	thread_Timer = THREAD_CreateSimple(timer_watch);
+	//thread_Timer = THREAD_CreateSimple(timer_watch);
 
 	while (j == 0)
 	{
@@ -105,8 +105,8 @@ int main()
 	THREAD_MSleep(20000);
 
 	// On detruit les threads
-	THREAD_Destroy(&thread_bumpers);
-	THREAD_Destroy(&thread_Timer);
+	//THREAD_Destroy(&thread_bumpers);
+	//THREAD_Destroy(&thread_Timer);
 
 	// On arrete tout sur la carte d'entrees/sorties
 	FPGA_StopAll();
