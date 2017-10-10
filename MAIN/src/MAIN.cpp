@@ -66,7 +66,7 @@ int main()
 
 	}
 	// Depart du circuit
-	avancer_distance(2220);
+	avancer_distance(2210);
 
 	rotation_angle(90);
 
@@ -257,9 +257,9 @@ void rotation_angle(float fAngle)
 	float fDistance = 0;
 	fDistance = (fAngle/360) * (PI * 141);
 	//Gauche
-	if (fDistance > 0)
+	if (fAngle > 0)
 	{
-		float x = (fDistance / 7.18) + 1 + iTicGauche;
+		float x = (fDistance / 3.56) + 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
@@ -268,9 +268,9 @@ void rotation_angle(float fAngle)
 		}
 	}
 	//Droit
-	if (fDistance < 0)
+	if (fAngle < 0)
 	{
-		float x = (fDistance / 7.18) - 1 + iTicGauche;
+		float x = (fDistance / 3.56) - 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
@@ -302,7 +302,7 @@ void avancer_distance(int iDistance)
 	//Recule
 	if (iDistance < 0)
 	{
-		float x = (iDistance / 3.56) - 1;
+		float x = (iDistance / 3.56) - 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
