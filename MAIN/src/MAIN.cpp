@@ -117,6 +117,7 @@ void bumper_watch()
 		if(DIGITALIO_Read(BMP_FRONT))
 		{
 			int i = 0;
+			LCD_Printf("ajustement de GAINP");
 			while(i = 0)
 			{
 				// part les moteurs pour avancer
@@ -126,17 +127,47 @@ void bumper_watch()
 				THREAD_MSleep(2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("augmentation de 0,05 = %f", &GAINP)
-					i = 1;
+					LCD_Printf("augmentation de 0,05 = %f\n", &GAINP);
+					&GAINP = &GAINP + 0.05;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Fermeture des modification\n")
-					i = 1;
+					LCD_Printf("Diminution de 0,05 = %f\n", &GAINP);
+					i&GAINP = &GAINP - 0.05;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
-					LCD_Printf("Fermeture des modification\n")
+					LCD_Printf("Appuyer une autre fois pour GAINI\n");
+					i = 1;
+				}
+			}
+		}
+		// attend 50 millisecondes
+		THREAD_MSleep(50);
+	}
+	if(DIGITALIO_Read(BMP_FRONT))
+		{
+			int i = 0;
+			while(i = 0)
+			{
+				// part les moteurs pour avancer
+				MOTOR_SetSpeed(MOTOR_LEFT,  50);
+				MOTOR_SetSpeed(MOTOR_RIGHT, 50);
+				// attend 2 secondes
+				THREAD_MSleep(2000);
+				if(DIGITALIO_Read(BMP_LEFT))
+				{
+					LCD_Printf("augmentation de 0,05 = %f\n", &GAINI);
+					&GAINI = &GAINI + 0.05;
+				}
+				if(DIGITALIO_Read(BMP_RIGHT))
+				{
+					LCD_Printf("Diminution de 0,05 = %f\n", &GAINI);
+					&GAINI = &GAINI - 0.05;
+				}
+				if(DIGITALIO_Read(BMP_FRONT))
+				{
+					LCD_Printf("Fermeture des modification\n");
 					i = 1;
 				}
 			}
