@@ -170,13 +170,13 @@ void bumper_watch()
 				avancer_distance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
-					LCD_Printf("Augmentation de 0,01 = %f\n", GAINI);
-					GAINI += 0.01;
+					LCD_Printf("Augmentation de 0,001 = %f\n", GAINI);
+					GAINI += 0.001;
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
-					LCD_Printf("Diminution de 0,01 = %f\n", GAINI);
-					GAINI -= 0.01;
+					LCD_Printf("Diminution de 0,001 = %f\n", GAINI);
+					GAINI -= 0.001;
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
@@ -189,6 +189,8 @@ void bumper_watch()
 			}
 		}
 	}
+	MOTOR_SetSpeed(7, 0);
+	MOTOR_SetSpeed(8, 0);
 }
 
 
