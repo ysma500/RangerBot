@@ -2,8 +2,8 @@
 ============================================================================
  Name : MAIN.cpp
  Author :
- Version :
- Description : Demo - Exe source file
+ Version :0.81
+ Description : Code Robus 1
 ============================================================================
 */
 
@@ -108,6 +108,7 @@ int main()
 // Les threads suivant sont executes en parallele du main() a partir du moment ou ils sont crees
 // 		avec la fonction THREAD_CreateSimple()
 
+//Début de la fonction pour la modification des gain à suivre 
 void bumper_watch()
 {
 	while(1)
@@ -115,15 +116,30 @@ void bumper_watch()
 		// si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT))
 		{
-			// part les moteurs a reculons
-			MOTOR_SetSpeed(MOTOR_LEFT,  -50);
-			MOTOR_SetSpeed(MOTOR_RIGHT, -50);
-			// attend 2 secondes
-			THREAD_MSleep(2000);
-			// part le moteur gauche vers l'avant (pour que le robot tourne sur lui-meme)
-			MOTOR_SetSpeed(MOTOR_LEFT, 50);
-			// attend 300 millisecondes
-			THREAD_MSleep(300);
+			int i = 0;
+			while(i = 0)
+			{
+				// part les moteurs pour avancer
+				MOTOR_SetSpeed(MOTOR_LEFT,  50);
+				MOTOR_SetSpeed(MOTOR_RIGHT, 50);
+				// attend 2 secondes
+				THREAD_MSleep(2000);
+				if(DIGITALIO_Read(BMP_LEFT))
+				{
+					LCD_Printf("augmentation de 0,05 = %f", &GAINP)
+					i = 1;
+				}
+				if(DIGITALIO_Read(BMP_RIGHT))
+				{
+					LCD_Printf("Fermeture des modification\n")
+					i = 1;
+				}
+				if(DIGITALIO_Read(BMP_FRONT))
+				{
+					LCD_Printf("Fermeture des modification\n")
+					i = 1;
+				}
+			}
 		}
 		// attend 50 millisecondes
 		THREAD_MSleep(50);
