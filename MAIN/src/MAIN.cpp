@@ -27,7 +27,7 @@ int main()
 {
 	// variables locales
 	int i;
-	int j;
+	int j = 0;
 	// declarations des threads
 	THREAD thread_bumpers;
 	THREAD thread_Timer;
@@ -42,7 +42,7 @@ int main()
 	thread_bumpers = THREAD_CreateSimple(bumper_watch);
 	thread_Timer = THREAD_CreateSimple(timer_watch);
 
-	while (j = 0)
+	while (j == 0)
 	{
 		if(DIGITALIO_Read(BMP_REAR))
 		{
@@ -131,7 +131,7 @@ void bumper_watch()
 		{
 			int i = 0;
 			LCD_Printf("ajustement de GAINP");
-			while(i = 0)
+			while(i == 0)
 			{
 				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
@@ -157,7 +157,7 @@ void bumper_watch()
 		if(DIGITALIO_Read(BMP_FRONT))
 		{
 			int i = 0;
-			while(i = 0)
+			while(i == 0)
 			{
 				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
