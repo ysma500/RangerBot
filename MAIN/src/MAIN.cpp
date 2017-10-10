@@ -12,7 +12,7 @@
 
 // Include Files
 #include <libarmus.h>
-#define PI 3.1416
+#define PI 3.14159265358979323846264338327950288
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
