@@ -269,7 +269,7 @@ void avancer_distance(int iDistance)
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
 			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fGauche_speed = fGauche_speed * PID_watch(&iTicGauche,&iTicGDroit);
+			fGauche_speed = fGauche_speed + PID_watch(&iTicGauche,&iTicGDroit);
 		}
 	}
 }
