@@ -254,11 +254,11 @@ void rotation_angle(float fAngle)
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 	float fDistance = 0;
-	fDistance = fAngle*PI/180;
+	fDistance = (fAngle/360) * (PI * 141);
 	//Gauche
 	if (fDistance > 0)
 	{
-		float x = (fDistance / 7) + 1 + iTicGauche;
+		float x = (fDistance / 7.2) + 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
@@ -269,7 +269,7 @@ void rotation_angle(float fAngle)
 	//Droit
 	if (fDistance < 0)
 	{
-		float x = (fDistance / 7) - 1;
+		float x = (fDistance / 7.2) - 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
@@ -290,7 +290,7 @@ void avancer_distance(int iDistance)
 	//Avance
 	if (iDistance > 0)
 	{
-		float x = (iDistance / 7) + 1 + iTicGauche;
+		float x = (iDistance / 3.6) + 1 + iTicGauche;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
@@ -301,7 +301,7 @@ void avancer_distance(int iDistance)
 	//Recule
 	if (iDistance < 0)
 	{
-		float x = (iDistance / 7) - 1;
+		float x = (iDistance / 3.6) - 1;
 		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
