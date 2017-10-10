@@ -11,21 +11,22 @@
 #include <libarmus.h>
 #define PI 3.1416
 
+float GAINI = 0.0;
+float GAINP = 0.5;
+
 // Prototypes de fonctions de threads
 void bumper_watch();
 void timer_watch();
 
 // Prototypes de fonctions (Avancer, Tourner)
-void avancer_distance(int iDistance,float GAINI,float GAINP);
+void avancer_distance(int iDistance);
 void rotation_angle(float iAngle);
-float PID_watch(int* iClicGauche,int* iClicDroit,float GAINI,float GAINP);
+float PID_watch(int* iTicGauche,int* iTicGDroit);
 
 int main()
 {
 	// variables locales
 	int i;
-	float GAINI = 0.5;
-	float GAINP = 0.5;
 
 	// declarations des threads
 	THREAD thread_bumpers;
@@ -42,39 +43,39 @@ int main()
 	thread_Timer = THREAD_CreateSimple(timer_watch);
 
 	// Depart du circuit
-	avancer_distance(2220,GAINI,GAINP);
+	avancer_distance(2220);
 
 	rotation_angle(90);
 
-	avancer_distance(430,GAINI,GAINP);
+	avancer_distance(430);
 
 	rotation_angle(-90);
 
-	avancer_distance(450,GAINI,GAINP);
+	avancer_distance(450);
 
 	rotation_angle(-90);
 
-	avancer_distance(430,GAINI,GAINP);
+	avancer_distance(430);
 
 	rotation_angle(90);
 
-	avancer_distance(400,GAINI,GAINP);
+	avancer_distance(400);
 
 	rotation_angle(-45);
 
-	avancer_distance(560,GAINI,GAINP);
+	avancer_distance(560);
 
 	rotation_angle(90);
 
-	avancer_distance(820,GAINI,GAINP);
+	avancer_distance(820);
 
 	rotation_angle(-45);
 
-	avancer_distance(500,GAINI,GAINP);
+	avancer_distance(500);
 
 	rotation_angle(-12.5);
 
-	avancer_distance(460,GAINI,GAINP);
+	avancer_distance(460);
 
 	rotation_angle(180);
 
@@ -82,7 +83,7 @@ int main()
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
 
-	avancer_distance(-460,GAINI,GAINP);
+	avancer_distance(-460);
 
 	LCD_Printf("Le robot a termine le parcour\n");
 
@@ -113,8 +114,7 @@ int main()
 //Début de la fonction pour la modification des gain à suivre 
 void bumper_watch()
 {
-	float GAINI = 0.5;
-	float GAINP = 0.5;
+
 	while(1)
 	{
 		// si la "bumper switch" avant de robus est enclanchee...
@@ -124,7 +124,7 @@ void bumper_watch()
 			LCD_Printf("ajustement de GAINP");
 			while(i = 0)
 			{
-				avancer_distance (500,GAINI,GAINP);
+				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					LCD_Printf("augmentation de 0,05 = %f\n", GAINP);
@@ -150,7 +150,7 @@ void bumper_watch()
 			int i = 0;
 			while(i = 0)
 			{
-				avancer_distance (500,GAINI,GAINP);
+				avancer_distance (500);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					LCD_Printf("augmentation de 0,05 = %f\n", GAINI);
@@ -184,7 +184,7 @@ void timer_watch()
 	}
 }
 
-float PID_watch(int* iClicGauche,int* iClicDroit,float GAINI,float GAINP)
+float PID_watch(int* iTicGauche,int* iTicGDroit)
 {
 	int iCorrP = 0;
 	int iCorrI = 0;
@@ -196,9 +196,9 @@ float PID_watch(int* iClicGauche,int* iClicDroit,float GAINI,float GAINP)
 	iClicDlive = ENCODER_Read(2);
 	iClicGlive = ENCODER_Read(1);
 	iVarClic = iClicDlive - iClicGlive;
-	*iClicDroit += iClicDlive;
-	*iClicGauche += iClicGlive;
-	iIVarClic = *iClicDroit - *iClicGauche;
+	*iTicGDroit += iClicDlive;
+	*iTicGauche += iClicGlive;
+	iIVarClic = *iTicGDroit - *iTicGauche;
 	iCorrP = GAINP * iVarClic;
 	iCorrI = GAINI * iIVarClic;
 	return (iCorrP + iCorrI);
@@ -208,13 +208,13 @@ float PID_watch(int* iClicGauche,int* iClicDroit,float GAINI,float GAINP)
 //Fonction à Vérifier (integrer PID)
 void rotation_angle(float fAngle)
 {
-	int iClicGauche;
-	int iClicDroit;
+	int iTicGauche;
+	int iTicGDroit;
 	float fDistance = 0;
 	fDistance = fAngle*PI/180;
 
 	float x = (fDistance / 7) + 1 ;
-	while(iClicGauche < x && iClicDroit < x)
+	while(iTicGauche < x && iTicGDroit < x)
 	{
 		int speed = 0;
 		float fSpeed = 50;
@@ -232,12 +232,12 @@ void rotation_angle(float fAngle)
 }
 
 
-void avancer_distance(int iDistance,float GAINI, float GAINP)
+void avancer_distance(int iDistance)
 {
 	float fDroit_speed = 50;
 	float fGauche_speed = 50;
-	int iClicGauche = 0;
-	int iClicDroit = 0;
+	int iTicGauche = 0;
+	int iTicGDroit = 0;
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
@@ -245,22 +245,22 @@ void avancer_distance(int iDistance,float GAINI, float GAINP)
 	if (iDistance > 0)
 	{
 		float x = (iDistance / 7) + 1;
-		while(iClicGauche < x && iClicDroit < x )
+		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, fGauche_speed);
 			MOTOR_SetSpeed(8, fDroit_speed);
-			fGauche_speed = fGauche_speed * PID_watch(&iClicGauche,&iClicDroit,GAINI,GAINP);
+			fGauche_speed = fGauche_speed * PID_watch(&iTicGauche,&iTicGDroit);
 		}
 	}
 	//Recule
 	if (iDistance < 0)
 	{
 		float x = (iDistance / 7) - 1;
-		while(iClicGauche < x && iClicDroit < x )
+		while(iTicGauche < x && iTicGDroit < x )
 		{
 			MOTOR_SetSpeed(7, -(fGauche_speed));
 			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fGauche_speed = fGauche_speed * PID_watch(&iClicGauche,&iClicDroit,GAINI,GAINP);
+			fGauche_speed = fGauche_speed * PID_watch(&iTicGauche,&iTicGDroit);
 		}
 	}
 }
