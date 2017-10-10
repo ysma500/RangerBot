@@ -179,7 +179,12 @@ void bumper_watch()
 
 void timer_watch()
 {
-	//...
+	while (1)
+	{
+		//Temps
+		int TIMER = TIMER + 50;
+		THREAD_MSleep(50);
+	}
 }
 
 float PID_watch(int* iClicGauche,int* iClicDroit)
