@@ -15,7 +15,7 @@
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
-#define Circum 229.34 //Cir de la roue
+#define Circum 229.33626371205490640777296697940 //Cir de la roue
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -242,11 +242,12 @@ void Rotation(float fAngle)
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
-	int iTicObjectif = iTicDone + fTicToDo;
+	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
+
 	//Gauche
 	if (fAngle > 0)
 	{
-		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
+		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -257,7 +258,7 @@ void Rotation(float fAngle)
 	//Droite
 	if (fAngle < 0)
 	{
-		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
+		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
@@ -280,7 +281,7 @@ void Avance(int iDistance) //Distance en mm
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 
-	int iTicObjectif = iTicDone + fTicToDo;
+	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
 	//Avance
 	if (iDistance > 0)
 	{
