@@ -18,6 +18,7 @@
 #define Circum 229.33626371205490640777296697940 //Cir de la roue
 #define LEFT_ROT 1
 #define RIGHT_ROT 0
+#define SPEED_START 70
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -214,7 +215,7 @@ float PID_Setup()
 {
 	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
 	
-	THREAD_MSleep(100);
+	THREAD_MSleep(50);
 	iTicDRead = ENCODER_Read(2);
 	iTicGRead = ENCODER_Read(1);
 	
@@ -231,8 +232,8 @@ float PID_Setup()
 
 void Rotation(float fAngle, int iDirection)
 {
-	float fDroitSpeed = 50; //Define start speed
-	float fGaucheSpeed = 50;
+	float fDroitSpeed = SPEED_START; //Define start speed
+	float fGaucheSpeed = SPEED_START;
 
 	//Cacul des tics a faire (encodeurs)
 	float fArcRot = ((PI * 141) * (fAngle / 360));
@@ -273,8 +274,8 @@ void Rotation(float fAngle, int iDirection)
 
 void Avance(int iDistance) //Distance en mm
 {
-	float fDroitSpeed = 50;
-	float fGaucheSpeed = 50;
+	float fDroitSpeed = SPEED_START;
+	float fGaucheSpeed = SPEED_START;
 	float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
 	int iTicDone = m_iTicTotalG;
 	
