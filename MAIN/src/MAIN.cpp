@@ -15,6 +15,7 @@
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
+#define circumference 229.34
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -100,13 +101,13 @@ int main()
 	Avance(460);
 
 	Rotation(180.0);
-
+	/*
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
 
 	Avance(-460);
-
+	*/
 	LCD_Printf("Le robot a termine le parcours\n");
 
 
@@ -231,17 +232,19 @@ void Rotation(float fAngle)
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
-	float fArcLength = ((2 * PI * 140) * (fAngle / 360));
-	float fTicToDo = (fArcLength / (2 * PI * 36.5)) * 64;
-	
+
+	float fArcLength = ((2 * PI * 36.5) * (fAngle / 360)); //verifier calcul
+	float fTicToDo = (fArcLength / (2 * PI * 36.5)) * 64; //verifier calcul
+	float fTicToDo =
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 	int iTicDone = 0;
+	int iTicObjectif = iTicDone + fTicToDo;
 	//Gauche
 	if (fAngle > 0)
 	{
-		while(m_iTicTotalD < (iTicDone + fTicToDo))
+		while((m_iTicTotalD < iTicObjectif) && (m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -262,11 +265,11 @@ void Rotation(float fAngle)
 }
 
 
-void Avance(int iDistance)
+void Avance(int iDistance) //Distance en mm
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
-	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;
+	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;//verifier calcul
 	int iTicDone = m_iTicTotalD;
 	
 	//Remise a 0
@@ -283,7 +286,7 @@ void Avance(int iDistance)
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	
+	/*
 	//Recule
 	if (iDistance < 0)
 	{
@@ -294,6 +297,7 @@ void Avance(int iDistance)
 			fGaucheSpeed += PID_Setup();
 		}
 	}
+	*/
 }
 
 
