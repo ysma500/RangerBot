@@ -25,14 +25,13 @@ int m_iTicTotalD = 0;
 void Initialisation();
 
 // Prototypes de fonctions (Avancer, Tourner)
-void avancer_distance(int iDistance);
-void rotation_angle(float iAngle);
+void Avance(int iDistance);
+void Rotation(float iAngle);
 float PID_Setup(void);
 
 int main()
 {
 	// variables locales
-	int i;
 	int j = 0;
 
 	//on choisit le bon mode de gestion d'erreur
@@ -43,70 +42,70 @@ int main()
 	
 	while (j == 0)
 	{
+		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
 		{
+			LCD_Printf("Entrer dans les Configs\n");
 			j = 1;
 		}
-		THREAD_MSleep(1000);
 	}
 	
 	//Configuration
 	Initialisation();
 	
-	
 	j = 0;
-	while (j == 0)
+	while(j == 0)
 	{
+		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
 		{
+			LCD_Printf("Depart dans 5sec\n");
+			THREAD_MSleep(5000);
 			j = 1;
-			LCD_Printf(" Départ dans 5");
 		}
-		THREAD_MSleep(5000);
-
 	}
 	// Depart du circuit
-	avancer_distance(2210);
+	Avance(2250);
 
-	rotation_angle(90.0);
+	Rotation(90.0);
 
-	avancer_distance(430);
+	Avance(475);
 
-	rotation_angle(-90.0);
+	Rotation(-90.0);
 
-	avancer_distance(450);
+	Avance(450);
 
-	rotation_angle(-90.0);
+	Rotation(-90.0);
 
-	avancer_distance(430);
+	Avance(475);	//Verifier les maths jusque ici (Ysmael)
 
-	rotation_angle(90.0);
+	Rotation(90.0);
 
-	avancer_distance(400);
+	Avance(400);
 
-	rotation_angle(-45.0);
+	Rotation(-45.0);
 
-	avancer_distance(560);
+	Avance(560);
 
-	rotation_angle(90.0);
+	Rotation(90.0);
 
-	avancer_distance(820);
+	Avance(820);
 
-	rotation_angle(-45.0);
+	Rotation(-45.0);
 
-	avancer_distance(500);
+	Avance(500);
 
-	rotation_angle(-12.5);
+	Rotation(-12.5);
 
-	avancer_distance(460);
+	Avance(460);
 
-	rotation_angle(180.0);
+	Rotation(180.0);
 
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
 
-	avancer_distance(-460);
+	Avance(-460);
 
 	LCD_Printf("Le robot a termine le parcours\n");
 
@@ -133,7 +132,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		avancer_distance (500);
+		Avance (500);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
@@ -141,18 +140,18 @@ void Initialisation()
 			//Attends 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
-			LCD_Printf("ajustement de GAIN_P\n");
+			LCD_Printf("Ajustement de GAIN_P\n");
 			while(k == 0)
 			{
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					GAIN_P += 0.01;
-					LCD_Printf("Augmentation de 0,01 = %f\n", GAIN_P);
+					LCD_Printf("Augmentation de 0,01 = %0.2f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					GAIN_P -= 0.01;
-					LCD_Printf("Diminution de 0,01 = %f\n", GAIN_P);
+					LCD_Printf("Diminution de 0,01 = %0.2f\n", GAIN_P);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
@@ -172,19 +171,19 @@ void Initialisation()
 			// attend 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
-			LCD_Printf("ajustement de GAIN_I\n");
+			LCD_Printf("Ajustement de GAIN_I\n");
 			while(k == 0)
 			{
-				//avancer_distance (2000);
+				//Avance (2000);
 				if(DIGITALIO_Read(BMP_LEFT))
 				{
 					GAIN_I += 0.001;
-					LCD_Printf("Augmentation de 0,001 = %f\n", GAIN_I);
+					LCD_Printf("Augmentation de 0,001 = %0.4f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_RIGHT))
 				{
 					GAIN_I -= 0.001;
-					LCD_Printf("Diminution de 0,001 = %f\n", GAIN_I);
+					LCD_Printf("Diminution de 0,001 = %0.4f\n", GAIN_I);
 				}
 				if(DIGITALIO_Read(BMP_FRONT))
 				{
@@ -204,8 +203,8 @@ void Initialisation()
 			LCD_Printf("Sortie des configs\n");
 		}
 	}
-	MOTOR_SetSpeed(7, 0);
-	MOTOR_SetSpeed(8, 0);
+	MOTOR_SetSpeed(LEFT_MOTOR, 0);
+	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
 
@@ -228,7 +227,7 @@ float PID_Setup()
 	return (iCorrP + iCorrI);
 }
 
-void rotation_angle(float fAngle)
+void Rotation(float fAngle)
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
@@ -250,7 +249,7 @@ void rotation_angle(float fAngle)
 		}
 	}
 	
-	//Droit
+	//Droite
 	if (fAngle < 0)
 	{
 		while(m_iTicTotalD < (iTicDone - fTicToDo))
@@ -263,7 +262,7 @@ void rotation_angle(float fAngle)
 }
 
 
-void avancer_distance(int iDistance)
+void Avance(int iDistance)
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
