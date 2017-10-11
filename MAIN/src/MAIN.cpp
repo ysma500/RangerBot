@@ -16,6 +16,8 @@
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
 #define Circum 229.33626371205490640777296697940 //Cir de la roue
+#define LEFT_ROT 1
+#define RIGHT_ROT 0
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -27,7 +29,7 @@ void Initialisation();
 
 // Prototypes de fonctions (Avancer, Tourner)
 void Avance(int iDistance);
-void Rotation(float iAngle);
+void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 
 int main()
@@ -68,39 +70,39 @@ int main()
 	// Depart du circuit
 	Avance(2250);
 
-	Rotation(90.0);
+	Rotation(90.0, LEFT_ROT);
 
 	Avance(475);
 
-	Rotation(-90.0);
+	Rotation(90.0, RIGHT_ROT);
 
 	Avance(450);
 
-	Rotation(-90.0);
+	Rotation(90.0, RIGHT_ROT);
 
 	Avance(475);	//Verifier les maths jusque ici (Ysmael)
 
-	Rotation(90.0);
+	Rotation(90.0, LEFT_ROT);
 
 	Avance(400);
 
-	Rotation(-45.0);
+	Rotation(45.0, RIGHT_ROT);
 
 	Avance(560);
 
-	Rotation(90.0);
+	Rotation(90.0, LEFT_ROT);
 
 	Avance(820);
 
-	Rotation(-45.0);
+	Rotation(45.0, RIGHT_ROT);
 
 	Avance(500);
 
-	Rotation(-12.5);
+	Rotation(12.5, RIGHT_ROT);
 
 	Avance(460);
 
-	Rotation(180.0);
+	Rotation(180.0, LEFT_ROT);
 
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
@@ -227,7 +229,7 @@ float PID_Setup()
 	return (iCorrP + iCorrI);
 }
 
-void Rotation(float fAngle)
+void Rotation(float fAngle, int iDirection)
 {
 	float fDroitSpeed = 50; //Define start speed
 	float fGaucheSpeed = 50;
@@ -244,7 +246,7 @@ void Rotation(float fAngle)
 	ENCODER_Read(1);
 
 	//Gauche
-	if (fAngle > 0)
+	if (iDirection == LEFT_ROT)
 	{
 		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
@@ -255,7 +257,7 @@ void Rotation(float fAngle)
 	}
 	
 	//Droite
-	if (fAngle < 0)
+	if (iDirection == RIGHT_ROT)
 	{
 		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
