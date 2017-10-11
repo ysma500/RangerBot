@@ -237,11 +237,11 @@ void Rotation(float fAngle)
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	int iTicDone = 0;
+	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
 	//Gauche
 	if (fAngle > 0)
 	{
-		while(m_iTicTotalD < (iTicDone + fTicToDo))
+		while(m_iTicTotalG < (iTicDone + fTicToDo))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -252,7 +252,7 @@ void Rotation(float fAngle)
 	//Droite
 	if (fAngle < 0)
 	{
-		while(m_iTicTotalD < (iTicDone - fTicToDo))
+		while(m_iTicTotalG < (iTicDone + fTicToDo))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
@@ -267,7 +267,7 @@ void Avance(int iDistance)
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
 	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;
-	int iTicDone = m_iTicTotalD;
+	int iTicDone = m_iTicTotalG;
 	
 	//Remise a 0
 	ENCODER_Read(2);
@@ -276,7 +276,7 @@ void Avance(int iDistance)
 	//Avance
 	if (iDistance > 0)
 	{
-		while(m_iTicTotalD < (iTicDone + fTicToDo))
+		while(m_iTicTotalG < (iTicDone + fTicToDo))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -287,7 +287,7 @@ void Avance(int iDistance)
 	//Recule
 	if (iDistance < 0)
 	{
-		while(m_iTicTotalD < (iTicDone - fTicToDo))
+		while(m_iTicTotalG < (iTicDone - fTicToDo))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
