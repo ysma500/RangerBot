@@ -5,8 +5,8 @@
  Version :0.81
  Description : Code Robus 1
 
- robot 47 P: I:
- robot 77 P: I:
+ robot 47 P: 0,9 I:0,089
+ robot 77 P: 1,70 I:0,220
 ============================================================================
 */
 
@@ -99,7 +99,7 @@ int main()
 	Rotation(45.0, RIGHT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	Avance(560);
+	Avance(500);
 
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
@@ -125,6 +125,14 @@ int main()
 	//THREAD_MSleep(1000);
 
 	Avance(460);
+	THREAD_MSleep(DELAY_STEP);
+	Avance(500);
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(45.0, LEFT_ROT);
+	THREAD_MSleep(DELAY_STEP);
+	Avance(820);
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(90.0, RIGHT_ROT);
 
 	LCD_Printf("Le robot a termine le parcours\n");
 
