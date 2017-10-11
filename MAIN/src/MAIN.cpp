@@ -19,6 +19,7 @@
 #define LEFT_ROT 1
 #define RIGHT_ROT 0
 #define SPEED_START 70
+#define DELAY_STEP 500
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -70,31 +71,31 @@ int main()
 	}
 	// Depart du circuit
 	Avance(2250);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(475);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, RIGHT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(450);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, RIGHT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(475);	//Verifier les maths jusque ici (Ysmael)
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(400);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, RIGHT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(560);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
-
+	THREAD_MSleep(DELAY_STEP);
 	Avance(820);
-
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, RIGHT_ROT);
 
 	Avance(500);
