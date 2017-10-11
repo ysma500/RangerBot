@@ -15,7 +15,7 @@
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
-#define circumference 229.34
+#define Circum 229.34 //Cir de la roue
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
@@ -101,13 +101,13 @@ int main()
 	Avance(460);
 
 	Rotation(180.0);
-	/*
+
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
 
 	Avance(-460);
-	*/
+
 	LCD_Printf("Le robot a termine le parcours\n");
 
 
@@ -230,18 +230,19 @@ float PID_Setup()
 
 void Rotation(float fAngle)
 {
-	float fDroitSpeed = 50;
+	float fDroitSpeed = 50; //Define start speed
 	float fGaucheSpeed = 50;
-	int iTicDone = 0;
-	int iTicObjectif = iTicDone + fTicToDo;
-	float fArcLength = ((2 * PI * 140) * (fAngle / 360));
-	float fTicToDo = (fArcLength / (PI * 36.5)) * 64;
+
+	//Cacul des tics a faire (encodeurs)
+	float fArcRot = ((PI * 141) * (fAngle / 360));
+	float fTicToDo = (fArcRot / Circum) * 64;
 	
+
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
-
+	int iTicObjectif = iTicDone + fTicToDo;
 	//Gauche
 	if (fAngle > 0)
 	{
@@ -272,19 +273,18 @@ void Avance(int iDistance) //Distance en mm
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
-	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;//verifier calcul
-	int iTicDone = m_iTicTotalD;
+	float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
 	int iTicDone = m_iTicTotalG;
-
 	
-	//Remise a 0
+	//Remise a 0 des encodeurs
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	
+
+	int iTicObjectif = iTicDone + fTicToDo;
 	//Avance
 	if (iDistance > 0)
 	{
-		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
+		while((m_iTicTotalG < iTicObjectif) && (m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -294,7 +294,7 @@ void Avance(int iDistance) //Distance en mm
 	//Recule
 	if (iDistance < 0)
 	{
-		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
+		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
