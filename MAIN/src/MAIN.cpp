@@ -13,19 +13,21 @@
 // Include Files
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
+#define LEFT_MOTOR 7
+#define RIGHT_MOTOR 8
 
 float GAIN_I = 0.089;
 float GAIN_P = 0.90;
-int iTicGauche = 0;
-int iTicGDroit = 0;
+int m_iTicTotalG = 0;
+int m_iTicTotalD = 0;
 
 // Prototypes de fonctions de configs
-void bumper_watch();
+void Initialisation();
 
 // Prototypes de fonctions (Avancer, Tourner)
 void avancer_distance(int iDistance);
 void rotation_angle(float iAngle);
-float PID_watch(void);
+float PID_Setup(void);
 
 int main()
 {
@@ -49,7 +51,7 @@ int main()
 	}
 	
 	//Configuration
-	bumper_watch();
+	Initialisation();
 	
 	
 	j = 0;
@@ -66,31 +68,31 @@ int main()
 	// Depart du circuit
 	avancer_distance(2210);
 
-	rotation_angle(90);
+	rotation_angle(90.0);
 
 	avancer_distance(430);
 
-	rotation_angle(-90);
+	rotation_angle(-90.0);
 
 	avancer_distance(450);
 
-	rotation_angle(-90);
+	rotation_angle(-90.0);
 
 	avancer_distance(430);
 
-	rotation_angle(90);
+	rotation_angle(90.0);
 
 	avancer_distance(400);
 
-	rotation_angle(-45);
+	rotation_angle(-45.0);
 
 	avancer_distance(560);
 
-	rotation_angle(90);
+	rotation_angle(90.0);
 
 	avancer_distance(820);
 
-	rotation_angle(-45);
+	rotation_angle(-45.0);
 
 	avancer_distance(500);
 
@@ -98,7 +100,7 @@ int main()
 
 	avancer_distance(460);
 
-	rotation_angle(180);
+	rotation_angle(180.0);
 
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
@@ -106,7 +108,7 @@ int main()
 
 	avancer_distance(-460);
 
-	LCD_Printf("Le robot a termine le parcour\n");
+	LCD_Printf("Le robot a termine le parcours\n");
 
 
 	// Vous devez inserez un fichier audio avec ce nom sur votre cle usb
@@ -116,10 +118,6 @@ int main()
 	// Le code attent 20 secondes
 	THREAD_MSleep(20000);
 
-	// On detruit les threads
-	//THREAD_Destroy(&thread_bumpers);
-	//THREAD_Destroy(&thread_Timer);
-
 	// On arrete tout sur la carte d'entrees/sorties
 	FPGA_StopAll();
 
@@ -128,23 +126,19 @@ int main()
 	return 0;
 }
 
-
-// Les threads suivant sont executes en parallele du main() a partir du moment ou ils sont crees
-// 		avec la fonction THREAD_CreateSimple()
-
-//Début de la fonction pour la modification des gain à suivre 
-void bumper_watch()
+//Debut de la fonction pour la modification des gains a suivre 
+void Initialisation()
 {
 	int i = 0, j = 0;
 
 	while(i==0 || j==0)
 	{
 		avancer_distance (500);
-		// si la "bumper switch" avant de robus est enclanchee...
+		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
 			LCD_Printf("Wait 1 sec\n");
-			// attend 1000 millisecondes
+			//Attends 1000 millisecondes
 			THREAD_MSleep(1000);
 			int k = 0;
 			LCD_Printf("ajustement de GAIN_P\n");
@@ -164,8 +158,8 @@ void bumper_watch()
 				{
 					LCD_Printf("Fermeture des modification de GAIN_P\n");
 					k = 1;
-					iTicGauche = 0;
-					iTicGDroit = 0;
+					m_iTicTotalG = 0;
+					m_iTicTotalD = 0;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
@@ -196,8 +190,8 @@ void bumper_watch()
 				{
 					LCD_Printf("Fermeture des modification de GAIN_I\n");
 					k=1;
-					iTicGauche = 0;
-					iTicGDroit = 0;
+					m_iTicTotalG = 0;
+					m_iTicTotalD = 0;
 				}
 				// attend 50 millisecondes
 				THREAD_MSleep(50);
@@ -215,65 +209,55 @@ void bumper_watch()
 }
 
 
-/*void timer_watch()
+float PID_Setup()
 {
-	while (1)
-	{
-		//Temps
-		int TIMER = TIMER + 50;
-		THREAD_MSleep(50);
-	}
-}*/
-
-float PID_watch()
-{
-	int iCorrP = 0;
-	int iCorrI = 0;
-	int iClicGlive = 0;
-	int iClicDlive = 0;
-	int iVarClic = 0;
-	int iIVarClic = 0;
+	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
+	
 	THREAD_MSleep(50);
-	iClicDlive = ENCODER_Read(2);
-	iClicGlive = ENCODER_Read(1);
-	iVarClic = iClicDlive - iClicGlive;
-	iTicGDroit += iClicDlive;
-	iTicGauche += iClicGlive;
-	iIVarClic = iTicGDroit - iTicGauche;
-	iCorrP = GAIN_P * iVarClic;
-	iCorrI = GAIN_I * iIVarClic;
+	iTicDRead = ENCODER_Read(2);
+	iTicGRead = ENCODER_Read(1);
+	
+	m_iTicTotalD += iTicDRead;
+	m_iTicTotalG += iTicGRead;
+	iErrorLive = iTicDRead - iTicGRead;
+	iErrorTotal = m_iTicTotalD - m_iTicTotalG;
+	
+	iCorrP = GAIN_P * iErrorLive;
+	iCorrI = GAIN_I * iErrorTotal;
+	
 	return (iCorrP + iCorrI);
 }
 
 void rotation_angle(float fAngle)
 {
-	float fDroit_speed = 50;
-	float fGauche_speed = 50;
+	float fDroitSpeed = 50;
+	float fGaucheSpeed = 50;
+	float fArcLength = ((2 * PI * 140) * (fAngle / 360));
+	float fTicToDo = (fArcLength / (2 * PI * 36.5)) * 64;
+	
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	float fDistance = 0;
-	fDistance = (fAngle/360) * (PI * 141);
+	
 	//Gauche
 	if (fAngle > 0)
 	{
-		float x = (fDistance / 3.56) + 1 + iTicGauche;
-		while(iTicGauche < x && iTicGDroit < x )
+		while(m_iTicTotalD < (iTicDone + fTicToDo))
 		{
-			MOTOR_SetSpeed(7, -(fGauche_speed));
-			MOTOR_SetSpeed(8, fDroit_speed);
-			fGauche_speed = fGauche_speed + PID_watch();
+			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
+			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
+			fGaucheSpeed += PID_Setup();
 		}
 	}
+	
 	//Droit
 	if (fAngle < 0)
 	{
-		float x = (fDistance / 3.56) - 1 + iTicGauche;
-		while(iTicGauche < x && iTicGDroit < x )
+		while(m_iTicTotalD < (iTicDone - fTicToDo))
 		{
-			MOTOR_SetSpeed(7, fGauche_speed);
-			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fGauche_speed = fGauche_speed + PID_watch();
+			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
+			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
+			fGaucheSpeed += PID_Setup();
 		}
 	}
 }
@@ -281,31 +265,34 @@ void rotation_angle(float fAngle)
 
 void avancer_distance(int iDistance)
 {
-	float fDroit_speed = 50;
-	float fGauche_speed = 50;
+	float fDroitSpeed = 50;
+	float fGaucheSpeed = 50;
+	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;
+	int iTicDone = m_iTicTotalD;
+	
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
+	
 	//Avance
 	if (iDistance > 0)
 	{
-		float x = (iDistance / 3.56) + 1 + iTicGauche;
-		while(iTicGauche < x && iTicGDroit < x )
+		while(m_iTicTotalD < (iTicDone + fTicToDo))
 		{
-			MOTOR_SetSpeed(7, fGauche_speed);
-			MOTOR_SetSpeed(8, fDroit_speed);
-			fGauche_speed = fGauche_speed + PID_watch();
+			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
+			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
+			fGaucheSpeed += PID_Setup();
 		}
 	}
+	
 	//Recule
 	if (iDistance < 0)
 	{
-		float x = (iDistance / 3.56) - 1 + iTicGauche;
-		while(iTicGauche < x && iTicGDroit < x )
+		while(m_iTicTotalD < (iTicDone - fTicToDo))
 		{
-			MOTOR_SetSpeed(7, -(fGauche_speed));
-			MOTOR_SetSpeed(8, -(fDroit_speed));
-			fGauche_speed = fGauche_speed + PID_watch();
+			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
+			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
+			fGaucheSpeed += PID_Setup();
 		}
 	}
 }
