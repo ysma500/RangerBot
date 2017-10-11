@@ -73,39 +73,56 @@ int main()
 	Avance(2250);
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(475);
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, RIGHT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(450);
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, RIGHT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(475);	//Verifier les maths jusque ici (Ysmael)
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(400);
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, RIGHT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(560);
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
+
 	THREAD_MSleep(DELAY_STEP);
 	Avance(820);
+
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, RIGHT_ROT);
 
+	THREAD_MSleep(DELAY_STEP);
 	Avance(500);
 
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(12.5, RIGHT_ROT);
 
+	THREAD_MSleep(DELAY_STEP);
 	Avance(460);
 
+	THREAD_MSleep(DELAY_STEP);
 	Rotation(180.0, LEFT_ROT);
 
+	THREAD_MSleep(DELAY_STEP);
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
 	THREAD_MSleep(10000);
