@@ -233,7 +233,6 @@ void Initialisation()
 	}
 }
 
-
 float PID_Setup()
 {
 	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
@@ -301,7 +300,6 @@ void Rotation(float fAngle, int iDirection)
 	MOTOR_SetSpeed(LEFT_MOTOR, 0);
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
-
 
 void Avance(int iDistance) //Distance en mm
 {
