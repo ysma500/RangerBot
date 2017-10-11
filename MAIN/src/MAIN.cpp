@@ -249,10 +249,15 @@ void Rotation(float fAngle, int iDirection)
 {
 	float fDroitSpeed = SPEED_START-20; //Define start speed
 	float fGaucheSpeed = SPEED_START-20;
-
+	float fArcRot = 0;
+	float fTicToDo = 0;
+	
 	//Cacul des tics a faire (encodeurs)
-	float fArcRot = ((PI * 141) * (fAngle / 360));
-	float fTicToDo = (fArcRot / Circum) * 64;
+	if (iDirection == RIGHT_ROT)
+		fArcRot = ((PI * 141) * ((fAngle - 5) / 360));
+	else
+		fArcRot = ((PI * 141) * (fAngle / 360));
+	fTicToDo = (fArcRot / Circum) * 64;
 	
 	m_iTicTotalD = 0;
 	m_iTicTotalG = 0;
