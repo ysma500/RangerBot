@@ -133,7 +133,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		Avance(100);
+		Avance(800);
 		LCD_Printf("Tic coter Gauche: %d	Tic coter Droit: %d\n", m_iTicTotalG, m_iTicTotalD);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
