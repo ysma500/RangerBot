@@ -133,7 +133,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		Avance(250);
+		Avance(100);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
@@ -211,7 +211,7 @@ float PID_Setup()
 {
 	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
 	
-	THREAD_MSleep(50);
+	THREAD_MSleep(100);
 	iTicDRead = ENCODER_Read(2);
 	iTicGRead = ENCODER_Read(1);
 	
