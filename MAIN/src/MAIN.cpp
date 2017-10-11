@@ -133,7 +133,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		Avance(2500);
+		Avance(250);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
