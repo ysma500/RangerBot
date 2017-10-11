@@ -70,7 +70,7 @@ int main()
 		}
 	}
 	// Depart du circuit
-	Avance(2250);
+	Avance(2200);
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(90.0, LEFT_ROT);
 
@@ -114,20 +114,17 @@ int main()
 	Avance(500);
 
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(12.5, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
 	Avance(460);
 
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(180.0, LEFT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	AUDIO_SetVolume(50);
-	AUDIO_PlayFile("thug.wav");
-	THREAD_MSleep(1000);
+	//AUDIO_SetVolume(50);
+	//AUDIO_PlayFile("thug.wav");
+	//THREAD_MSleep(1000);
 
-	Avance(-460);
+	Avance(460);
 
 	LCD_Printf("Le robot a termine le parcours\n");
 
