@@ -133,7 +133,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		Avance (500);
+		Avance(2500);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
 		{
@@ -204,8 +204,6 @@ void Initialisation()
 			LCD_Printf("Sortie des configs\n");
 		}
 	}
-	MOTOR_SetSpeed(LEFT_MOTOR, 0);
-	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
 
@@ -237,20 +235,20 @@ void Rotation(float fAngle)
 	float fArcRot = ((PI * 141) * (fAngle / 360));
 	float fTicToDo = (fArcRot / Circum) * 64;
 	
+	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
+	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
 
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
-	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
 
 	//Gauche
 	if (fAngle > 0)
 	{
-		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
+		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
-			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
-			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
+			MOTOR_SetSpeed(LEFT_MOTOR, (int)(-1*(fGaucheSpeed)));
+			MOTOR_SetSpeed(RIGHT_MOTOR, (int)fDroitSpeed);
 			fGaucheSpeed += PID_Setup();
 		}
 	}
@@ -258,10 +256,10 @@ void Rotation(float fAngle)
 	//Droite
 	if (fAngle < 0)
 	{
-		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
+		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
-			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
-			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
+			MOTOR_SetSpeed(LEFT_MOTOR, (int)fGaucheSpeed);
+			MOTOR_SetSpeed(RIGHT_MOTOR, (int)(-1*(fDroitSpeed)));
 			fGaucheSpeed += PID_Setup();
 		}
 	}
@@ -277,15 +275,17 @@ void Avance(int iDistance) //Distance en mm
 	float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
 	int iTicDone = m_iTicTotalG;
 	
+	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
+	
 	//Remise a 0 des encodeurs
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 
-	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
+
 	//Avance
 	if (iDistance > 0)
 	{
-		while((m_iTicTotalG < iTicObjectif) && (m_iTicTotalG < iTicObjectif))
+		while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -295,7 +295,7 @@ void Avance(int iDistance) //Distance en mm
 	//Recule
 	if (iDistance < 0)
 	{
-		while((m_iTicTotalG < iTicObjectif) &&( m_iTicTotalG < iTicObjectif))
+		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
