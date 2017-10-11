@@ -125,7 +125,7 @@ int main()
 	THREAD_MSleep(DELAY_STEP);
 	AUDIO_SetVolume(50);
 	AUDIO_PlayFile("thug.wav");
-	THREAD_MSleep(10000);
+	THREAD_MSleep(1000);
 
 	Avance(-460);
 
