@@ -232,19 +232,20 @@ void Rotation(float fAngle)
 {
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
-
-	float fArcLength = ((2 * PI * 36.5) * (fAngle / 360)); //verifier calcul
-	float fTicToDo = (fArcLength / (2 * PI * 36.5)) * 64; //verifier calcul
-	float fTicToDo =
+	int iTicDone = 0;
+	int iTicObjectif = iTicDone + fTicToDo;
+	float fArcLength = ((2 * PI * 140) * (fAngle / 360));
+	float fTicToDo = (fArcLength / (PI * 36.5)) * 64;
+	
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	int iTicDone = 0;
-	int iTicObjectif = iTicDone + fTicToDo;
+	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
+
 	//Gauche
 	if (fAngle > 0)
 	{
-		while((m_iTicTotalD < iTicObjectif) && (m_iTicTotalG < iTicObjectif))
+		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
@@ -255,13 +256,15 @@ void Rotation(float fAngle)
 	//Droite
 	if (fAngle < 0)
 	{
-		while(m_iTicTotalD < (iTicDone - fTicToDo))
+		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
 			fGaucheSpeed += PID_Setup();
 		}
 	}
+	MOTOR_SetSpeed(LEFT_MOTOR, 0);
+	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
 
@@ -271,6 +274,8 @@ void Avance(int iDistance) //Distance en mm
 	float fGaucheSpeed = 50;
 	float fTicToDo = (iDistance / (2 * PI * 36.5)) * 64;//verifier calcul
 	int iTicDone = m_iTicTotalD;
+	int iTicDone = m_iTicTotalG;
+
 	
 	//Remise a 0
 	ENCODER_Read(2);
@@ -279,25 +284,26 @@ void Avance(int iDistance) //Distance en mm
 	//Avance
 	if (iDistance > 0)
 	{
-		while(m_iTicTotalD < (iTicDone + fTicToDo))
+		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
 			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	/*
 	//Recule
 	if (iDistance < 0)
 	{
-		while(m_iTicTotalD < (iTicDone - fTicToDo))
+		while((m_iTicTotalG < (iTicDone + fTicToDo)) &&( m_iTicTotalG < (iTicDone + fTicToDo)))
 		{
 			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
 			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	*/
+	//Arreter les moteurs
+	MOTOR_SetSpeed(LEFT_MOTOR, 0);
+	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
 
