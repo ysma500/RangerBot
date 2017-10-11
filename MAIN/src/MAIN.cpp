@@ -233,8 +233,8 @@ float PID_Setup()
 
 void Rotation(float fAngle, int iDirection)
 {
-	float fDroitSpeed = SPEED_START; //Define start speed
-	float fGaucheSpeed = SPEED_START;
+	float fDroitSpeed = SPEED_START-20; //Define start speed
+	float fGaucheSpeed = SPEED_START-20;
 
 	//Cacul des tics a faire (encodeurs)
 	float fArcRot = ((PI * 141) * (fAngle / 360));
