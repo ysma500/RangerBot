@@ -232,7 +232,7 @@ void Rotation(float fAngle)
 	float fDroitSpeed = 50;
 	float fGaucheSpeed = 50;
 	float fArcLength = ((2 * PI * 140) * (fAngle / 360));
-	float fTicToDo = (fArcLength / (2 * PI * 36.5)) * 64;
+	float fTicToDo = (fArcLength / (PI * 36.5)) * 64;
 	
 	//Remise a 0
 	ENCODER_Read(2);
