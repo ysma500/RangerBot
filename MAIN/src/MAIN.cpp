@@ -237,7 +237,7 @@ void Rotation(float fAngle)
 	//Remise a 0
 	ENCODER_Read(2);
 	ENCODER_Read(1);
-	
+	int iTicDone = 0;
 	//Gauche
 	if (fAngle > 0)
 	{
