@@ -240,11 +240,11 @@ void Rotation(float fAngle, int iDirection)
 	float fArcRot = ((PI * 141) * (fAngle / 360));
 	float fTicToDo = (fArcRot / Circum) * 64;
 	
-	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
-	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
-	
 	m_iTicTotalD = 0;
 	m_iTicTotalG = 0;
+	
+	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
+	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
 
 	//Remise a 0
 	ENCODER_Read(2);
