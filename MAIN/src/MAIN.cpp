@@ -21,8 +21,8 @@
 #define SPEED_START 70
 #define DELAY_STEP 500
 
-float GAIN_I = 0.089;
-float GAIN_P = 0.90;
+float GAIN_I = 0.223;
+float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 
@@ -72,67 +72,74 @@ int main()
 	// Depart du circuit
 	Avance(2200);
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, LEFT_ROT);
+	Rotation(85.0, LEFT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
 	Avance(475);
 
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, RIGHT_ROT);
+	Rotation(83.0, RIGHT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	Avance(450);
+	Avance(420);
 
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, RIGHT_ROT);
+	Rotation(83.0, RIGHT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
 	Avance(475);	//Verifier les maths jusque ici (Ysmael)
 
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, LEFT_ROT);
+	Rotation(86.0, LEFT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	Avance(400);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(45.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(500);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(820);
+	Avance(370);
 
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, RIGHT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	Avance(500);
+	Avance(355);
 
 	THREAD_MSleep(DELAY_STEP);
-	Avance(460);
+	Rotation(82.0, LEFT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(180.0, LEFT_ROT);
+	Avance(620);
+
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(52.0, RIGHT_ROT);
+
+	THREAD_MSleep(DELAY_STEP);
+	Avance(1150);
+
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(175.0, LEFT_ROT);
 
 	THREAD_MSleep(DELAY_STEP);
 	//AUDIO_SetVolume(50);
 	//AUDIO_PlayFile("thug.wav");
 	//THREAD_MSleep(1000);
 
-	Avance(460);
+	Avance(1150);
 	THREAD_MSleep(DELAY_STEP);
-	Avance(500);
+	Rotation(52.0, LEFT_ROT);
+	THREAD_MSleep(DELAY_STEP);
+	Avance(620);
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(82.0, RIGHT_ROT);
+	THREAD_MSleep(DELAY_STEP);
+	Avance(355);
 	THREAD_MSleep(DELAY_STEP);
 	Rotation(45.0, LEFT_ROT);
 	THREAD_MSleep(DELAY_STEP);
-	Avance(820);
+	Avance(370);
 	THREAD_MSleep(DELAY_STEP);
-	Rotation(90.0, RIGHT_ROT);
+	Rotation(86.0, RIGHT_ROT);
+	THREAD_MSleep(DELAY_STEP);
+	Avance(475);
+	THREAD_MSleep(DELAY_STEP);
+	Rotation(83.0, LEFT_ROT);
 
 	LCD_Printf("Le robot a termine le parcours\n");
 
@@ -263,7 +270,7 @@ void Rotation(float fAngle, int iDirection)
 	if (iDirection == RIGHT_ROT)
 		fArcRot = ((PI * 141) * ((fAngle - 5) / 360));
 	else
-		fArcRot = ((PI * 141) * (fAngle / 360));
+		fArcRot = ((PI * 141) * ((fAngle - 4) / 360));
 	fTicToDo = (fArcRot / Circum) * 64;
 	
 	m_iTicTotalD = 0;
