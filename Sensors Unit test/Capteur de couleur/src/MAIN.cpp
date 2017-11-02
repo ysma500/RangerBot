@@ -46,8 +46,8 @@ unsigned char cap_GetValue(unsigned char cap_address);
 void cap_SetValue(unsigned char cap_address, unsigned char cap_value);
 int integrationTime_GetValue(unsigned char address);
 void integrationTime_SetValue(unsigned char address, int time_value);
-void led_TurnOff();
-void led_TurnOn();
+void led_TurnOff();	//Controle sortie digitale 9
+void led_TurnOn();	//Controle sortie digitale 9
 void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear);
 void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
 int color_Init(int& dev_handle);
