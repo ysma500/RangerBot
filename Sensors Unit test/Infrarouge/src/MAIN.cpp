@@ -57,15 +57,29 @@ int main()
 void testDeCapteurs(void)
 {
 	int i = 0, j = 0;
-	int capteur[3];
+	int capteur[3] = {1,2,3};
 
 	while(i==0 || j==0)
 	{
-
-		THREAD_MSleep(5000);
+		DIGITALIO_Write(2, 0);
+		DIGITALIO_Write(3, 0);
+		DIGITALIO_Write(4, 0);
 		capteur[0] = ANALOG_Read(1);
+		THREAD_MSleep(1500);
+
+		DIGITALIO_Write(2, 1);
+		DIGITALIO_Write(3, 0);
+		DIGITALIO_Write(4, 0);
 		capteur[1] = ANALOG_Read(2);
+		THREAD_MSleep(1500);
+
+		DIGITALIO_Write(2, 0);
+		DIGITALIO_Write(3, 1);
+		DIGITALIO_Write(4, 0);
 		capteur[2] = ANALOG_Read(3);
+		THREAD_MSleep(1500);
+
+
 
 		LCD_Printf("Capteur 1 : %d\n", capteur[0]);
 		LCD_Printf("Capteur 2 : %d\n", capteur[1]);
