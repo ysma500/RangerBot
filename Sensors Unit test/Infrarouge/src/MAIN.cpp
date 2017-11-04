@@ -57,9 +57,19 @@ int main()
 void testDeCapteurs(void)
 {
 	int i = 0, j = 0;
+	int capteur[3];
 
 	while(i==0 || j==0)
 	{
+
+		THREAD_MSleep(5000);
+		capteur[0] = ANALOG_Read(1);
+		capteur[1] = ANALOG_Read(2);
+		capteur[2] = ANALOG_Read(3);
+
+		LCD_Printf("Capteur 1 : %d\n", capteur[0]);
+		LCD_Printf("Capteur 2 : %d\n", capteur[1]);
+		LCD_Printf("Capteur 3 : %d\n", capteur[2]);
 
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))	//Configuration 1 de la fonction de test des capteurs
