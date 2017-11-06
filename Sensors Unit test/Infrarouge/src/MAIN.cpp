@@ -9,24 +9,81 @@
  robot 77 P: 1,70 I:0,220
 ============================================================================
 */
-
+/******************************************
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ ***********************************/
 // Include Files
 #include <libarmus.h>
 
 // Prototypes de fonctions de configs
-void testDeCapteurs(void);
+void testDeCapteurs(int capteur[3]);
+int capteurAffichage(int capteur[3]);
+//Define
+#define IR0 0	//Capteur plus bas
+#define IR1 1	//Capteur niveau moyen
+#define IR2 2	//Capteur plus haut
+#define B1 1 //Analog input 1 à l'endroit B1
+#define DISTANCE_MIN 100
+
+//Combinaison du multiplexeur A0,A1 et A2
+int combinaison(int capteur)
+{
+	switch (capteur)
+	{
+			case 1 :
+				DIGITALIO_Write(2, 0);
+				DIGITALIO_Write(3, 0);
+				DIGITALIO_Write(4, 0);
+				break;
+
+			case 2 :
+				DIGITALIO_Write(2, 0);
+				DIGITALIO_Write(3, 1);
+				DIGITALIO_Write(4, 0);
+				break;
+
+			case 3 :
+				DIGITALIO_Write(2, 1);
+				DIGITALIO_Write(3, 1);
+				DIGITALIO_Write(4, 0);
+				break;
+	}
+	return 0;
+}
+int lireCapteur(int capteur_Infra[3])
+{
+	combinaison(IR0);
+	capteur_Infra[IR0] = ANALOG_Read(B1);
+
+	combinaison(IR1);
+	capteur_Infra[IR1] = ANALOG_Read(B1);
+
+	combinaison(IR2);
+	capteur_Infra[IR2] = ANALOG_Read(B1);
+
+}
 
 int main()
 {
 	// variables locales
 	int j = 0;
-
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
+
 	
+	//Nouveau contenu
+	int capteur_Infra[3] = {0,0,0};			// 3 capteurs infra rouge utilisé pour la grande course
+
+
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
@@ -38,7 +95,7 @@ int main()
 	}
 	
 	//Configuration
-	testDeCapteurs();
+	testDeCapteurs(capteur_Infra);
 	
 	LCD_Printf("Fin du test du capteur\n");
 
@@ -54,41 +111,27 @@ int main()
 }
 
 //Debut de la fonction pour la modification des gains a suivre 
-void testDeCapteurs(void)
+void testDeCapteurs(int capteur[3])
 {
 	int i = 0, j = 0;
-	int capteur[3] = {1,2,3};
+
+	int Affichage = 0;
 
 	while(i==0 || j==0)
 	{
-		DIGITALIO_Write(2, 0);
-		DIGITALIO_Write(3, 0);
-		DIGITALIO_Write(4, 0);
-		capteur[0] = ANALOG_Read(1);
-		THREAD_MSleep(1500);
 
-		DIGITALIO_Write(2, 1);
-		DIGITALIO_Write(3, 0);
-		DIGITALIO_Write(4, 0);
-		capteur[1] = ANALOG_Read(2);
-		THREAD_MSleep(1500);
+		lireCapteur(capteur);
 
-		DIGITALIO_Write(2, 0);
-		DIGITALIO_Write(3, 1);
-		DIGITALIO_Write(4, 0);
-		capteur[2] = ANALOG_Read(3);
-		THREAD_MSleep(1500);
-
-
-
-		LCD_Printf("Capteur 1 : %d\n", capteur[0]);
-		LCD_Printf("Capteur 2 : %d\n", capteur[1]);
-		LCD_Printf("Capteur 3 : %d\n", capteur[2]);
-
+		/*
+		LCD_Printf("Analog IR0 = %d\n", capteur[0]);
+		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
+		LCD_Printf("Analog IR2 = %d\n", capteur[2]);
+		*/
+		
 		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))	//Configuration 1 de la fonction de test des capteurs
+		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
 		{
-
+			capteurAffichage(capteur);
 		}
 		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
 		{
@@ -101,6 +144,30 @@ void testDeCapteurs(void)
 			LCD_Printf("Sortie des configs\n");
 		}
 	}
+}
+int capteurAffichage(int capteur[3])
+{
+	if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
+
+		if( capteur[IR2] > capteur[IR1] && capteur[IR2] > capteur[IR0] )
+		{
+			LCD_ClearAndPrint("Detection d'un robot\n");
+			LCD_Printf("Robot a : %d",capteur[IR2]);
+		}
+
+		else if( capteur[IR1] > capteur[IR0] && capteur[IR1] > capteur[IR2])
+		{
+			LCD_ClearAndPrint("Detection de la plateforme\n");
+			LCD_Printf("La plateforme a : %d",capteur[IR1]);
+		}
+
+		else
+		{
+			LCD_ClearAndPrint("Objet detecter\n");
+			LCD_Printf("L'objet a : %d",capteur[IR0]);
+		}
+
+	return 0;
 }
 
 
