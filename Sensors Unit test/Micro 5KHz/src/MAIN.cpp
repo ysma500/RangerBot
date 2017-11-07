@@ -53,19 +53,37 @@ int main()
 	return 0;
 }
 
-//Debut de la fonction pour la modification des gains a suivre 
+//Detecter le son de 5kHz
+//ANALOG_Read()
+//Two inputs are : AN_IN7, AN_IN6
 void testDeCapteurs(void)
 {
 	int condition = 0;
+	int micro_sound;
+	int micro_background;
+	int micro_result;
 	while (condition == 0)
 	{
+		micro_sound = 4;	//ANALOG_Read(AN_IN6);
+		micro_background = 1; 	//ANALOG_Read(AN_IN7);
+		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(100);
-		
+		if (micro_result >= 3) //Condition ici va etre if()
+		{
+			LCD_Printf("Le signal de 5kHz a ete entendu \n");
+			condition = 1;
+		}
+		else 
+		{
+			LCD_Printf("Aucune reception du son");
+			THREAD_MSleep(1000);
+		}
 		
 	}
 	
 }
 
+//ANALOG_Read()
 
 
 
