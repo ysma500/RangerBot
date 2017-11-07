@@ -56,27 +56,14 @@ int main()
 //Debut de la fonction pour la modification des gains a suivre 
 void testDeCapteurs(void)
 {
-	int i = 0, j = 0;
-
-	while(i==0 || j==0)
+	int condition = 0;
+	while (condition == 0)
 	{
-
-		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))	//Configuration 1 de la fonction de test des capteurs
-		{
-
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
-		{
-
-		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
-		{
-			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
-		}
+		THREAD_MSleep(100);
+		
+		
 	}
+	
 }
 
 
