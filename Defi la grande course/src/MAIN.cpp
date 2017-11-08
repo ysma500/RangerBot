@@ -126,6 +126,7 @@ void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 void Tourne_gauche_avance();
+void Avance_BASE();
 
 int main()
 {
@@ -187,7 +188,7 @@ int main()
 			{
 				LCD_Printf("YELLOW \n");
 				m_iCouleurDep = 1;
-				//Avance
+				Avance_BASE();
 			}//Pink
 			else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
 			&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
