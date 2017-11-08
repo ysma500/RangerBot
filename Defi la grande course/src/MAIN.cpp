@@ -45,37 +45,43 @@
 #define CTRL_GOFS				1
 
 #define CONFIG_TOFS				0
-//Rose, vert, bleu, jaune; Centre : gris, contour : rouge
+
+//Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
 //Define des couleurs pour le capteurs de couleurs
-#define RED_R 0
-#define RED_V 0
-#define RED_B 0
-#define RED_C 0
+#define RED_R 544
+#define RED_V 266
+#define RED_B 184
+#define RED_C 887
 
-#define GRIS_R 0
-#define GRIS_V 0
-#define GRIS_B 0
-#define GRIS_C 0
+#define GREY_R 560
+#define GREY_V 632
+#define GREY_B 510
+#define GREY_C 1024
 
-#define VERT_R 0
-#define VERT_V 0
-#define VERT_B 0
-#define VERT_C 0
+#define YELLOW_R 955
+#define YELLOW_V 917
+#define YELLOW_B 305
+#define YELLOW_C 1016
 
-#define ROSE_R 0
-#define ROSE_V 0
-#define ROSE_B 0
-#define ROSE_C 0
+#define PINK_R 780
+#define PINK_V 475
+#define PINK_B 390
+#define PINK_C 1015
 
-#define BLEU_R 0
-#define BLEU_V 0
-#define BLEU_B 0
-#define BLEU_C 0
+#define GREEN_R 212
+#define GREEN_V 305
+#define GREEN_B 
+#define GREEN_C 0
 
-#define JAUNE_R 0
-#define JAUNE_V 0
-#define JAUNE_B 0
-#define JAUNE_C 0
+#define BLUE_R 0
+#define BLUE_V 0
+#define BLUE_B 0
+#define BLUE_C 0
+
+#define WHITE_R 0
+#define WHITE_V 0
+#define WHITE_B 0
+#define WHITE_C 0
 
 #define LINE_HYST 10 //Incertitude sur la detection de couleurs
 
@@ -170,6 +176,7 @@ int main()
 		}	
 	}
 	
+	//Strategie pour le parcours
 	float f_time = 0; //Initialisation compteur temps de la course
 	float f_MSdepuis = 0; //millisecondes depuis la derniere lecture
 	int red, blue, green, clear;
@@ -178,13 +185,63 @@ int main()
 	while (f_time <= TOTAL_TIME)
 	{
 		color_Read(red, blue, green, clear);
+		//Red
 		if (red >= (RED_R - LINE_HYST) && red <= (RED_R + LINE_HYST) 
-			&& blue >= (RED_B - LINE_HYST) && blue <= (RED_B - LINE_HYST)
-			&& green >= (RED_G - LINE_HYST) && green <= (RED_G - LINE_HYST)
-			&& clear >= (RED_C - LINE_HYST) && clear <= (RED_C - LINE_HYST))
+			&& blue >= (RED_B - LINE_HYST) && blue <= (RED_B + LINE_HYST)
+			&& green >= (RED_G - LINE_HYST) && green <= (RED_G + LINE_HYST)
+			&& clear >= (RED_C - LINE_HYST) && clear <= (RED_C + LINE_HYST))
 			{
-				LCD_Printf("Decolisse\n");
+				LCD_Printf("RED\n");
 			}
+		//Grey
+		else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
+			&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
+			&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
+			&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
+			{
+					LCD_Printf("GREY \n");
+			}
+		//Yellow
+		else if (red >= (YELLOW_R - LINE_HYST) && red <= (YELLOW_R + LINE_HYST)
+			&& blue >= (YELLOW_B - LINE_HYST) && blue <= (YELLOW_B + LINE_HYST)
+			&& green >= (YELLOW_G - LINE_HYST) && green <= (YELLOW_G + LINE_HYST)
+			&& clear >= (YELLOW_C - LINE_HYST) && clear <= (YELLOW_C + LINE_HYST))
+			{
+					LCD_Printf("YELLOW \n");
+			}
+		//Pink
+		else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+			&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+			&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+			&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+			{
+					LCD_Printf("PINK \n");
+			}
+		//Green
+		else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+			&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+			&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+			&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+			{
+					LCD_Printf("GREEN \n");
+			}
+		//Blue
+		else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+			&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+			&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+			&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+			{
+					LCD_Printf("BLUE \n");
+			}
+		//White
+		else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
+			&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
+			&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
+			&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
+			{
+					LCD_Printf("WHITE \n");
+			}	
+			
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
 		f_time = f_time + f_MSdepuis;
 		SYSTEM_ResetTimer();

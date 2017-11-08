@@ -91,7 +91,7 @@ int main()
 		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
 		{
-			LCD_Printf("Entrer dans les Tests de capteurs\n");
+			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 1;
 		}
 	}
@@ -121,7 +121,7 @@ void testDeCapteurs(void)
 	while(i==0 || j==0)
 	{
 		color_Read(red, blue, green, clear);
-		if(DIGITALIO_Read(BMP_REAR)	//Sortie de la fonction de test des capteurs
+		if(DIGITALIO_Read(BMP_REAR))
 		{
 			i = 1;
 			j = 1;
