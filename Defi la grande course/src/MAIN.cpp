@@ -93,6 +93,7 @@
 #define START_GREEN 5
 #define START_BLUE 6
 #define START_WHITE 7
+#define START_BLACK 8
 #define START_OTHER 0
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
@@ -253,6 +254,9 @@ int main()
 					//LCD_Printf("WHITE \n");
 					Avance_BASE();
 					break;
+				case START_BLACK:
+					Avance_BASE();
+					break;
 				default:
 					//LCD_Printf("I don't know where the fuck I am\n");
 					Avance_BASE();
@@ -283,66 +287,70 @@ int get_current_color()
 	int color;
 	int red, blue, green, clear;
 	color_Read(red, blue, green, clear);
-			//Red
-			if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
-				&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
-				&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
-				&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
-			{
-				color = START_RED;
-			}
-			//Grey
-			else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
-				&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
-				&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
-				&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
-			{
-				color = START_GREY;
-			}
-			//Yellow
-			else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
-				&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
-				&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
-				&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
-			{
-				color = START_YELLOW;
-			}
-			//Pink
-			else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
-				&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
-				&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
-				&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
-			{
-				color = START_PINK;
-			}
-			//Green
-			else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
-				&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
-				&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
-				&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
-			{
-				color = START_GREEN;
-			}
-			//Blue
-			else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
-				&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
-				&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
-				&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
-			{
-				color = START_BLUE;
-			}
-			//White
-			else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
-				&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
-				&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
-				&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
-			{
-				color = START_WHITE;
-			}
-			else
-			{
-				color = START_OTHER;
-			}
+	if(clear < 130)
+	{
+		color = START_BLACK;
+	}
+	//Red
+	else if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+		&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+		&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+		&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
+	{
+		color = START_RED;
+	}
+	//Grey
+	else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
+		&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
+		&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
+		&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
+	{
+		color = START_GREY;
+	}
+	//Yellow
+	else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+		&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+		&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+		&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
+	{
+		color = START_YELLOW;
+	}
+	//Pink
+	else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+		&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+		&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+		&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+	{
+		color = START_PINK;
+	}
+	//Green
+	else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+		&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+		&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+		&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+	{
+		color = START_GREEN;
+	}
+	//Blue
+	else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+		&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+		&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+		&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+	{
+		color = START_BLUE;
+	}
+	//White
+	else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
+		&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
+		&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
+		&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
+	{
+		color = START_WHITE;
+	}
+	else
+	{
+		color = START_OTHER;
+	}
 	return color;
 }
 
