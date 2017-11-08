@@ -41,6 +41,7 @@
 #define DATA_GREEN_LO			66
 #define DATA_BLUE_LO			68
 #define DATA_CLEAR_LO			70
+#define VALEUR_INTEG			2048
 
 #define CTRL_GSSR				0
 #define CTRL_GOFS				1
@@ -49,40 +50,40 @@
 
 //Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
 //Define des couleurs pour le capteurs de couleurs
-#define RED_R 544
-#define RED_G 266
-#define RED_B 184
-#define RED_C 887
+#define RED_R 348
+#define RED_G 152
+#define RED_B 81
+#define RED_C 414
 
-#define GREY_R 560
-#define GREY_G 632
-#define GREY_B 510
-#define GREY_C 1024
+#define GREY_R 239
+#define GREY_G 280
+#define GREY_B 215
+#define GREY_C 590
 
-#define YELLOW_R 955
-#define YELLOW_G 917
-#define YELLOW_B 305
-#define YELLOW_C 1016
+#define YELLOW_R 608
+#define YELLOW_G 567
+#define YELLOW_B 220
+#define YELLOW_C 896
 
-#define PINK_R 780
-#define PINK_G 475
-#define PINK_B 390
-#define PINK_C 1015
+#define PINK_R 535
+#define PINK_G 348
+#define PINK_B 258
+#define PINK_C 798
 
-#define GREEN_R 212
-#define GREEN_G 305
-#define GREEN_B 218
-#define GREEN_C 712
+#define GREEN_R 56
+#define GREEN_G 107
+#define GREEN_B 75
+#define GREEN_C 196
 
-#define BLUE_R 208
-#define BLUE_G 240
-#define BLUE_B 355
-#define BLUE_C 758
+#define BLUE_R 105
+#define BLUE_G 142
+#define BLUE_B 185
+#define BLUE_C 284
 
-#define WHITE_R 1020
-#define WHITE_G 1018
-#define WHITE_B 905
-#define WHITE_C 1023
+#define WHITE_R 685
+#define WHITE_G 755
+#define WHITE_B 571
+#define WHITE_C 896
 
 //Code de chaque couleur
 #define START_RED 1
@@ -133,6 +134,7 @@ void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 void Tourne_gauche_avance();
+void Tourne_gauche_avance(int valeurMod);
 void Avance_BASE();
 
 int main()
@@ -145,10 +147,10 @@ int main()
 	cap_SetValue(CAP_BLUE, 15);
 	cap_SetValue(CAP_CLEAR, 15);
 
-	integrationTime_SetValue(INTEGRATION_RED, 255);
-	integrationTime_SetValue(INTEGRATION_GREEN, 255);
-	integrationTime_SetValue(INTEGRATION_BLUE, 255);
-	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
+	integrationTime_SetValue(INTEGRATION_RED, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
 	
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
@@ -188,7 +190,7 @@ int main()
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
 			m_iCouleurDep = get_current_color(); //trouver la couleur de depart
-			//LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
+			LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
 			Avance_BASE();
 		}
 	}
@@ -207,7 +209,7 @@ int main()
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
-			Tourne_gauche_avance();
+			Tourne_gauche_avance(START_RED);
 		}
 		else if(current_color == m_iCouleurDep)
 		{
@@ -538,6 +540,12 @@ void Tourne_gauche_avance()
 {
 	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE);
+}
+
+void Tourne_gauche_avance(int valeurMod)
+{
+	Rotation(45,LEFT_ROT);
+	Avance(MIN_DISTANCE/3);
 }
 
 void Avance_BASE()

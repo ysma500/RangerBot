@@ -32,6 +32,7 @@
 #define DATA_GREEN_LO			66
 #define DATA_BLUE_LO			68
 #define DATA_CLEAR_LO			70
+#define VALEUR_INTEG			2048
 
 #define CTRL_GSSR				0
 #define CTRL_GOFS				1
@@ -72,10 +73,10 @@ int main()
 	cap_SetValue(CAP_BLUE, 15);
 	cap_SetValue(CAP_CLEAR, 15);
 
-	integrationTime_SetValue(INTEGRATION_RED, 255);
-	integrationTime_SetValue(INTEGRATION_GREEN, 255);
-	integrationTime_SetValue(INTEGRATION_BLUE, 255);
-	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
+	integrationTime_SetValue(INTEGRATION_RED, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
 
 	// variables locales
 	int j = 0;
