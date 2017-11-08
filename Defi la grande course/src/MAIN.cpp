@@ -124,6 +124,7 @@ int adjd_dev;
 void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
+void Tourne_gauche_avance();
 
 int main()
 {
@@ -238,7 +239,7 @@ int main()
 			&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 		{
 			LCD_Printf("RED\n");
-			//Tourne a gauche et avance
+			Tourne_gauche_avance();
 		}
 		//Grey
 		else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
@@ -683,4 +684,10 @@ int color_Init(int& dev_handle)
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
 
+///Fonction tourne aguche et avance apres lecture de couleur
+
+void Tourne_gauche_avance()
+{
+
+}
 
