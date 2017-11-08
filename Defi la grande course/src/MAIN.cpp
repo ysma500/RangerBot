@@ -245,7 +245,8 @@ int main()
 		else if (current_color == START_GREEN)
 		{
 				LCD_Printf("GREEN \n");	
-				//Stop, Backup and tourne a gauche et avance				
+				Avance(-MIN_DISTANCE);
+				Tourne_gauche_avance();
 		}
 		else if (current_color == START_BLUE)
 		{
