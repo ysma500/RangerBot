@@ -213,8 +213,9 @@ int main()
 		}
 		else if(current_color == m_iCouleurDep)
 		{
-			//LCD_Printf("COULEUR DE DEPART \n");
-			//Stop, backup and 180 degree turn
+			LCD_Printf("COULEUR DE DEPART \n");
+			Avance((-1,5 * MIN_DISTANCE));
+			Rotation(180, 1);
 		}
 		else
 		{
