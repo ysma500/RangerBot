@@ -268,8 +268,6 @@ int main()
 					break;
 				case START_BLUE:
 					//LCD_Printf("BLUE \n");
-					//Si tu as un objet dans les pinces, tourne a droite et avance
-					//Sinon tourne a gauche et avance
 					Tourne_gauche_avance();					
 					break;
 				case START_WHITE:
