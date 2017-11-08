@@ -121,23 +121,14 @@ void testDeCapteurs(void)
 	while(i==0 || j==0)
 	{
 		color_Read(red, blue, green, clear);
-		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))	//Configuration 1 de la fonction de test des capteurs
-		{
-
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
-		{
-
-		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
+		if(DIGITALIO_Read(BMP_REAR)	//Sortie de la fonction de test des capteurs
 		{
 			i = 1;
 			j = 1;
 			LCD_Printf("Sortie des configs\n");
 		}
 		LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d \n", red, green, blue, clear);
-		THREAD_MSleep(500);
+		THREAD_MSleep(1000);
 	}
 }
 
