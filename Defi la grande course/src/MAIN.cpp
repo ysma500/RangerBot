@@ -189,23 +189,22 @@ int main()
 			if (m_iCouleurDep == START_YELLOW)
 			{
 				LCD_Printf("YELLOW \n");
-				//Tourne a gauche et avance				
+				//Avance				
 			}
 			else if (m_iCouleurDep == START_PINK)
 			{
 				LCD_Printf("PINK \n");	
-				//Tourne a gauche et avance				
+				//Avance				
 			}
 			else if (m_iCouleurDep == START_GREEN)
 			{
 				LCD_Printf("GREEN \n");	
-				//Stop, Backup and tourne a gauche et avance				
+				//Avance				
 			}
 			else if (m_iCouleurDep == START_BLUE)
 			{
 				LCD_Printf("BLUE \n");
-				//Si tu as un objet dans les pinces, tourne a droite et avance
-				//Sinon tourne a gauche et avance				
+				//Avance			
 			}
 		}
 	}
@@ -235,12 +234,12 @@ int main()
 		else if (current_color == START_YELLOW)
 		{
 				LCD_Printf("YELLOW \n");
-				//Tourne a gauche et avance				
+				Tourne_gauche_avance();
 		}
 		else if (current_color == START_PINK)
 		{
 				LCD_Printf("PINK \n");	
-				//Tourne a gauche et avance				
+				Tourne_gauche_avance();
 		}
 		else if (current_color == START_GREEN)
 		{
