@@ -659,6 +659,7 @@ int color_Init(int& dev_handle)
 
 void Tourne_gauche_avance()
 {
-
+	Rotation(45,1);
+	Avance(200);
 }
 
