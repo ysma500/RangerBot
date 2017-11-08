@@ -84,6 +84,7 @@
 #define WHITE_B 905
 #define WHITE_C 1023
 
+//Code de chaque couleur
 #define START_RED 1
 #define START_GREY 2
 #define START_YELLOW 3
