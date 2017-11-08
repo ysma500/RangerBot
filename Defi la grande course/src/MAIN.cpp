@@ -202,49 +202,53 @@ int main()
 	while (f_time <= TOTAL_TIME)
 	{
 		current_color = get_current_color();
-
+		
 		if (current_color == START_RED)
 		{
 			LCD_Printf("RED\n");
 			Tourne_gauche_avance();
 		}
-		else if (current_color == START_GREY)
+		else if(current_color == m_iCouleurDep)
 		{
-				LCD_Printf("GREY \n");
-				//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-				//Sinon, avance...
-		}
-		else if (current_color == START_YELLOW)
-		{
-				LCD_Printf("YELLOW \n");
-				Tourne_gauche_avance();
-		}
-		else if (current_color == START_PINK)
-		{
-				LCD_Printf("PINK \n");	
-				Tourne_gauche_avance();
-		}
-		else if (current_color == START_GREEN)
-		{
-				LCD_Printf("GREEN \n");	
-				Avance(-MIN_DISTANCE);
-				Tourne_gauche_avance();
-		}
-		else if (current_color == START_BLUE)
-		{
-				LCD_Printf("BLUE \n");
-				//Si tu as un objet dans les pinces, tourne a droite et avance
-				//Sinon tourne a gauche et avance				
-		}
-		else if (current_color == START_WHITE)
-		{
-				LCD_Printf("WHITE \n");
+			//Stop, backup and 180 degree turn
 		}
 		else
 		{
-				LCD_Printf("I don't know where the fuck I am\n");
-				//Code de detection de ligne?				
+			switch(current_color)
+			{
+				case START_GREY:
+					LCD_Printf("GREY \n");
+					//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+					//Sinon, avance...
+					break;
+				case START_YELLOW:
+					LCD_Printf("YELLOW \n");
+					Tourne_gauche_avance();
+					break;
+				case START_PINK:
+					LCD_Printf("PINK \n");	
+					Tourne_gauche_avance();
+					break;
+				case START_GREEN:
+					LCD_Printf("GREEN \n");	
+					Avance(-MIN_DISTANCE);
+					Tourne_gauche_avance();
+					break;
+				case START_BLUE:
+					LCD_Printf("BLUE \n");
+					//Si tu as un objet dans les pinces, tourne a droite et avance
+					//Sinon tourne a gauche et avance	
+					break;
+				case START_WHITE:
+					LCD_Printf("WHITE \n");
+					break;
+				default:
+					LCD_Printf("I don't know where the fuck I am\n");
+					//Code de detection de ligne?	
+					break;
+			}
 		}
+
 		THREAD_MSleep(1000);
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
 		f_time = f_time + f_MSdepuis;
