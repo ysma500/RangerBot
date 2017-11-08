@@ -1,4 +1,4 @@
-src/MAIN.o src/MAIN.o: ../src/MAIN.cpp \
+src/Armus-GC.o src/Armus-GC.o: ../src/Armus-GC.cpp \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/libarmus.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/analog_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/audio_api.h \

@@ -11,6 +11,8 @@
 */
 //Timer total 
 #define TOTAL_TIME 180 000
+//Voltage du 5kHz
+#define VOLTAGE_MICRO 4
 // Include Files
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
@@ -86,7 +88,7 @@ int m_iTicTotalD = 0;
 // Prototypes de fonctions de configs
 void Initialisation();
 
-//Prototypes de fonctions capteur de couleur
+//Prototypes de fonctions capteur de couleur, pas besoin de comprendre
 void adjd_SetRegister(unsigned char reg, unsigned char val);
 void adjd_SetRegister16(unsigned char reg, int val);
 unsigned char adjd_ReadRegister(unsigned char reg);
@@ -110,8 +112,6 @@ float PID_Setup(void);
 
 int main()
 {
-
-	
 	//Initialisation du capteur de couleur
 	ERROR_CHECK(color_Init(adjd_dev));
 
@@ -125,14 +125,14 @@ int main()
 	integrationTime_SetValue(INTEGRATION_BLUE, 255);
 	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
 	
-	
-
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
 	
+	//Configuration
+	Initialisation();
 	
 	int j = 0; //Debut du programme
 	while (j == 0)
@@ -145,37 +145,37 @@ int main()
 		}
 	}
 	
-	//Configuration
-	Initialisation();
-	
 	//Ecoute du 5kHz
-	int condition = 0;
+	int condition_micro = 0;
 	int micro_sound; //5kHz filtre
 	int micro_background; //bruit de fond
 	int micro_result;
-	while (condition == 0)
+	while (condition_micro == 0)
 	{
-		micro_sound = ANALOG_Read(AN_IN6); ////
-		micro_background = ANALOG_Read(AN_IN7); ////
+		//ANALOG_Read(entre analogique) envoie un voltage 0 a 5 volt recu a un nombre entre 0 et 1023
+		micro_sound = ANALOG_Read(AN_IN6); //entree analogique bien declaree?
+		micro_background = ANALOG_Read(AN_IN7); //entree analogique bien declaree?
 		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(100);
-		if (micro_result >= 3) 
+
+		if (micro_result >= VOLTAGE_MICRO) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
-			SYSTEM_ResetTimer();
-			
-			condition = 1;
+			condition_micro = 1;
 		}
 		else 
 		{
 			LCD_Printf("Aucune reception du son\n");
-			THREAD_MSleep(1000);
+			THREAD_MSleep(500);
 		}	
 	}
 	
-	float f_compteur = 0; //Initialisation compteur temps de la course
+	float f_time = 0; //Initialisation compteur temps de la course
+	float f_MSdepuis = 0; //millisecondes depuis la derniere lecture
 	int red, blue, green, clear;
-	while (f_compteur < TOTAL_TIME)
+	SYSTEM_ResetTimer(); //Mise a zero du compteur de la course
+
+	while (f_time <= TOTAL_TIME)
 	{
 		color_Read(red, blue, green, clear);
 		if (red >= (RED_R - LINE_HYST) && red <= (RED_R + LINE_HYST) 
@@ -183,9 +183,10 @@ int main()
 			&& green >= (RED_G - LINE_HYST) && green <= (RED_G - LINE_HYST)
 			&& clear >= (RED_C - LINE_HYST) && clear <= (RED_C - LINE_HYST))
 			{
-				decoliss; //a gauche
+				LCD_Printf("Decolisse\n");
 			}
-		f_compteur + = SYSTEM_ReadTimerMSeconds();
+		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
+		f_time = f_time + f_MSdepuis;
 		SYSTEM_ResetTimer();
 	}
 
