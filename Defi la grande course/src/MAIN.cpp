@@ -84,7 +84,7 @@
 #define WHITE_C 1023
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
-#define LINE_HYST_RED 100
+#define LINE_HYST_PLUS 100
 
 //PID
 float GAIN_I = 0.223;
@@ -187,10 +187,10 @@ int main()
 	{
 		color_Read(red, blue, green, clear);
 		//Red
-		if (red >= (RED_R - LINE_HYST_RED) && red <= (RED_R + LINE_HYST_RED)
-			&& blue >= (RED_B - LINE_HYST_RED) && blue <= (RED_B + LINE_HYST_RED)
-			&& green >= (RED_G - LINE_HYST_RED) && green <= (RED_G + LINE_HYST_RED)
-			&& clear >= (RED_C - LINE_HYST_RED) && clear <= (RED_C + LINE_HYST_RED))
+		if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+			&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+			&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+			&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 			{
 				LCD_Printf("RED\n");
 			}
@@ -203,10 +203,17 @@ int main()
 					LCD_Printf("GREY \n");
 			}
 		//Yellow
-		else if (red >= (YELLOW_R - LINE_HYST) && red <= (YELLOW_R + LINE_HYST)
+	/*	else if (red >= (YELLOW_R - LINE_HYST) && red <= (YELLOW_R + LINE_HYST)
 			&& blue >= (YELLOW_B - LINE_HYST) && blue <= (YELLOW_B + LINE_HYST)
 			&& green >= (YELLOW_G - LINE_HYST) && green <= (YELLOW_G + LINE_HYST)
 			&& clear >= (YELLOW_C - LINE_HYST) && clear <= (YELLOW_C + LINE_HYST))
+			{
+					LCD_Printf("YELLOW \n");
+			}*/
+		else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+			&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+			&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
 			{
 					LCD_Printf("YELLOW \n");
 			}
