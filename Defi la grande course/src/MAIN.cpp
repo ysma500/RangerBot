@@ -189,7 +189,7 @@ int main()
 			condition_micro = 1;
 			m_iCouleurDep = get_current_color(); //trouver la couleur de depart
 			LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
-			Avance_BASE();
+			//Avance_BASE();
 		}
 	}
 	
@@ -207,7 +207,7 @@ int main()
 		if (current_color == START_RED)
 		{
 			LCD_Printf("RED\n");
-			Tourne_gauche_avance();
+			//Tourne_gauche_avance();
 		}
 		else if(current_color == m_iCouleurDep)
 		{
@@ -225,16 +225,16 @@ int main()
 					break;
 				case START_YELLOW:
 					LCD_Printf("YELLOW \n");
-					Tourne_gauche_avance();
+					//Tourne_gauche_avance();
 					break;
 				case START_PINK:
 					LCD_Printf("PINK \n");	
-					Tourne_gauche_avance();
+					//Tourne_gauche_avance();
 					break;
 				case START_GREEN:
 					LCD_Printf("GREEN \n");	
-					Avance(-MIN_DISTANCE);
-					Tourne_gauche_avance();
+					//Avance(-MIN_DISTANCE);
+					//Tourne_gauche_avance();
 					break;
 				case START_BLUE:
 					LCD_Printf("BLUE \n");
