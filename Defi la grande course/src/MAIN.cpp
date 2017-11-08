@@ -124,6 +124,7 @@ int adjd_dev;
 void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
+void Tourne_gauche_avance();
 
 int main()
 {
