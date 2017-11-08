@@ -655,4 +655,10 @@ int color_Init(int& dev_handle)
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
 
+///Fonction tourne aguche et avance apres lecture de couleur
+
+void Tourne_gauche_avance()
+{
+
+}
 
