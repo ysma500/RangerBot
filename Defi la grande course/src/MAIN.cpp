@@ -188,7 +188,7 @@ int main()
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
 			m_iCouleurDep = get_current_color(); //trouver la couleur de depart
-			LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
+			//LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
 			Avance_BASE();
 		}
 	}
@@ -206,12 +206,12 @@ int main()
 		
 		if (current_color == START_RED)
 		{
-			LCD_Printf("RED\n");
+			//LCD_Printf("RED\n");
 			Tourne_gauche_avance();
 		}
 		else if(current_color == m_iCouleurDep)
 		{
-			LCD_Printf("COULEUR DE DEPART \n");
+			//LCD_Printf("COULEUR DE DEPART \n");
 			//Stop, backup and 180 degree turn
 		}
 		else
@@ -219,7 +219,7 @@ int main()
 			switch(current_color)
 			{
 				case START_GREY:
-					LCD_Printf("GREY \n");
+					//LCD_Printf("GREY \n");
 					//if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
 					/*Sinon, avance...else
 					{
@@ -228,37 +228,37 @@ int main()
 					Avance_BASE();
 					break;
 				case START_YELLOW:
-					LCD_Printf("YELLOW \n");
+					//LCD_Printf("YELLOW \n");
 					Tourne_gauche_avance();
 					break;
 				case START_PINK:
-					LCD_Printf("PINK \n");	
+					//LCD_Printf("PINK \n");	
 					Tourne_gauche_avance();
 					break;
 				case START_GREEN:
-					LCD_Printf("GREEN \n");	
+					//LCD_Printf("GREEN \n");	
 					Avance(-MIN_DISTANCE);
 					Tourne_gauche_avance();
 					break;
 				case START_BLUE:
-					LCD_Printf("BLUE \n");
+					//LCD_Printf("BLUE \n");
 					//Si tu as un objet dans les pinces, tourne a droite et avance
 					//Sinon tourne a gauche et avance
 					Tourne_gauche_avance();					
 					break;
 				case START_WHITE:
-					LCD_Printf("WHITE \n");
+					//LCD_Printf("WHITE \n");
 					Avance_BASE();
 					break;
 				default:
-					LCD_Printf("I don't know where the fuck I am\n");
+					//LCD_Printf("I don't know where the fuck I am\n");
 					Avance_BASE();
 					//Code de detection de ligne?	
 					break;
 			}
 		}
 
-		THREAD_MSleep(1000);
+		THREAD_MSleep(10);
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
 		f_time = f_time + f_MSdepuis;
 		SYSTEM_ResetTimer();
