@@ -189,22 +189,22 @@ int main()
 			if (m_iCouleurDep == START_YELLOW)
 			{
 				LCD_Printf("YELLOW \n");
-				//Avance				
+				Avance_BASE();
 			}
 			else if (m_iCouleurDep == START_PINK)
 			{
 				LCD_Printf("PINK \n");	
-				//Avance				
+				Avance_BASE();
 			}
 			else if (m_iCouleurDep == START_GREEN)
 			{
 				LCD_Printf("GREEN \n");	
-				//Avance				
+				Avance_BASE();
 			}
 			else if (m_iCouleurDep == START_BLUE)
 			{
 				LCD_Printf("BLUE \n");
-				//Avance			
+				Avance_BASE();
 			}
 		}
 	}
