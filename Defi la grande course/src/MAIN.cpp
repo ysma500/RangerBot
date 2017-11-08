@@ -84,7 +84,7 @@
 #define WHITE_C 1023
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
-#define LINE_HYST_PLUS 100
+#define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
 //PID
 float GAIN_I = 0.223;
