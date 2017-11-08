@@ -203,7 +203,6 @@ int main()
 		{
 			LCD_Printf("RED\n");
 			Tourne_gauche_avance();
-			//Tourne a gauche et avance
 		}
 		else if (m_iCouleurDep == START_GREY)
 		{
