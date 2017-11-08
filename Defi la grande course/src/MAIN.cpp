@@ -213,12 +213,12 @@ int main()
 		else if (m_iCouleurDep == START_YELLOW)
 		{
 				LCD_Printf("YELLOW \n");
-				//Tourne a gauche et avance				
+				Tourne_gauche_avance();
 		}
 		else if (m_iCouleurDep == START_PINK)
 		{
 				LCD_Printf("PINK \n");	
-				//Tourne a gauche et avance				
+				Tourne_gauche_avance();
 		}
 		else if (m_iCouleurDep == START_GREEN)
 		{
