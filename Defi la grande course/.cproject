@@ -1,70 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="org.armus.plugin.arm-softfloat-linux-gnueabi.exe.debug.1957044811">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.armus.plugin.arm-softfloat-linux-gnueabi.exe.debug.1957044811" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+		<cconfiguration id="0.1057746749">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.1057746749" moduleId="org.eclipse.cdt.core.settings" name="Default">
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.code.GCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="${ProjName}" buildArtefactType="org.armus.plugin.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.armus.plugin.buildArtefactType.exe" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.code.GCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.VCErrorParser" id="org.armus.plugin.arm-softfloat-linux-gnueabi.exe.debug.1957044811" name="Debug" parent="org.armus.plugin.arm-softfloat-linux-gnueabi.exe.debug">
-					<folderInfo id="org.armus.plugin.arm-softfloat-linux-gnueabi.exe.debug.1957044811." name="/" resourcePath="">
-						<toolChain id="armus.debug.toolchain.779766064" name="Arm-linux-gcc" superClass="armus.debug.toolchain">
-							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.armus.plugin.targetplatform.1312514807" name="ARM (ARMUS)" osList="linux" superClass="org.armus.plugin.targetplatform"/>
-							<builder buildPath="${workspace_loc:/MAIN}/Debug" id="armus.toolchain.builder.2106082299" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="ARMUS Builder" superClass="armus.toolchain.builder">
-								<outputEntries>
-									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
-								</outputEntries>
-							</builder>
-							<tool id="armus.toolchain.linker.1791188660" name="ARM-Linux Linker" superClass="armus.toolchain.linker">
-								<option id="armus.linker.libarmus.addlibspath.1182316264" superClass="armus.linker.libarmus.addlibspath" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/librairie/lib&quot;"/>
-								</option>
-								<option id="armus.linker.libarmus.addlibs.1812913257" superClass="armus.linker.libarmus.addlibs" valueType="libs"/>
-								<inputType id="armus.linker.input.o.740912241" name="Object File" superClass="armus.linker.input.o">
-									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
-								</inputType>
+				<configuration buildProperties="" description="" id="0.1057746749" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.1057746749." name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.2007900548" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.2007900548.1006221428" name=""/>
+							<builder id="org.eclipse.cdt.build.core.settings.default.builder.1667474404" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.84459080" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1975870337" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2077168407" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="armus.toolchain.cc.compiler.1062440223" name="ARM-Linux C++ Compiler" superClass="armus.toolchain.cc.compiler">
-								<option id="armus.cc.compiler.includepaths.73660059" name="Additionnal Include Paths (-I)" superClass="armus.cc.compiler.includepaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:/Users/Kate/Documents/GitHub/RangerBot/MAIN/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/librairie/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/toolchain/sysroot/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4&quot;"/>
-								</option>
-								<option id="armus.cc.compiler.armuslibs.path.1248809984" name="LibARMus Include Path" superClass="armus.cc.compiler.armuslibs.path" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/librairie/include&quot;"/>
-								</option>
-								<option id="armuc.cc.compiler.includes.1170066693" name="Standard Includes" superClass="armuc.cc.compiler.includes" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/toolchain/sysroot/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/&quot;"/>
-								</option>
-								<inputType id="armus.compiler.input.cc.1400043096" name="C++ Source File" superClass="armus.compiler.input.cc"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.389959161" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1638049136" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+							</tool>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.229240138" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.391273729" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="MAIN.org.armus.plugin.target.armus.exe.1584363697" name="ARMus Executable" projectType="org.armus.plugin.target.armus.exe"/>
+		<project id="Defi la grande course.null.1554292809" name="Defi la grande course"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="0.1057746749">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

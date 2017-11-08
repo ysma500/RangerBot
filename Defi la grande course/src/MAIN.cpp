@@ -130,6 +130,7 @@ int adjd_dev;
 void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
+void Tourne_gauche_avance();
 
 int main()
 {
@@ -184,12 +185,8 @@ int main()
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
 		}
-		else 
-		{
-			LCD_Printf("Aucune reception du son\n");
-			THREAD_MSleep(500);
-		}	
 	}
+	
 	
 	//Strategie pour le parcours
 	float f_time = 0; //Initialisation compteur temps de la course
@@ -202,35 +199,46 @@ int main()
 
 		if (m_iCouleurDep == START_RED)
 		{
-				LCD_Printf("RED\n");
+			LCD_Printf("RED\n");
+			Tourne_gauche_avance();
+			//Tourne a gauche et avance
 		}
 		else if (m_iCouleurDep == START_GREY)
 		{
 				LCD_Printf("GREY \n");
+				//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+				//Sinon, avance...
 		}
 		else if (m_iCouleurDep == START_YELLOW)
 		{
-				LCD_Printf("YELLOW \n");			
+				LCD_Printf("YELLOW \n");
+				//Tourne a gauche et avance				
 		}
 		else if (m_iCouleurDep == START_PINK)
 		{
-				LCD_Printf("PINK \n");			
+				LCD_Printf("PINK \n");	
+				//Tourne a gauche et avance				
 		}
 		else if (m_iCouleurDep == START_GREEN)
 		{
-				LCD_Printf("GREEN \n");			
+				LCD_Printf("GREEN \n");	
+				//Stop, Backup and tourne a gauche et avance				
 		}
 		else if (m_iCouleurDep == START_BLUE)
 		{
-				LCD_Printf("BLUE \n");			
+				LCD_Printf("BLUE \n");
+				//Si tu as un objet dans les pinces, tourne a droite et avance
+				//Sinon tourne a gauche et avance				
 		}
 		else if (m_iCouleurDep == START_WHITE)
 		{
-				LCD_Printf("WHITE \n");			
+				LCD_Printf("WHITE \n");
+				
 		}
 		else
 		{
-				LCD_Printf("I don't know where the fuck I am\n");			
+				LCD_Printf("I don't know where the fuck I am\n");
+				//Code de detection de ligne?				
 		}
 		THREAD_MSleep(1000);
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
@@ -261,7 +269,6 @@ int get_current_color()
 				&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 			{
 				color = START_RED;
-				//Tourne a gauche et avance
 			}
 			//Grey
 			else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
@@ -270,8 +277,6 @@ int get_current_color()
 				&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
 			{
 				color = START_GREY;
-				//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-				//Sinon, avance...
 			}
 			//Yellow
 			else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
@@ -280,7 +285,6 @@ int get_current_color()
 				&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
 			{
 				color = START_YELLOW;
-				//Tourne a gauche et avance
 			}
 			//Pink
 			else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
@@ -289,7 +293,6 @@ int get_current_color()
 				&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
 			{
 				color = START_PINK;
-				//Tourne a gauche et avance
 			}
 			//Green
 			else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
@@ -298,7 +301,6 @@ int get_current_color()
 				&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
 			{
 				color = START_GREEN;
-				//Stop, Backup and tourne a gauche et avance
 			}
 			//Blue
 			else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
@@ -307,8 +309,6 @@ int get_current_color()
 				&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
 			{
 				color = START_BLUE;
-				//Si tu as un objet dans les pinces, tourne a droite et avance
-				//Sinon tourne a gauche et avance
 			}
 			//White
 			else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
@@ -321,7 +321,6 @@ int get_current_color()
 			else
 			{
 				color = START_OTHER;
-				//Code de detection de ligne?
 			}
 	return color;
 }
@@ -685,4 +684,11 @@ int color_Init(int& dev_handle)
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
 
+///Fonction tourne aguche et avance apres lecture de couleur
+
+void Tourne_gauche_avance()
+{
+	Rotation(45,1);
+	Avance(200);
+}
 
