@@ -515,6 +515,19 @@ void Avance(int iDistance) //Distance en mm
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
+///Fonction tourne ou avance
+
+void Tourne_gauche_avance()
+{
+	Rotation(45,1);
+	Avance(MIN_DISTANCE);
+}
+
+void Avance_BASE()
+{
+	Avance(MIN_DISTANCE);
+}
+
 
 
 ///****************************************************************************
@@ -686,11 +699,4 @@ int color_Init(int& dev_handle)
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
 
-///Fonction tourne aguche et avance apres lecture de couleur
-
-void Tourne_gauche_avance()
-{
-	Rotation(45,1);
-	Avance(MIN_DISTANCE);
-}
 
