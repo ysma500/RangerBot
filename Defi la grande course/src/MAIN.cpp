@@ -83,7 +83,8 @@
 #define WHITE_B 905
 #define WHITE_C 1023
 
-#define LINE_HYST 20 //Incertitude sur la detection de couleurs
+#define LINE_HYST 50 //Incertitude sur la detection de couleurs
+#define LINE_HYST_RED 100
 
 //PID
 float GAIN_I = 0.223;
@@ -138,7 +139,7 @@ int main()
 	LCD_ClearAndPrint("Depart du programme\n");
 	
 	//Configuration
-	Initialisation();
+	//Initialisation();
 	
 	int j = 0; //Debut du programme
 	while (j == 0)
@@ -186,10 +187,10 @@ int main()
 	{
 		color_Read(red, blue, green, clear);
 		//Red
-		if (red >= (RED_R - LINE_HYST) && red <= (RED_R + LINE_HYST) 
-			&& blue >= (RED_B - LINE_HYST) && blue <= (RED_B + LINE_HYST)
-			&& green >= (RED_G - LINE_HYST) && green <= (RED_G + LINE_HYST)
-			&& clear >= (RED_C - LINE_HYST) && clear <= (RED_C + LINE_HYST))
+		if (red >= (RED_R - LINE_HYST_RED) && red <= (RED_R + LINE_HYST_RED)
+			&& blue >= (RED_B - LINE_HYST_RED) && blue <= (RED_B + LINE_HYST_RED)
+			&& green >= (RED_G - LINE_HYST_RED) && green <= (RED_G + LINE_HYST_RED)
+			&& clear >= (RED_C - LINE_HYST_RED) && clear <= (RED_C + LINE_HYST_RED))
 			{
 				LCD_Printf("RED\n");
 			}
