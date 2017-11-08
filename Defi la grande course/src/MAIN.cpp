@@ -216,6 +216,7 @@ int main()
 		}
 		else
 		{
+			//lecture des infrarouges
 			switch(current_color)
 			{
 				case START_GREY:
