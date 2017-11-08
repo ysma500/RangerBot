@@ -187,26 +187,8 @@ int main()
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
-			if (m_iCouleurDep == START_YELLOW)
-			{
-				LCD_Printf("YELLOW \n");
-				Avance_BASE();
-			}
-			else if (m_iCouleurDep == START_PINK)
-			{
-				LCD_Printf("PINK \n");	
-				Avance_BASE();
-			}
-			else if (m_iCouleurDep == START_GREEN)
-			{
-				LCD_Printf("GREEN \n");	
-				Avance_BASE();
-			}
-			else if (m_iCouleurDep == START_BLUE)
-			{
-				LCD_Printf("BLUE \n");
-				Avance_BASE();
-			}
+			m_iCouleurDep = get_current_color();
+			Avance_BASE();
 		}
 	}
 	
@@ -245,7 +227,8 @@ int main()
 		else if (current_color == START_GREEN)
 		{
 				LCD_Printf("GREEN \n");	
-				//Stop, Backup and tourne a gauche et avance				
+				Avance(-MIN_DISTANCE);
+				Tourne_gauche_avance();
 		}
 		else if (current_color == START_BLUE)
 		{
