@@ -225,6 +225,7 @@ int main()
 					{
 						Avance_BASE();
 					}*/
+					Avance_BASE();
 					break;
 				case START_YELLOW:
 					LCD_Printf("YELLOW \n");
@@ -242,13 +243,16 @@ int main()
 				case START_BLUE:
 					LCD_Printf("BLUE \n");
 					//Si tu as un objet dans les pinces, tourne a droite et avance
-					//Sinon tourne a gauche et avance	
+					//Sinon tourne a gauche et avance
+					Tourne_gauche_avance();					
 					break;
 				case START_WHITE:
 					LCD_Printf("WHITE \n");
+					Avance_BASE();
 					break;
 				default:
 					LCD_Printf("I don't know where the fuck I am\n");
+					Avance_BASE();
 					//Code de detection de ligne?	
 					break;
 			}
@@ -531,7 +535,7 @@ void Avance(int iDistance) //Distance en mm
 
 void Tourne_gauche_avance()
 {
-	Rotation(45,1);
+	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE);
 }
 
