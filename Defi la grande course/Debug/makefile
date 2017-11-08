@@ -36,19 +36,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Defi\ la\ grande\ course.exe
+all: MAIN.exe
 
 # Tool invocations
-Defi\ la\ grande\ course.exe: $(OBJS) $(USER_OBJS)
+MAIN.exe: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking ARM-Linux Linker'
-	arm-softfloat-linux-gnueabi-g++ -L"C:/Program Files (x86)/ArmusIDE/librairie/lib" -Xlinker --unresolved-symbols=ignore-in-shared-libs --sysroot="C:/Program Files (x86)/ArmusIDE/toolchain/sysroot" -o "Defi la grande course.exe" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-softfloat-linux-gnueabi-g++ -L"C:/Program Files (x86)/ArmusIDE/librairie/lib" -Xlinker --unresolved-symbols=ignore-in-shared-libs --sysroot="C:/Program Files (x86)/ArmusIDE/toolchain/sysroot" -o "MAIN.exe" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS) "Defi la grande course.exe"
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS) MAIN.exe
 	-@echo ' '
 
 .PHONY: all clean dependents
