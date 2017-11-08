@@ -23,6 +23,7 @@
 #define RIGHT_ROT 0
 #define SPEED_START 70
 #define DELAY_STEP 500
+#define MIN_DISTANCE 200
 
 //Define du capteur de couleurs
 #define ADJD_S371_QR999_SADR 	0x74
@@ -131,6 +132,7 @@ void Avance(int iDistance);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 void Tourne_gauche_avance();
+void Avance_BASE();
 
 int main()
 {
@@ -689,6 +691,6 @@ int color_Init(int& dev_handle)
 void Tourne_gauche_avance()
 {
 	Rotation(45,1);
-	Avance(200);
+	Avance(MIN_DISTANCE);
 }
 
