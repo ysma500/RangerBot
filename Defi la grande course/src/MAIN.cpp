@@ -83,6 +83,11 @@
 #define WHITE_B 905
 #define WHITE_C 1023
 
+#define START_RED 1
+#define START_YELLOW 2
+#define START_PINK 3
+#define START_GREEN 4
+
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
@@ -91,6 +96,9 @@ float GAIN_I = 0.223;
 float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
+
+//Valeur de couleur de depart
+int m_iCouleurDep = 0;
 
 // Prototypes de fonctions de configs
 void Initialisation();
@@ -191,17 +199,20 @@ int main()
 			&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
 			&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
 			&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
-			{
-				LCD_Printf("RED\n");
-			}
+		{
+			LCD_Printf("RED\n");
+			//Tourne a gauche et avance
+		}
 		//Grey
 		else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
 			&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
 			&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
 			&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
-			{
-					LCD_Printf("GREY \n");
-			}
+		{
+			LCD_Printf("GREY \n");
+			//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+			//Sinon, avance...
+		}
 		//Yellow
 	/*	else if (red >= (YELLOW_R - LINE_HYST) && red <= (YELLOW_R + LINE_HYST)
 			&& blue >= (YELLOW_B - LINE_HYST) && blue <= (YELLOW_B + LINE_HYST)
@@ -214,45 +225,51 @@ int main()
 			&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
 			&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
 			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
-			{
-					LCD_Printf("YELLOW \n");
-			}
+		{
+			LCD_Printf("YELLOW \n");
+			//Tourne a gauche et avance
+		}
 		//Pink
 		else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
 			&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
 			&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
 			&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
-			{
-					LCD_Printf("PINK \n");
-			}
+		{
+			LCD_Printf("PINK \n");
+			//Tourne a gauche et avance
+		}
 		//Green
 		else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
 			&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
 			&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
 			&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
-			{
-					LCD_Printf("GREEN \n");
-			}
+		{
+			LCD_Printf("GREEN \n");
+			//Stop, Backup and tourne a gauche et avance
+		}
 		//Blue
 		else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
 			&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
 			&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
 			&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
-			{
-					LCD_Printf("BLUE \n");
-			}
+		{
+			LCD_Printf("BLUE \n");
+			//Si tu as un objet dans les pinces, tourne a droite et avance
+			//Sinon tourne a gauche et avance
+		}
 		//White
 		else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
 			&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
 			&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
 			&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
-			{
-					LCD_Printf("WHITE \n");
-			}	
+		{
+			LCD_Printf("WHITE \n");
+		}	
 		else 
-			{
-				LCD_Printf("I don't know where the fuck I am\n");
-			}
+		{
+			LCD_Printf("I don't know where the fuck I am\n");
+			//Code de detection de ligne?
+		}
 		THREAD_MSleep(1000);
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
 		f_time = f_time + f_MSdepuis;
