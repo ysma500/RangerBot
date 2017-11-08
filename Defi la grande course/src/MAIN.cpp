@@ -13,7 +13,7 @@
 #define TOTAL_TIME 180000
 //Voltage du 5kHz
 #define VOLTAGE_MICRO 1
-// Include Files
+// Include Files armus
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
