@@ -43,20 +43,48 @@
 #define CTRL_GOFS				1
 
 #define CONFIG_TOFS				0
+//Rose, vert, bleu, jaune; Centre : gris, contour : rouge
+//Define des couleurs pour le capteurs de couleurs
+#define RED_R 0
+#define RED_V 0
+#define RED_B 0
+#define RED_C 0
 
-//
+#define GRIS_R 0
+#define GRIS_V 0
+#define GRIS_B 0
+#define GRIS_C 0
+
+#define VERT_R 0
+#define VERT_V 0
+#define VERT_B 0
+#define VERT_C 0
+
+#define ROSE_R 0
+#define ROSE_V 0
+#define ROSE_B 0
+#define ROSE_C 0
+
+#define BLEU_R 0
+#define BLEU_V 0
+#define BLEU_B 0
+#define BLEU_C 0
+
+#define JAUNE_R 0
+#define JAUNE_V 0
+#define JAUNE_B 0
+#define JAUNE_C 0
+
+#define LINE_HYST 10 //Incertitude sur la detection de couleurs
+
+//PID
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 
-//
-char m_cFlag = 0;
-
 // Prototypes de fonctions de configs
 void Initialisation();
-
-
 
 //Prototypes de fonctions capteur de couleur
 void adjd_SetRegister(unsigned char reg, unsigned char val);
@@ -97,8 +125,7 @@ int main()
 	integrationTime_SetValue(INTEGRATION_BLUE, 255);
 	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
 	
-	// variables locales
-	int j = 0;
+	
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
@@ -106,6 +133,8 @@ int main()
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
 	
+	
+	int j = 0; //Debut du programme
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
@@ -149,6 +178,13 @@ int main()
 	while (f_compteur < TOTAL_TIME)
 	{
 		color_Read(red, blue, green, clear);
+		if (red >= (RED_R - LINE_HYST) && red <= (RED_R + LINE_HYST) 
+			&& blue >= (RED_B - LINE_HYST) && blue <= (RED_B - LINE_HYST)
+			&& green >= (RED_G - LINE_HYST) && green <= (RED_G - LINE_HYST)
+			&& clear >= (RED_C - LINE_HYST) && clear <= (RED_C - LINE_HYST))
+			{
+				decoliss; //a gauche
+			}
 		f_compteur + = SYSTEM_ReadTimerMSeconds();
 		SYSTEM_ResetTimer();
 	}
