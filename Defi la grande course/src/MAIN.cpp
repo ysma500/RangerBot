@@ -138,6 +138,16 @@ void Tourne_gauche_avance();
 void Tourne_gauche_avance(int valeurMod);
 void Avance_BASE();
 
+//Prototypes de fonctions de configs
+void testDeCapteurs(int capteur[3]);
+int capteurAffichage(int capteur[3]);
+//Define
+#define IR0 0	//Capteur plus bas
+#define IR1 1	//Capteur niveau moyen
+#define IR2 2	//Capteur plus haut
+#define B1 1 //Analog input 1 à l'endroit B1
+#define DISTANCE_MIN 100
+
 int main()
 {
 	//Initialisation du capteur de couleur
@@ -733,37 +743,23 @@ int color_Init(int& dev_handle)
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
 
-/*
-============================================================================
- Name : MAIN.cpp
- Author :
- Version :0.81
- Description : Code Robus 1
 
- robot 47 P: 0,9 I:0,089
- robot 77 P: 1,70 I:0,220
-============================================================================
-*/
+
+
+
+
 /******************************************
  *
  *
  *
- *
+ * Fonctions Detecteurs Infrarouge
  *
  *
  *
  ***********************************/
 
 
-/* Prototypes de fonctions de configs
-void testDeCapteurs(int capteur[3]);
-int capteurAffichage(int capteur[3]);
-//Define
-#define IR0 0	//Capteur plus bas
-#define IR1 1	//Capteur niveau moyen
-#define IR2 2	//Capteur plus haut
-#define B1 1 //Analog input 1 à l'endroit B1
-#define DISTANCE_MIN 100
+/*
 
 //Combinaison du multiplexeur A0,A1 et A2
 int combinaison(int capteur)
