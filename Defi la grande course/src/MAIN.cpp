@@ -759,7 +759,7 @@ int color_Init(int& dev_handle)
  ***********************************/
 
 
-/*
+
 
 //Combinaison du multiplexeur A0,A1 et A2
 int combinaison(int capteur)
@@ -798,7 +798,7 @@ int lireCapteur(int capteur_Infra[3])
 	capteur_Infra[IR2] = ANALOG_Read(B1);
 
 }
-
+/*
 int main()
 {
 	// variables locales
@@ -840,6 +840,7 @@ int main()
 	return 0;
 }
 
+
 //Debut de la fonction pour la modification des gains a suivre
 void testDeCapteurs(int capteur[3])
 {
@@ -857,7 +858,7 @@ void testDeCapteurs(int capteur[3])
 		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
 		LCD_Printf("Analog IR2 = %d\n", capteur[2]);
 		*/
-
+/*
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
 		{
@@ -875,6 +876,9 @@ void testDeCapteurs(int capteur[3])
 		}
 	}
 }
+
+*/
+
 int capteurAffichage(int capteur[3])
 {
 	if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
