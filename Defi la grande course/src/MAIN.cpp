@@ -21,6 +21,8 @@
 #define Circum 229.33626371205490640777296697940 //Cir de la roue
 #define LEFT_ROT 1
 #define RIGHT_ROT 0
+#define AVANCE 2
+#define RECULE 3
 #define SPEED_START 70
 #define DELAY_STEP 500
 #define MIN_DISTANCE 200
@@ -138,7 +140,7 @@ int color_Init(int& dev_handle);
 int adjd_dev;
 
 // Prototypes de fonctions (Avancer, Tourner)
-void Avance(int iDistance);
+void Avance(int iDistance, int iSens);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 void Tourne_gauche_avance();
@@ -231,8 +233,8 @@ int main()
 		else if(current_color == m_iCouleurDep)
 		{
 			LCD_Printf("COULEUR DE DEPART \n");
-			Avance((-1,5 * MIN_DISTANCE));
-			Rotation(180, 1);
+			Avance((MIN_DISTANCE), RECULE);
+			Rotation(180, LEFT_ROT);
 		}
 		else
 		{
@@ -261,7 +263,7 @@ int main()
 					break;
 				case START_GREEN:
 					//LCD_Printf("GREEN \n");	
-					Avance(-MIN_DISTANCE);
+					Avance(-MIN_DISTANCE, AVANCE);
 					Tourne_gauche_avance();
 					break;
 				case START_BLUE:
@@ -381,7 +383,7 @@ void Initialisation()
 
 	while(i==0 || j==0)
 	{
-		Avance(800);
+		Avance(800, AVANCE);
 		LCD_Printf("Tic coter Gauche: %d	Tic coter Droit: %d\n", m_iTicTotalG, m_iTicTotalD);
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
@@ -523,7 +525,7 @@ void Rotation(float fAngle, int iDirection)
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
-void Avance(int iDistance) //Distance en mm
+void Avance(int iDistance, int iSens) //Distance en mm
 {
 	float fDroitSpeed = SPEED_START;
 	float fGaucheSpeed = SPEED_START;
@@ -538,7 +540,7 @@ void Avance(int iDistance) //Distance en mm
 
 
 	//Avance
-	if (iDistance > 0)
+	if (iSens == AVANCE)
 	{
 		while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
 		{
@@ -548,7 +550,7 @@ void Avance(int iDistance) //Distance en mm
 		}
 	}
 	//Recule
-	if (iDistance < 0)
+	if (iSens == RECULE)
 	{
 		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
@@ -567,18 +569,18 @@ void Avance(int iDistance) //Distance en mm
 void Tourne_gauche_avance()
 {
 	Rotation(45,LEFT_ROT);
-	Avance(MIN_DISTANCE);
+	Avance(MIN_DISTANCE, AVANCE);
 }
 
 void Tourne_gauche_avance(int valeurMod)
 {
 	Rotation(45,LEFT_ROT);
-	Avance(MIN_DISTANCE/3);
+	Avance(MIN_DISTANCE/3, AVANCE);
 }
 
 void Avance_BASE()
 {
-	Avance(MIN_DISTANCE);
+	Avance(MIN_DISTANCE, AVANCE);
 }
 
 
