@@ -4,15 +4,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/Armus-GC.cpp \
 ../src/MAIN.cpp 
 
 OBJS += \
-./src/Armus-GC.o \
 ./src/MAIN.o 
 
 CPP_DEPS += \
-./src/Armus-GC.d \
 ./src/MAIN.d 
 
 
