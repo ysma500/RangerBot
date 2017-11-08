@@ -186,6 +186,27 @@ int main()
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
+			if (m_iCouleurDep == START_YELLOW)
+			{
+				LCD_Printf("YELLOW \n");
+				//Tourne a gauche et avance				
+			}
+			else if (m_iCouleurDep == START_PINK)
+			{
+				LCD_Printf("PINK \n");	
+				//Tourne a gauche et avance				
+			}
+			else if (m_iCouleurDep == START_GREEN)
+			{
+				LCD_Printf("GREEN \n");	
+				//Stop, Backup and tourne a gauche et avance				
+			}
+			else if (m_iCouleurDep == START_BLUE)
+			{
+				LCD_Printf("BLUE \n");
+				//Si tu as un objet dans les pinces, tourne a droite et avance
+				//Sinon tourne a gauche et avance				
+			}
 		}
 	}
 	
