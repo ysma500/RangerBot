@@ -183,7 +183,7 @@ int main()
 			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
 		{
 			LCD_Printf("YELLOW \n");
-			//Tourne a gauche et avance
+			Tourne_gauche_avance();
 		}
 		}
 		else 
