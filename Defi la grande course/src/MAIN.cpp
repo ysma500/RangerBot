@@ -99,6 +99,13 @@
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
+//Define
+#define IR0 0	//Capteur plus bas
+#define IR1 1	//Capteur niveau moyen
+#define IR2 2	//Capteur plus haut
+#define B1 1 //Analog input 1 à l'endroit B1
+#define DISTANCE_MIN 100
+
 //PID
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
@@ -141,12 +148,8 @@ void Avance_BASE();
 //Prototypes de fonctions de configs
 void testDeCapteurs(int capteur[3]);
 int capteurAffichage(int capteur[3]);
-//Define
-#define IR0 0	//Capteur plus bas
-#define IR1 1	//Capteur niveau moyen
-#define IR2 2	//Capteur plus haut
-#define B1 1 //Analog input 1 à l'endroit B1
-#define DISTANCE_MIN 100
+int lectrureRouge(int capteur[3]);
+
 
 int main()
 {
@@ -217,6 +220,7 @@ int main()
 	{
 		current_color = get_current_color();
 		
+
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
@@ -235,11 +239,11 @@ int main()
 			{
 				case START_GREY:
 					//LCD_Printf("GREY \n");
-					//if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-					/*Sinon, avance...else
+					if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+					Sinon, avance...else
 					{
 						Avance_BASE();
-					}*/
+
 					Avance_BASE();
 					break;
 				case START_YELLOW:
@@ -798,113 +802,45 @@ int lireCapteur(int capteur_Infra[3])
 	capteur_Infra[IR2] = ANALOG_Read(B1);
 
 }
-/*
-int main()
+
+int lectrureRouge(int capteur[3])
 {
-	// variables locales
-	int j = 0;
-	//on choisit le bon mode de gestion d'erreur
-	ERROR_SetMode(LCD_ONLY);
+	int valeur = 0;
+	lireCapteur(capteur);
+	valeur = capteurAffichage(capteur);
 
-	// affiche sur le LCD
-	LCD_ClearAndPrint("Depart du programme\n");
-
-
-	//Nouveau contenu
-	int capteur_Infra[3] = {0,0,0};			// 3 capteurs infra rouge utilisé pour la grande course
-
-
-	while (j == 0)
-	{
-		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
-		{
-			LCD_Printf("Entrer dans les Tests de capteurs\n");
-			j = 1;
-		}
-	}
-
-	//Configuration
-	testDeCapteurs(capteur_Infra);
-
-	LCD_Printf("Fin du test du capteur\n");
-
-	// Le code attent 20 secondes
-	THREAD_MSleep(20000);
-
-	// On arrete tout sur la carte d'entrees/sorties
-	FPGA_StopAll();
-
-	LCD_Printf("Fin du programme\n");
-
-	return 0;
+	return valeur;
 }
-
-
-//Debut de la fonction pour la modification des gains a suivre
-void testDeCapteurs(int capteur[3])
-{
-	int i = 0, j = 0;
-
-	int Affichage = 0;
-
-	while(i==0 || j==0)
-	{
-
-		lireCapteur(capteur);
-
-		/*
-		LCD_Printf("Analog IR0 = %d\n", capteur[0]);
-		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
-		LCD_Printf("Analog IR2 = %d\n", capteur[2]);
-		*/
-/*
-		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
-		{
-			capteurAffichage(capteur);
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
-		{
-
-		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
-		{
-			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
-		}
-	}
-}
-
-*/
 
 int capteurAffichage(int capteur[3])
 {
 	if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
 
-		if( capteur[IR2] > capteur[IR1] && capteur[IR2] > capteur[IR0] )
+		if( capteur[IR2] >= capteur[IR1] && capteur[IR2] >= capteur[IR0] )
 		{
-			LCD_ClearAndPrint("Detection d'un robot\n");
-			LCD_Printf("Robot a : %d",capteur[IR2]);
+			//LCD_ClearAndPrint("Detection d'un robot\n");
+			//LCD_Printf("Robot a : %d",capteur[IR2]);
+			return 3;
 		}
 
 		else if( capteur[IR1] > capteur[IR0] && capteur[IR1] > capteur[IR2])
 		{
-			LCD_ClearAndPrint("Detection de la plateforme\n");
-			LCD_Printf("La plateforme a : %d",capteur[IR1]);
+			//LCD_ClearAndPrint("Detection de la plateforme\n");
+			//LCD_Printf("La plateforme a : %d",capteur[IR1]);
+			return 2;
 		}
 
 		else
 		{
-			LCD_ClearAndPrint("Objet detecter\n");
-			LCD_Printf("L'objet a : %d",capteur[IR0]);
+			//LCD_ClearAndPrint("Objet detecter\n");
+			//LCD_Printf("L'objet a : %d",capteur[IR0]);
+			return 1;
 		}
 
 	return 0;
 }
 
-*/
+
 
 
 
