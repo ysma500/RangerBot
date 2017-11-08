@@ -64,9 +64,12 @@ void testDeCapteurs(void)
 	int micro_result;
 	while (condition == 0)
 	{
-		micro_sound = ANALOG_Read(AN_IN6); ////
-		micro_background = ANALOG_Read(AN_IN7); ////
+		micro_sound = ANALOG_Read(6); ////
+		micro_background = ANALOG_Read(7); ////
 		micro_result = micro_sound - micro_background;
+		LCD_Printf("Micro 5kHz filtre : %d \n", micro_sound);
+		LCD_Printf("Micro background : %d \n", micro_background);
+		LCD_Printf("Micro resultat : %d \n", micro_result);
 		THREAD_MSleep(100);
 		if (micro_result >= 3) 
 		{
