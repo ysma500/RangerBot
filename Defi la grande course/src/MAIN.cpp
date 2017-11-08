@@ -150,7 +150,7 @@ void Avance_BASE();
 //Prototypes de fonctions de configs
 void testDeCapteurs(int capteur[3]);
 int capteurAffichage(int capteur[3]);
-int lectrureRouge(int capteur[3]);
+int lectureRouge(int capteur[3]);
 
 
 int main()
@@ -224,7 +224,7 @@ int main()
 	while (f_time <= TOTAL_TIME)
 	{
 		current_color = get_current_color();
-		hauteur = lectrureRouge(capteur);
+		hauteur = lectureRouge(capteur);
 
 		if (current_color == START_RED)
 		{
@@ -810,7 +810,7 @@ int lireCapteur(int capteur_Infra[3])
 
 }
 
-int lectrureRouge(int capteur[3])
+int lectureRouge(int capteur[3])
 {
 	int valeur = 0;
 	lireCapteur(capteur);
