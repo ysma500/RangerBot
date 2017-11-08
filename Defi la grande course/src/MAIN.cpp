@@ -220,8 +220,11 @@ int main()
 			{
 				case START_GREY:
 					LCD_Printf("GREY \n");
-					//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-					//Sinon, avance...
+					//if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+					/*Sinon, avance...else
+					{
+						Avance_BASE();
+					}*/
 					break;
 				case START_YELLOW:
 					LCD_Printf("YELLOW \n");
