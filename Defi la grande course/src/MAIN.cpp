@@ -178,12 +178,12 @@ int main()
 	while (condition_micro == 0)
 	{
 		//ANALOG_Read(entre analogique) envoie un voltage 0 a 5 volt recu a un nombre entre 0 et 1023
-		micro_sound = 4 ;//ANALOG_Read(AN_IN6); //entree analogique bien declaree?
-		micro_background = 1; //ANALOG_Read(AN_IN7); //entree analogique bien declaree?
+		micro_sound = ANALOG_Read(6);
+		micro_background = ANALOG_Read(7);
 		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(100);
 
-		if (micro_result >= VOLTAGE_MICRO) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
+		if (micro_result >= 20) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
