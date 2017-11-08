@@ -177,6 +177,14 @@ int main()
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
+			if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+			&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+			&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
+		{
+			LCD_Printf("YELLOW \n");
+			//Tourne a gauche et avance
+		}
 		}
 		else 
 		{
