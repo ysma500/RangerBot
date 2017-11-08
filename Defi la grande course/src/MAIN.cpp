@@ -215,11 +215,13 @@ int main()
 	float f_MSdepuis = 0; //millisecondes depuis la derniere lecture
 	SYSTEM_ResetTimer(); //Mise a zero du compteur de la course
 	int current_color;
+	int capteur[3];
+	int hauteur;
 
 	while (f_time <= TOTAL_TIME)
 	{
 		current_color = get_current_color();
-		
+		hauteur = lectrureRouge(capteur);
 
 		if (current_color == START_RED)
 		{
@@ -239,12 +241,15 @@ int main()
 			{
 				case START_GREY:
 					//LCD_Printf("GREY \n");
-					if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-					Sinon, avance...else
+					if (hauteur == 2)
+					{
+						Rotation(45, 0);
+						Avance_BASE();
+					}
+					else
 					{
 						Avance_BASE();
-
-					Avance_BASE();
+					}
 					break;
 				case START_YELLOW:
 					//LCD_Printf("YELLOW \n");
@@ -790,6 +795,7 @@ int combinaison(int capteur)
 	}
 	return 0;
 }
+
 int lireCapteur(int capteur_Infra[3])
 {
 	combinaison(IR0);
