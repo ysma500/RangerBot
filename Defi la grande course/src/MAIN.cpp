@@ -84,6 +84,7 @@
 #define WHITE_B 905
 #define WHITE_C 1023
 
+//Code de chaque couleur
 #define START_RED 1
 #define START_GREY 2
 #define START_YELLOW 3
@@ -188,7 +189,7 @@ int main()
 			condition_micro = 1;
 			m_iCouleurDep = get_current_color();
 			Avance_BASE();
-		}
+		}		
 	}
 	
 	
@@ -226,7 +227,8 @@ int main()
 		else if (current_color == START_GREEN)
 		{
 				LCD_Printf("GREEN \n");	
-				//Stop, Backup and tourne a gauche et avance				
+				Avance(-MIN_DISTANCE);
+				Tourne_gauche_avance();
 		}
 		else if (current_color == START_BLUE)
 		{
