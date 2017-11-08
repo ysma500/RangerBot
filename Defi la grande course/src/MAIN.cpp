@@ -10,9 +10,9 @@
 ============================================================================
 */
 //Timer total 
-#define TOTAL_TIME 180 000
+#define TOTAL_TIME 180000
 //Voltage du 5kHz
-#define VOLTAGE_MICRO 4
+#define VOLTAGE_MICRO 1
 // Include Files
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
@@ -49,41 +49,41 @@
 //Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
 //Define des couleurs pour le capteurs de couleurs
 #define RED_R 544
-#define RED_V 266
+#define RED_G 266
 #define RED_B 184
 #define RED_C 887
 
 #define GREY_R 560
-#define GREY_V 632
+#define GREY_G 632
 #define GREY_B 510
 #define GREY_C 1024
 
 #define YELLOW_R 955
-#define YELLOW_V 917
+#define YELLOW_G 917
 #define YELLOW_B 305
 #define YELLOW_C 1016
 
 #define PINK_R 780
-#define PINK_V 475
+#define PINK_G 475
 #define PINK_B 390
 #define PINK_C 1015
 
 #define GREEN_R 212
-#define GREEN_V 305
-#define GREEN_B 
-#define GREEN_C 0
+#define GREEN_G 305
+#define GREEN_B 218
+#define GREEN_C 712
 
-#define BLUE_R 0
-#define BLUE_V 0
-#define BLUE_B 0
-#define BLUE_C 0
+#define BLUE_R 208
+#define BLUE_G 240
+#define BLUE_B 355
+#define BLUE_C 758
 
-#define WHITE_R 0
-#define WHITE_V 0
-#define WHITE_B 0
-#define WHITE_C 0
+#define WHITE_R 1020
+#define WHITE_G 1018
+#define WHITE_B 905
+#define WHITE_C 1023
 
-#define LINE_HYST 10 //Incertitude sur la detection de couleurs
+#define LINE_HYST 20 //Incertitude sur la detection de couleurs
 
 //PID
 float GAIN_I = 0.223;
@@ -159,8 +159,8 @@ int main()
 	while (condition_micro == 0)
 	{
 		//ANALOG_Read(entre analogique) envoie un voltage 0 a 5 volt recu a un nombre entre 0 et 1023
-		micro_sound = ANALOG_Read(AN_IN6); //entree analogique bien declaree?
-		micro_background = ANALOG_Read(AN_IN7); //entree analogique bien declaree?
+		micro_sound = 4 ;//ANALOG_Read(AN_IN6); //entree analogique bien declaree?
+		micro_background = 1; //ANALOG_Read(AN_IN7); //entree analogique bien declaree?
 		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(100);
 
@@ -241,7 +241,11 @@ int main()
 			{
 					LCD_Printf("WHITE \n");
 			}	
-			
+		else 
+			{
+				LCD_Printf("I don't know where the fuck I am\n");
+			}
+		THREAD_MSleep(1000);
 		f_MSdepuis = SYSTEM_ReadTimerMSeconds();
 		f_time = f_time + f_MSdepuis;
 		SYSTEM_ResetTimer();
