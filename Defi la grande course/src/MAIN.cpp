@@ -23,6 +23,7 @@
 #define RIGHT_ROT 0
 #define SPEED_START 70
 #define DELAY_STEP 500
+#define MIN_DISTANCE 200
 
 //Define du capteur de couleurs
 #define ADJD_S371_QR999_SADR 	0x74
