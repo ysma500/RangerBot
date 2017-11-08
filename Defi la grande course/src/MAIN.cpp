@@ -201,7 +201,7 @@ int main()
 			&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 		{
 			LCD_Printf("RED\n");
-			//Tourne a gauche et avance
+			Tourne_gauche_avance();
 		}
 		//Grey
 		else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
