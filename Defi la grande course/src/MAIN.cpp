@@ -9,7 +9,8 @@
  robot 77 P: 1,70 I:0,220
 ============================================================================
 */
-
+//Timer total 
+#define TOTAL_TIME 180 000
 // Include Files
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
@@ -21,13 +22,58 @@
 #define SPEED_START 70
 #define DELAY_STEP 500
 
+//Define du capteur de couleurs
+#define ADJD_S371_QR999_SADR 	0x74
+#define CAP_RED					0x6
+#define CAP_GREEN				0x7
+#define CAP_BLUE				0x8
+#define CAP_CLEAR				0x9
+#define INTEGRATION_RED			10
+#define INTEGRATION_GREEN		12
+#define INTEGRATION_BLUE		14
+#define INTEGRATION_CLEAR		16
+#define ADJD_REG_CTRL			0
+#define ADJD_REG_CONFIG			1
+#define DATA_RED_LO				64
+#define DATA_GREEN_LO			66
+#define DATA_BLUE_LO			68
+#define DATA_CLEAR_LO			70
+
+#define CTRL_GSSR				0
+#define CTRL_GOFS				1
+
+#define CONFIG_TOFS				0
+
+//
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 
+//
+char m_cFlag = 0;
+
 // Prototypes de fonctions de configs
 void Initialisation();
+
+
+
+//Prototypes de fonctions capteur de couleur
+void adjd_SetRegister(unsigned char reg, unsigned char val);
+void adjd_SetRegister16(unsigned char reg, int val);
+unsigned char adjd_ReadRegister(unsigned char reg);
+int adjd_ReadRegister16(unsigned char reg);
+unsigned char cap_GetValue(unsigned char cap_address);
+void cap_SetValue(unsigned char cap_address, unsigned char cap_value);
+int integrationTime_GetValue(unsigned char address);
+void integrationTime_SetValue(unsigned char address, int time_value);
+void led_TurnOff();	//Controle sortie digitale 9
+void led_TurnOn();	//Controle sortie digitale 9
+void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear);
+void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
+int color_Init(int& dev_handle);
+
+int adjd_dev;
 
 // Prototypes de fonctions (Avancer, Tourner)
 void Avance(int iDistance);
@@ -36,6 +82,21 @@ float PID_Setup(void);
 
 int main()
 {
+
+	
+	//Initialisation du capteur de couleur
+	ERROR_CHECK(color_Init(adjd_dev));
+
+	cap_SetValue(CAP_RED, 15);
+	cap_SetValue(CAP_GREEN, 15);
+	cap_SetValue(CAP_BLUE, 15);
+	cap_SetValue(CAP_CLEAR, 15);
+
+	integrationTime_SetValue(INTEGRATION_RED, 255);
+	integrationTime_SetValue(INTEGRATION_GREEN, 255);
+	integrationTime_SetValue(INTEGRATION_BLUE, 255);
+	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
+	
 	// variables locales
 	int j = 0;
 
@@ -50,7 +111,7 @@ int main()
 		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
 		{
-			LCD_Printf("Entrer dans les Configs\n");
+			LCD_Printf("Debut de l'ecoute du 5kHz\n");
 			j = 1;
 		}
 	}
@@ -58,95 +119,39 @@ int main()
 	//Configuration
 	Initialisation();
 	
-	j = 0;
-	while(j == 0)
+	//Ecoute du 5kHz
+	int condition = 0;
+	int micro_sound; //5kHz filtre
+	int micro_background; //bruit de fond
+	int micro_result;
+	while (condition == 0)
 	{
+		micro_sound = ANALOG_Read(AN_IN6); ////
+		micro_background = ANALOG_Read(AN_IN7); ////
+		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
+		if (micro_result >= 3) 
 		{
-			LCD_Printf("Depart dans 5sec\n");
-			THREAD_MSleep(5000);
-			j = 1;
+			LCD_Printf("Le signal de 5kHz a ete entendu \n");
+			SYSTEM_ResetTimer();
+			
+			condition = 1;
 		}
+		else 
+		{
+			LCD_Printf("Aucune reception du son\n");
+			THREAD_MSleep(1000);
+		}	
 	}
-	// Depart du circuit
-	Avance(2200);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(85.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(420);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);	//Verifier les maths jusque ici (Ysmael)
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(86.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(370);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(45.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(355);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(82.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(620);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(52.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(1150);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(175.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	//AUDIO_SetVolume(50);
-	//AUDIO_PlayFile("thug.wav");
-	//THREAD_MSleep(1000);
-
-	Avance(1150);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(52.0, LEFT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(620);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(82.0, RIGHT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(355);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(45.0, LEFT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(370);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(86.0, RIGHT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, LEFT_ROT);
-
-	LCD_Printf("Le robot a termine le parcours\n");
-
-
-	// Vous devez inserez un fichier audio avec ce nom sur votre cle usb
-	//		dans le repertoire armus afin que cela fonctionne
-	//AUDIO_PlayMP3File("songno1.mp3");
+	
+	float f_compteur = 0; //Initialisation compteur temps de la course
+	int red, blue, green, clear;
+	while (f_compteur < TOTAL_TIME)
+	{
+		color_Read(red, blue, green, clear);
+		f_compteur + = SYSTEM_ReadTimerMSeconds();
+		SYSTEM_ResetTimer();
+	}
 
 	// Le code attent 20 secondes
 	THREAD_MSleep(20000);
@@ -348,5 +353,174 @@ void Avance(int iDistance) //Distance en mm
 }
 
 
+
+///****************************************************************************
+///*********** Fonctions pour le capteur de couleur ***************************
+///****************************************************************************
+
+//permet de changer la valeur des registres
+void adjd_SetRegister(unsigned char reg, unsigned char val)
+{
+	unsigned char data[2];
+	data[0] = reg;
+	data[1] = val;
+	armus::i2c_Write(adjd_dev, 2, data);
+}
+
+//permet de changer la valeur des registres de 16 bits
+void adjd_SetRegister16(unsigned char reg, int val)
+{
+	unsigned char data[2];
+	data[0] = reg;
+	data[1] = val & 0xFF;
+	armus::i2c_Write(adjd_dev, 2, data);
+	data[0] = reg+1;
+	data[1] = (val >> 8) & 0xFF;
+	armus::i2c_Write(adjd_dev, 2, data);
+}
+
+//permet de lire la valeur des registres
+unsigned char adjd_ReadRegister(unsigned char reg)
+{
+	unsigned char val;
+
+	armus::i2c_ReadAfterWrite(adjd_dev, 1, &reg, 1, &val);
+
+	return val;
+}
+
+//permet de lire la valeur des registres de 16 bits
+int adjd_ReadRegister16(unsigned char reg)
+{
+	int val16;
+	unsigned char val;
+	armus::i2c_ReadAfterWrite(adjd_dev, 1, &reg, 1, &val);
+	val16 = val;
+	reg = reg+1;
+	armus::i2c_ReadAfterWrite(adjd_dev, 1, &reg, 1, &val);
+	val16 = val16 + ((val << 8) & 0xFF00);
+	return val16;
+}
+
+
+// Permet de connaitre la valeur du CAP dans le registre
+// prend comme argument une constante CAP_RED, CAP_BLUE, CAP_CLEAR ou CAP_GREEN
+// retourne un unsigned char de la valeur
+unsigned char cap_GetValue(unsigned char cap_address)
+{
+	unsigned char cap_value;
+
+	cap_value = adjd_ReadRegister(cap_address);
+
+	return cap_value;
+}
+
+
+// Permet de changer la valeur du CAP dans le registre
+// prend comme premier argument une constante CAP_RED, CAP_BLUE, CAP_CLEAR ou CAP_GREEN
+// le second argument est compris entre 0 et 15, et determine la valeur du cap a ecrire dans le registre
+void cap_SetValue(unsigned char cap_address, unsigned char cap_value)
+{
+	adjd_SetRegister(cap_address, cap_value);
+}
+
+
+
+// Permet de connaitre la valeur du CAP dans le registre
+// address est une constante comme INTEGRATION_RED, ...
+// retourne un int de la valeur
+int integrationTime_GetValue(unsigned char address)
+{
+	int time_value;
+
+	time_value = adjd_ReadRegister16(address);
+
+	return time_value;
+}
+
+
+// Permet de changer la valeur du CAP dans le registre
+// address est une constante comme INTEGRATION_RED, ...
+// time_value est compris entre 0 et 4095
+void integrationTime_SetValue(unsigned char address, int time_value)
+{
+	adjd_SetRegister16(address, time_value);
+}
+
+
+// Vous devez vous-meme modifier cette fonction tout dependamment de la sortie numerique utilisee
+void led_TurnOff()
+{
+	// TODO : code a changer
+	DIGITALIO_Write(9, 0);
+}
+
+// Vous devez vous-meme modifier cette fonction tout dependamment de la sortie numerique utilisee
+void led_TurnOn()
+{
+	// TODO : code a changer
+	DIGITALIO_Write(9, 1);
+}
+
+// permet de faire une lecture differentielle avec et sans eclairage de la led
+void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear)
+{
+	//premiere lecture sans eclairage
+	led_TurnOff();
+
+	adjd_SetRegister(ADJD_REG_CONFIG, 1 << CONFIG_TOFS);
+	adjd_SetRegister(ADJD_REG_CTRL, 1 << CTRL_GOFS);
+	while(adjd_ReadRegister(ADJD_REG_CTRL))
+	{
+		THREAD_MSleep(50);
+	}
+
+	//lecture avec eclairage
+	led_TurnOn();
+	adjd_SetRegister(ADJD_REG_CTRL, 1 << CTRL_GSSR);
+	while(adjd_ReadRegister(ADJD_REG_CTRL))
+	{
+		THREAD_MSleep(50);
+	}
+
+	//eteindre la led
+	led_TurnOff();
+
+	data_red = adjd_ReadRegister16(DATA_RED_LO);
+	data_green = adjd_ReadRegister16(DATA_GREEN_LO);
+	data_blue = adjd_ReadRegister16(DATA_BLUE_LO);
+	data_clear = adjd_ReadRegister16(DATA_CLEAR_LO);
+}
+
+void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear)
+{
+	led_TurnOn();
+	adjd_SetRegister(ADJD_REG_CONFIG, 0 << CONFIG_TOFS);
+	adjd_SetRegister(ADJD_REG_CTRL, 1 << CTRL_GSSR);
+	while(adjd_ReadRegister(ADJD_REG_CTRL))
+	{
+		THREAD_MSleep(50);
+	}
+	led_TurnOff();
+
+	data_red = adjd_ReadRegister16(DATA_RED_LO);
+	data_green = adjd_ReadRegister16(DATA_GREEN_LO);
+	data_blue = adjd_ReadRegister16(DATA_BLUE_LO);
+	data_clear = adjd_ReadRegister16(DATA_CLEAR_LO);
+
+}
+
+// l argument est un integer qui ne doit pas etre modifie
+int color_Init(int& dev_handle)
+{
+	int error;
+	error = armus::i2c_RegisterDevice(ADJD_S371_QR999_SADR, 100000, 1000, dev_handle);
+
+	return error;
+}
+
+///****************************************************************************
+///*********** FIN Fonctions pour le capteur de couleur ***********************
+///****************************************************************************
 
 
