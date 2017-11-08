@@ -13,7 +13,7 @@
 #define TOTAL_TIME 180000
 //Voltage du 5kHz
 #define VOLTAGE_MICRO 1
-// Include Files
+// Include Files armus
 #include <libarmus.h>
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
@@ -190,22 +190,22 @@ int main()
 			if (iColor == START_YELLOW)
 			{
 				LCD_Printf("YELLOW \n");
-				//Avance				
+				Avance_BASE();
 			}
 			else if (iColor == START_PINK)
 			{
 				LCD_Printf("PINK \n");	
-				//Avance				
+				Avance_BASE();
 			}
 			else if (iColor == START_GREEN)
 			{
 				LCD_Printf("GREEN \n");	
-				//Avance				
+				Avance_BASE();
 			}
 			else if (iColor == START_BLUE)
 			{
 				LCD_Printf("BLUE \n");
-				//Avance			
+				Avance_BASE();
 			}
 		}
 	}
@@ -215,47 +215,47 @@ int main()
 	float f_time = 0; //Initialisation compteur temps de la course
 	float f_MSdepuis = 0; //millisecondes depuis la derniere lecture
 	SYSTEM_ResetTimer(); //Mise a zero du compteur de la course
+	int current_color;
 
 	while (f_time <= TOTAL_TIME)
 	{
-		m_iCouleurDep = get_current_color();
+		current_color = get_current_color();
 
-		if (m_iCouleurDep == START_RED)
+		if (current_color == START_RED)
 		{
 			LCD_Printf("RED\n");
 			Tourne_gauche_avance();
 		}
-		else if (m_iCouleurDep == START_GREY)
+		else if (current_color == START_GREY)
 		{
 				LCD_Printf("GREY \n");
 				//Si les infrarouges voient la boite a moins de 20cm, tourne a droite
 				//Sinon, avance...
 		}
-		else if (m_iCouleurDep == START_YELLOW)
+		else if (current_color == START_YELLOW)
 		{
 				LCD_Printf("YELLOW \n");
 				Tourne_gauche_avance();
 		}
-		else if (m_iCouleurDep == START_PINK)
+		else if (current_color == START_PINK)
 		{
 				LCD_Printf("PINK \n");	
 				Tourne_gauche_avance();
 		}
-		else if (m_iCouleurDep == START_GREEN)
+		else if (current_color == START_GREEN)
 		{
 				LCD_Printf("GREEN \n");	
 				//Stop, Backup and tourne a gauche et avance				
 		}
-		else if (m_iCouleurDep == START_BLUE)
+		else if (current_color == START_BLUE)
 		{
 				LCD_Printf("BLUE \n");
 				//Si tu as un objet dans les pinces, tourne a droite et avance
 				//Sinon tourne a gauche et avance				
 		}
-		else if (m_iCouleurDep == START_WHITE)
+		else if (current_color == START_WHITE)
 		{
 				LCD_Printf("WHITE \n");
-				
 		}
 		else
 		{
