@@ -83,10 +83,10 @@
 #define WHITE_B 905
 #define WHITE_C 1023
 
-#define START_RED 1
-#define START_YELLOW 2
-#define START_PINK 3
-#define START_GREEN 4
+#define START_YELLOW 1
+#define START_PINK 2
+#define START_GREEN 3
+#define START_BLUE 4
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
@@ -178,14 +178,43 @@ int main()
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
+			//Yellow
 			if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
 			&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
 			&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
 			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
-		{
-			LCD_Printf("YELLOW \n");
-			Tourne_gauche_avance();
-		}
+			{
+				LCD_Printf("YELLOW \n");
+				m_iCouleurDep = 1;
+				//Avance
+			}//Pink
+			else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+			&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+			&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+			&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+			{
+				LCD_Printf("PINK \n");
+				m_iCouleurDep = 2;
+				//Avance
+			}//Green
+			else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+				&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+				&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+				&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+			{
+				LCD_Printf("GREEN \n");
+				m_iCouleurDep = 3;
+				//Avance
+			}//Blue
+			else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+				&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+				&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+				&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+			{
+				LCD_Printf("BLUE \n");
+				m_iCouleurDep = 4;
+				//Avance
+			}
 		}
 		else 
 		{
