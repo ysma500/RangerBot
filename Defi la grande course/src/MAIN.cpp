@@ -10,7 +10,7 @@
 ============================================================================
 */
 //Timer total 
-#define TOTAL_TIME 180000
+#define TOTAL_TIME 175000
 //Voltage du 5kHz
 #define VOLTAGE_MICRO 1
 // Include Files armus
@@ -183,7 +183,7 @@ int main()
 		micro_sound = ANALOG_Read(6);
 		micro_background = ANALOG_Read(7);
 		micro_result = micro_sound - micro_background;
-		THREAD_MSleep(100);
+		THREAD_MSleep(1000);
 
 		if (micro_result >= 20) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
 		{
