@@ -101,6 +101,13 @@
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
+//Define
+#define IR0 0	//Capteur plus bas
+#define IR1 1	//Capteur niveau moyen
+#define IR2 2	//Capteur plus haut
+#define B1 1 //Analog input 1 à l'endroit B1
+#define DISTANCE_MIN 100
+
 //PID
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
@@ -139,6 +146,12 @@ float PID_Setup(void);
 void Tourne_gauche_avance();
 void Tourne_gauche_avance(int valeurMod);
 void Avance_BASE();
+
+//Prototypes de fonctions de configs
+void testDeCapteurs(int capteur[3]);
+int capteurAffichage(int capteur[3]);
+int lectrureRouge(int capteur[3]);
+
 
 int main()
 {
@@ -209,6 +222,7 @@ int main()
 	{
 		current_color = get_current_color();
 		
+
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
@@ -227,11 +241,11 @@ int main()
 			{
 				case START_GREY:
 					//LCD_Printf("GREY \n");
-					//if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
-					/*Sinon, avance...else
+					if (INFRAROUGE)Si les infrarouges voient la boite a moins de 20cm, tourne a droite
+					Sinon, avance...else
 					{
 						Avance_BASE();
-					}*/
+
 					Avance_BASE();
 					break;
 				case START_YELLOW:
@@ -734,5 +748,101 @@ int color_Init(int& dev_handle)
 ///****************************************************************************
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
+
+
+
+
+
+
+/******************************************
+ *
+ *
+ *
+ * Fonctions Detecteurs Infrarouge
+ *
+ *
+ *
+ ***********************************/
+
+
+
+
+//Combinaison du multiplexeur A0,A1 et A2
+int combinaison(int capteur)
+{
+	switch (capteur)
+	{
+			case 1 :
+				DIGITALIO_Write(2, 0);
+				DIGITALIO_Write(3, 0);
+				DIGITALIO_Write(4, 0);
+				break;
+
+			case 2 :
+				DIGITALIO_Write(2, 0);
+				DIGITALIO_Write(3, 1);
+				DIGITALIO_Write(4, 0);
+				break;
+
+			case 3 :
+				DIGITALIO_Write(2, 1);
+				DIGITALIO_Write(3, 1);
+				DIGITALIO_Write(4, 0);
+				break;
+	}
+	return 0;
+}
+int lireCapteur(int capteur_Infra[3])
+{
+	combinaison(IR0);
+	capteur_Infra[IR0] = ANALOG_Read(B1);
+
+	combinaison(IR1);
+	capteur_Infra[IR1] = ANALOG_Read(B1);
+
+	combinaison(IR2);
+	capteur_Infra[IR2] = ANALOG_Read(B1);
+
+}
+
+int lectrureRouge(int capteur[3])
+{
+	int valeur = 0;
+	lireCapteur(capteur);
+	valeur = capteurAffichage(capteur);
+
+	return valeur;
+}
+
+int capteurAffichage(int capteur[3])
+{
+	if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
+
+		if( capteur[IR2] >= capteur[IR1] && capteur[IR2] >= capteur[IR0] )
+		{
+			//LCD_ClearAndPrint("Detection d'un robot\n");
+			//LCD_Printf("Robot a : %d",capteur[IR2]);
+			return 3;
+		}
+
+		else if( capteur[IR1] > capteur[IR0] && capteur[IR1] > capteur[IR2])
+		{
+			//LCD_ClearAndPrint("Detection de la plateforme\n");
+			//LCD_Printf("La plateforme a : %d",capteur[IR1]);
+			return 2;
+		}
+
+		else
+		{
+			//LCD_ClearAndPrint("Objet detecter\n");
+			//LCD_Printf("L'objet a : %d",capteur[IR0]);
+			return 1;
+		}
+
+	return 0;
+}
+
+
+
 
 
