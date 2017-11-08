@@ -186,22 +186,23 @@ int main()
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
-			if (m_iCouleurDep == START_YELLOW)
+			int iColor = get_current_color();
+			if (iColor == START_YELLOW)
 			{
 				LCD_Printf("YELLOW \n");
 				//Avance				
 			}
-			else if (m_iCouleurDep == START_PINK)
+			else if (iColor == START_PINK)
 			{
 				LCD_Printf("PINK \n");	
 				//Avance				
 			}
-			else if (m_iCouleurDep == START_GREEN)
+			else if (iColor == START_GREEN)
 			{
 				LCD_Printf("GREEN \n");	
 				//Avance				
 			}
-			else if (m_iCouleurDep == START_BLUE)
+			else if (iColor == START_BLUE)
 			{
 				LCD_Printf("BLUE \n");
 				//Avance			
