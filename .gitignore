@@ -6,4 +6,5 @@ MAIN/Debug/src/MAIN.o
 MAIN/Debug/Armus.exe
 *.exe
 *.o
+*.d
 .metadata/.plugins/org.eclipse.cdt.core/.log
