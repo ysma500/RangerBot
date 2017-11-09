@@ -113,6 +113,7 @@ float GAIN_I = 0.223;
 float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
+int m_iFlagZoneBkp = 0;
 
 //Valeur de couleur de depart
 int m_iCouleurDep = 0;
@@ -229,24 +230,43 @@ int main()
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
-			Tourne_gauche_avance(START_RED);
+			if(m_iFlagZoneBkp)
+			{
+				m_iFlagZoneBkp = 0;
+				Rotation(90, LEFT_ROT);
+				Avance(600, AVANCE);
+			}
+			else
+			{
+				Tourne_gauche_avance(START_RED);
+			}
+			
 		}
 		else if(current_color == m_iCouleurDep)
 		{
-			LCD_Printf("COULEUR DE DEPART \n");
-			Avance((MIN_DISTANCE), RECULE);
-			Rotation(180, LEFT_ROT);
+			//LCD_Printf("COULEUR DE DEPART \n");
+			Avance((MIN_DISTANCE/3), RECULE);
+			if(!m_iFlagZoneBkp)
+			{
+				m_iFlagZoneBkp = 1;
+			}
+			//Rotation(160, LEFT_ROT);
 		}
 		else
 		{
+			if(hauteur == 3)
+			{
+				Avance((MIN_DISTANCE/3), RECULE);
+				Rotation(45, RIGHT_ROT);
+			}
 			//lecture des infrarouges
 			switch(current_color)
 			{
 				case START_GREY:
-					//LCD_Printf("GREY \n");
+					LCD_Printf("GREY \n");
 					if (hauteur == 2)
 					{
-						Rotation(45, 0);
+						Rotation(90, RIGHT_ROT);
 						Avance_BASE();
 					}
 					else
@@ -259,27 +279,32 @@ int main()
 					Tourne_gauche_avance();
 					break;
 				case START_PINK:
-					//LCD_Printf("PINK \n");	
+					LCD_Printf("PINK \n");	
 					Tourne_gauche_avance();
 					break;
 				case START_GREEN:
 					//LCD_Printf("GREEN \n");	
-					Avance(-MIN_DISTANCE, AVANCE);
 					Tourne_gauche_avance();
 					break;
 				case START_BLUE:
-					//LCD_Printf("BLUE \n");
+					LCD_Printf("BLUE \n");
 					Tourne_gauche_avance();					
 					break;
 				case START_WHITE:
-					//LCD_Printf("WHITE \n");
-					Avance_BASE();
+					LCD_Printf("WHITE \n");
+					if(m_iFlagZoneBkp)
+					{
+						m_iFlagZoneBkp = 0;
+						Rotation(160, LEFT_ROT);
+					}
+					else
+						Avance_BASE();
 					break;
 				case START_BLACK:
 					Avance_BASE();
 					break;
 				default:
-					//LCD_Printf("I don't know where the fuck I am\n");
+					LCD_Printf("I don't know where the fuck I am\n");
 					Avance_BASE();
 					//Code de detection de ligne?	
 					break;
@@ -783,13 +808,13 @@ int combinaison(int capteur)
 				break;
 
 			case 2 :
-				DIGITALIO_Write(2, 0);
-				DIGITALIO_Write(3, 1);
+				DIGITALIO_Write(2, 1);
+				DIGITALIO_Write(3, 0);
 				DIGITALIO_Write(4, 0);
 				break;
 
 			case 3 :
-				DIGITALIO_Write(2, 1);
+				DIGITALIO_Write(2, 0);
 				DIGITALIO_Write(3, 1);
 				DIGITALIO_Write(4, 0);
 				break;
@@ -821,16 +846,16 @@ int lectureRouge(int capteur[3])
 
 int capteurAffichage(int capteur[3])
 {
-	if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
-
-		if( capteur[IR2] >= capteur[IR1] && capteur[IR2] >= capteur[IR0] )
+	if(capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN)
+	{
+		/*if((capteur[IR0] >= capteur[IR1]) && (capteur[IR0] >= capteur[IR2]))
 		{
-			//LCD_ClearAndPrint("Detection d'un robot\n");
-			//LCD_Printf("Robot a : %d",capteur[IR2]);
-			return 3;
-		}
+			//LCD_ClearAndPrint("Objet detecter\n");
+			//LCD_Printf("L'objet a : %d",capteur[IR0]);
+			return 1;
+		}*/
 
-		else if( capteur[IR1] > capteur[IR0] && capteur[IR1] > capteur[IR2])
+		if((capteur[IR1] >= capteur[IR2]) && (capteur[IR0] >= capteur[IR2]))
 		{
 			//LCD_ClearAndPrint("Detection de la plateforme\n");
 			//LCD_Printf("La plateforme a : %d",capteur[IR1]);
@@ -839,11 +864,18 @@ int capteurAffichage(int capteur[3])
 
 		else
 		{
-			//LCD_ClearAndPrint("Objet detecter\n");
-			//LCD_Printf("L'objet a : %d",capteur[IR0]);
-			return 1;
+			if(capteur[IR2] >= 350)
+			{
+				return 3;
+			}
+			else
+			{
+				return 0;
+			}
+			//LCD_ClearAndPrint("Detection d'un robot\n");
+			//LCD_Printf("Robot a : %d",capteur[IR2]);
 		}
-
+	}
 	return 0;
 }
 

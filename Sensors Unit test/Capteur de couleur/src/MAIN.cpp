@@ -39,6 +39,60 @@
 
 #define CONFIG_TOFS				0
 
+//Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
+//Define des couleurs pour le capteurs de couleurs
+#define RED_R 348
+#define RED_G 152
+#define RED_B 81
+#define RED_C 414
+
+#define GREY_R 239
+#define GREY_G 280
+#define GREY_B 215
+#define GREY_C 590
+
+#define YELLOW_R 608
+#define YELLOW_G 567
+#define YELLOW_B 220
+#define YELLOW_C 896
+
+#define PINK_R 535
+#define PINK_G 348
+#define PINK_B 258
+#define PINK_C 798
+
+#define GREEN_R 56
+#define GREEN_G 107
+#define GREEN_B 75
+#define GREEN_C 196
+
+#define BLUE_R 105
+#define BLUE_G 142
+#define BLUE_B 185
+#define BLUE_C 284
+
+#define WHITE_R 685
+#define WHITE_G 755
+#define WHITE_B 571
+#define WHITE_C 896
+
+//Code de chaque couleur
+#define START_RED 1
+#define START_GREY 2
+#define START_YELLOW 3
+#define START_PINK 4
+#define START_GREEN 5
+#define START_BLUE 6
+#define START_WHITE 7
+#define START_BLACK 8
+#define START_OTHER 0
+
+#define LINE_HYST 50 //Incertitude sur la detection de couleurs
+#define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
+
+//Fonction pour savoir la couleur au moment
+int get_current_color();
+
 void adjd_SetRegister(unsigned char reg, unsigned char val);
 void adjd_SetRegister16(unsigned char reg, int val);
 unsigned char adjd_ReadRegister(unsigned char reg);
@@ -129,10 +183,92 @@ void testDeCapteurs(void)
 			LCD_Printf("Sortie des configs\n");
 		}
 		LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d \n", red, green, blue, clear);
+		get_current_color();
 		THREAD_MSleep(1000);
 	}
 }
 
+//Get current color function
+int get_current_color()
+{
+	int color = 0;
+	int red, blue, green, clear;
+	color_Read(red, blue, green, clear);
+	if(clear < 130)
+	{
+		LCD_Printf("BLACK \n");
+		//color = START_BLACK;
+	}
+	//Red
+	else if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+		&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+		&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+		&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
+	{
+		LCD_Printf("RED\n");
+		//color = START_RED;
+	}
+	//Grey
+	else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
+		&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
+		&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
+		&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
+	{
+		LCD_Printf("GREY \n");
+		//color = START_GREY;
+	}
+	//Yellow
+	else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+		&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+		&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+		&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
+	{
+		LCD_Printf("YELLOW \n");
+		//color = START_YELLOW;
+	}
+	//Pink
+	else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+		&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+		&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+		&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+	{
+		LCD_Printf("PINK \n");
+		//color = START_PINK;
+	}
+	//Green
+	else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+		&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+		&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+		&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+	{
+		LCD_Printf("GREEN \n");
+		//color = START_GREEN;
+	}
+	//Blue
+	else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+		&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+		&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+		&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+	{
+		LCD_Printf("BLUE \n");
+		//color = START_BLUE;
+	}
+	//White
+	else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
+		&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
+		&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
+		&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
+	{
+		LCD_Printf("WHITE \n");
+		//color = START_WHITE;
+	}
+	else
+	{
+		LCD_Printf("OTHER \n");
+		//color = START_OTHER;
+	}
+	return color;
+}
 
 ///****************************************************************************
 ///*********** Fonctions pour le capteur de couleur ***************************
