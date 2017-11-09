@@ -207,7 +207,7 @@ int main()
 			condition_micro = 1;
 			m_iCouleurDep = get_current_color(); //trouver la couleur de depart
 			LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
-			THREAD_MSleep(5000);
+			THREAD_MSleep(4000);
 			Avance_BASE();
 		}
 	}
