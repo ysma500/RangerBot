@@ -202,7 +202,7 @@ int main()
 		micro_result = micro_sound - micro_background;
 		THREAD_MSleep(1000);
 
-		if (micro_result >= 20) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
+		if (micro_result >= 20)//lets put 20 and hope it works
 		{
 			LCD_Printf("Le signal de 5kHz a ete entendu \n");
 			condition_micro = 1;
@@ -305,8 +305,7 @@ int main()
 					break;
 				default:
 					LCD_Printf("I don't know where the fuck I am\n");
-					Avance_BASE();
-					//Code de detection de ligne?	
+					Avance(100, AVANCE);	
 					break;
 			}
 		}
