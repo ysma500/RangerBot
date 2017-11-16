@@ -46,45 +46,8 @@
 #define RED_B 81
 #define RED_C 414
 
-#define GREY_R 239
-#define GREY_G 280
-#define GREY_B 215
-#define GREY_C 590
-
-#define YELLOW_R 608
-#define YELLOW_G 567
-#define YELLOW_B 220
-#define YELLOW_C 896
-
-#define PINK_R 535
-#define PINK_G 348
-#define PINK_B 258
-#define PINK_C 798
-
-#define GREEN_R 56
-#define GREEN_G 107
-#define GREEN_B 75
-#define GREEN_C 196
-
-#define BLUE_R 105
-#define BLUE_G 142
-#define BLUE_B 185
-#define BLUE_C 284
-
-#define WHITE_R 685
-#define WHITE_G 755
-#define WHITE_B 571
-#define WHITE_C 896
-
 //Code de chaque couleur
 #define START_RED 1
-#define START_GREY 2
-#define START_YELLOW 3
-#define START_PINK 4
-#define START_GREEN 5
-#define START_BLUE 6
-#define START_WHITE 7
-#define START_BLACK 8
 #define START_OTHER 0
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
@@ -140,7 +103,7 @@ int main()
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
-	
+
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
@@ -150,10 +113,10 @@ int main()
 			j = 1;
 		}
 	}
-	
+
 	//Configuration
 	testDeCapteurs();
-	
+
 	LCD_Printf("Fin du test du capteur\n");
 
 	// Le code attent 20 secondes
@@ -167,7 +130,7 @@ int main()
 	return 0;
 }
 
-//Debut de la fonction pour la modification des gains a suivre 
+//Debut de la fonction pour la modification des gains a suivre
 void testDeCapteurs(void)
 {
 	int i = 0, j = 0;
