@@ -136,6 +136,7 @@ int creerUnCode(int code[NB_CODE_MAX])
 
 		if(nb_Code >= NB_CODE_MAX - 1)
 		{
+			Nb_Code = 0;
 			LCD_ClearAndPrint("Les codes entrees sont : \n");
 			LCD_Printf("Vous avez entree %d codes !\n",code[0]);
 
