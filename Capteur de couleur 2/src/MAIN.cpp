@@ -9,12 +9,10 @@
  robot 77 P: 1,70 I:0,220
 ============================================================================
 */
-//Timer total 
-#define TOTAL_TIME 180000
-//Voltage du 5kHz
-#define VOLTAGE_MICRO 1
+
 // Include Files armus
 #include <libarmus.h>
+//define
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
@@ -129,10 +127,11 @@ int color_Init(int& dev_handle);
 int adjd_dev;
 
 // Prototypes de fonctions (Avancer, Tourner)
-void Avance(int iDistance);
+void Avance(int iDistance, int iSens);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 void Tourne_gauche_avance();
+void Tourne_gauche_avance(int valeurMod);
 void Avance_BASE();
 
 int main()
@@ -149,16 +148,16 @@ int main()
 	integrationTime_SetValue(INTEGRATION_GREEN, 255);
 	integrationTime_SetValue(INTEGRATION_BLUE, 255);
 	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
-	
+
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
-	
+
 	//Configuration
 	//Initialisation();
-	
+
 	int j = 0; //Debut du programme
 	while (j == 0)
 	{
@@ -169,31 +168,7 @@ int main()
 			j = 1;
 		}
 	}
-	
-	//Ecoute du 5kHz
-	int condition_micro = 0;
-	int micro_sound; //5kHz filtre
-	int micro_background; //bruit de fond
-	int micro_result;
-	while (condition_micro == 0)
-	{
-		//ANALOG_Read(entre analogique) envoie un voltage 0 a 5 volt recu a un nombre entre 0 et 1023
-		micro_sound = ANALOG_Read(6);
-		micro_background = ANALOG_Read(7);
-		micro_result = micro_sound - micro_background;
-		THREAD_MSleep(100);
 
-		if (micro_result >= 20) //il faut choisir le VOLTAGE_MICRO, a tester experimentalement
-		{
-			LCD_Printf("Le signal de 5kHz a ete entendu \n");
-			condition_micro = 1;
-			m_iCouleurDep = get_current_color(); //trouver la couleur de depart
-			//LCD_Printf("La couleur ci-dessous est %d \n", m_iCouleurDep);
-			Avance_BASE();
-		}
-	}
-	
-	
 	//Strategie pour le parcours
 	float f_time = 0; //Initialisation compteur temps de la course
 	float f_MSdepuis = 0; //millisecondes depuis la derniere lecture
@@ -203,7 +178,7 @@ int main()
 	while (f_time <= TOTAL_TIME)
 	{
 		current_color = get_current_color();
-		
+
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
@@ -232,11 +207,11 @@ int main()
 					Tourne_gauche_avance();
 					break;
 				case START_PINK:
-					//LCD_Printf("PINK \n");	
+					//LCD_Printf("PINK \n");
 					Tourne_gauche_avance();
 					break;
 				case START_GREEN:
-					//LCD_Printf("GREEN \n");	
+					//LCD_Printf("GREEN \n");
 					Avance(-MIN_DISTANCE);
 					Tourne_gauche_avance();
 					break;
@@ -244,7 +219,7 @@ int main()
 					//LCD_Printf("BLUE \n");
 					//Si tu as un objet dans les pinces, tourne a droite et avance
 					//Sinon tourne a gauche et avance
-					Tourne_gauche_avance();					
+					Tourne_gauche_avance();
 					break;
 				case START_WHITE:
 					//LCD_Printf("WHITE \n");
@@ -253,7 +228,7 @@ int main()
 				default:
 					//LCD_Printf("I don't know where the fuck I am\n");
 					Avance_BASE();
-					//Code de detection de ligne?	
+					//Code de detection de ligne?
 					break;
 			}
 		}
@@ -343,103 +318,22 @@ int get_current_color()
 	return color;
 }
 
-//Debut de la fonction pour la modification des gains a suivre 
-void Initialisation()
-{
-	int i = 0, j = 0;
-
-	while(i==0 || j==0)
-	{
-		Avance(800);
-		LCD_Printf("Tic coter Gauche: %d	Tic coter Droit: %d\n", m_iTicTotalG, m_iTicTotalD);
-		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_LEFT))
-		{
-			LCD_Printf("Wait 1 sec\n");
-			//Attends 1000 millisecondes
-			THREAD_MSleep(1000);
-			int k = 0;
-			LCD_Printf("Ajustement de GAIN_P\n");
-			while(k == 0)
-			{
-				if(DIGITALIO_Read(BMP_LEFT))
-				{
-					GAIN_P += 0.01;
-					LCD_Printf("Augmentation de 0,01 = %0.2f\n", GAIN_P);
-				}
-				if(DIGITALIO_Read(BMP_RIGHT))
-				{
-					GAIN_P -= 0.01;
-					LCD_Printf("Diminution de 0,01 = %0.2f\n", GAIN_P);
-				}
-				if(DIGITALIO_Read(BMP_FRONT))
-				{
-					LCD_Printf("Fermeture des modification de GAIN_P\n");
-					k = 1;
-					m_iTicTotalG = 0;
-					m_iTicTotalD = 0;
-				}
-				// attend 50 millisecondes
-				THREAD_MSleep(50);
-			}
-
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))
-		{
-			LCD_Printf("Wait 1 sec\n");
-			// attend 1000 millisecondes
-			THREAD_MSleep(1000);
-			int k = 0;
-			LCD_Printf("Ajustement de GAIN_I\n");
-			while(k == 0)
-			{
-				//Avance (2000);
-				if(DIGITALIO_Read(BMP_LEFT))
-				{
-					GAIN_I += 0.001;
-					LCD_Printf("Augmentation de 0,001 = %0.4f\n", GAIN_I);
-				}
-				if(DIGITALIO_Read(BMP_RIGHT))
-				{
-					GAIN_I -= 0.001;
-					LCD_Printf("Diminution de 0,001 = %0.4f\n", GAIN_I);
-				}
-				if(DIGITALIO_Read(BMP_FRONT))
-				{
-					LCD_Printf("Fermeture des modification de GAIN_I\n");
-					k=1;
-					m_iTicTotalG = 0;
-					m_iTicTotalD = 0;
-				}
-				// attend 50 millisecondes
-				THREAD_MSleep(50);
-			}
-		}
-		if(DIGITALIO_Read(BMP_REAR))
-		{
-			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
-		}
-	}
-}
-
 float PID_Setup()
 {
 	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
-	
+
 	THREAD_MSleep(50);
 	iTicDRead = ENCODER_Read(2);
 	iTicGRead = ENCODER_Read(1);
-	
+
 	m_iTicTotalD += iTicDRead;
 	m_iTicTotalG += iTicGRead;
 	iErrorLive = iTicDRead - iTicGRead;
 	iErrorTotal = m_iTicTotalD - m_iTicTotalG;
-	
+
 	iCorrP = GAIN_P * iErrorLive;
 	iCorrI = GAIN_I * iErrorTotal;
-	
+
 	return (iCorrP + iCorrI);
 }
 
@@ -449,18 +343,18 @@ void Rotation(float fAngle, int iDirection)
 	float fGaucheSpeed = SPEED_START-20;
 	float fArcRot = 0;
 	float fTicToDo = 0;
-	
+
 	//Cacul des tics a faire (encodeurs)
 	if (iDirection == RIGHT_ROT)
 		fArcRot = ((PI * 141) * ((fAngle - 5) / 360));
 	else
 		fArcRot = ((PI * 141) * ((fAngle - 4) / 360));
 	fTicToDo = (fArcRot / Circum) * 64;
-	
+
 	m_iTicTotalD = 0;
 	m_iTicTotalG = 0;
-	
-	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
+
+	int iTicDone = m_iTicTotalG; // ï¿½gual ï¿½ 0 ou ï¿½ m_TicTotalG...
 	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
 
 	//Remise a 0
@@ -477,7 +371,7 @@ void Rotation(float fAngle, int iDirection)
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	
+
 	//Droite
 	if (iDirection == RIGHT_ROT)
 	{
@@ -498,51 +392,71 @@ void Avance(int iDistance) //Distance en mm
 	float fGaucheSpeed = SPEED_START;
 	float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
 	int iTicDone = m_iTicTotalG;
-	
+
 	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
-	
+
 	//Remise a 0 des encodeurs
 	ENCODER_Read(2);
 	ENCODER_Read(1);
 
 
-	//Avance
-	if (iDistance > 0)
+	void Avance(int iDistance, int iSens) //Distance en mm
 	{
-		while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
+		float fDroitSpeed = SPEED_START;
+		float fGaucheSpeed = SPEED_START;
+		float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
+		int iTicDone = m_iTicTotalG;
+
+		int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
+
+		//Remise a 0 des encodeurs
+		ENCODER_Read(2);
+		ENCODER_Read(1);
+
+
+		//Avance
+		if (iSens == AVANCE)
 		{
-			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
-			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
-			fGaucheSpeed += PID_Setup();
+			while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
+			{
+				MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
+				MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
+				fGaucheSpeed += PID_Setup();
+			}
 		}
+		//Recule
+		if (iSens == RECULE)
+		{
+			while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
+			{
+				MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
+				MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
+				fGaucheSpeed += PID_Setup();
+			}
+		}
+		//Arreter les moteurs
+		MOTOR_SetSpeed(LEFT_MOTOR, 0);
+		MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 	}
-	//Recule
-	if (iDistance < 0)
+
+	///Fonction tourne ou avance
+
+	void Tourne_gauche_avance()
 	{
-		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
-		{
-			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
-			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
-			fGaucheSpeed += PID_Setup();
-		}
+		Rotation(45,LEFT_ROT);
+		Avance(MIN_DISTANCE, AVANCE);
 	}
-	//Arreter les moteurs
-	MOTOR_SetSpeed(LEFT_MOTOR, 0);
-	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
-}
 
-///Fonction tourne ou avance
+	void Tourne_gauche_avance(int valeurMod)
+	{
+		Rotation(45,LEFT_ROT);
+		Avance(MIN_DISTANCE/3, AVANCE);
+	}
 
-void Tourne_gauche_avance()
-{
-	Rotation(45,LEFT_ROT);
-	Avance(MIN_DISTANCE);
-}
-
-void Avance_BASE()
-{
-	Avance(MIN_DISTANCE);
-}
+	void Avance_BASE()
+	{
+		Avance(MIN_DISTANCE, AVANCE);
+	}
 
 
 
@@ -714,5 +628,3 @@ int color_Init(int& dev_handle)
 ///****************************************************************************
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
-
-
