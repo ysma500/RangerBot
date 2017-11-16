@@ -111,13 +111,27 @@ int main()
 			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 1;
 		}
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			LCD_Printf("Entrer dans les tests des capteurs\n");
+			j = 2;
+		}
 	}
 
+if (j == 1)
+{
 	//Configuration
 	testDeCapteurs();
 
 	LCD_Printf("Fin du test du capteur\n");
+}
+else if (j == 2)
+{
+	//afichage couleur actuelle
+	afficher_live();
 
+	LCD_Printf("Fin du test du capteur\n");
+}
 	// Le code attent 20 secondes
 	THREAD_MSleep(20000);
 
