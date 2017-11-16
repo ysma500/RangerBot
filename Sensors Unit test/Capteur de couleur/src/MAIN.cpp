@@ -112,7 +112,7 @@ int main()
 			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 1;
 		}
-		if(DIGITALIO_Read(BMP_REAR))
+		if(DIGITALIO_Read(BMP_LEFT))
 		{
 			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 2;
@@ -140,7 +140,6 @@ else if (j == 2)
 	FPGA_StopAll();
 
 	LCD_Printf("Fin du programme\n");
-
 	return 0;
 }
 
