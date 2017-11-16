@@ -110,7 +110,8 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 			if(code[0] > 0)
 			{
 				code_Erreur = trouverCode(code);
-				if(code_Erreur = BON_CODE)
+
+				if(code_Erreur == BON_CODE)
 				{
 
 					LCD_Printf("Bravo vous avez trouve le bon code!\n");
@@ -121,6 +122,7 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 					LCD_Printf("Ter pourri");
 				}
 			}
+
 			else
 			{
 				LCD_ClearAndPrint("Entree code avec BMP front");
@@ -207,6 +209,7 @@ int trouverCode(int code[NB_CODE_MAX])
 	int i = 1;
 	int k = 0;
 	LCD_ClearAndPrint("Section pour trouver le code\n");
+
 	while(i < NB_CODE_MAX)
 	{
 		valeur = valeurBumper();
@@ -216,16 +219,19 @@ int trouverCode(int code[NB_CODE_MAX])
 		{
 			LCD_Printf("Chiffre : %d \n", valeur);
 			THREAD_MSleep(1500);
+
 			if(code[i] != valeur)
 			{
 				return 0;
 			}
 
+			valeur = 0;
 			i++;
 		}
 
 
 	}
+
 	return BON_CODE;
 }
 
