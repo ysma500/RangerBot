@@ -50,7 +50,6 @@
 #define START_RED 1
 #define START_OTHER 0
 
-#define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
 //Fonction pour savoir la couleur au moment
@@ -112,13 +111,27 @@ int main()
 			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 1;
 		}
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			LCD_Printf("Entrer dans les tests des capteurs\n");
+			j = 2;
+		}
 	}
 
+if (j == 1)
+{
 	//Configuration
 	testDeCapteurs();
 
 	LCD_Printf("Fin du test du capteur\n");
+}
+else if (j == 2)
+{
+	//afichage couleur actuelle
+	afficher_live();
 
+	LCD_Printf("Fin du test du capteur\n");
+}
 	// Le code attent 20 secondes
 	THREAD_MSleep(20000);
 
@@ -157,11 +170,7 @@ int get_current_color()
 	int color = 0;
 	int red, blue, green, clear;
 	color_Read(red, blue, green, clear);
-	if(clear < 130)
-	{
-		LCD_Printf("BLACK \n");
-		//color = START_BLACK;
-	}
+
 	//Red
 	else if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
 		&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
@@ -169,66 +178,13 @@ int get_current_color()
 		&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 	{
 		LCD_Printf("RED\n");
-		//color = START_RED;
+		color = START_RED;
 	}
-	//Grey
-	else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
-		&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
-		&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
-		&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
-	{
-		LCD_Printf("GREY \n");
-		//color = START_GREY;
-	}
-	//Yellow
-	else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
-		&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
-		&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
-		&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
-	{
-		LCD_Printf("YELLOW \n");
-		//color = START_YELLOW;
-	}
-	//Pink
-	else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
-		&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
-		&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
-		&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
-	{
-		LCD_Printf("PINK \n");
-		//color = START_PINK;
-	}
-	//Green
-	else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
-		&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
-		&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
-		&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
-	{
-		LCD_Printf("GREEN \n");
-		//color = START_GREEN;
-	}
-	//Blue
-	else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
-		&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
-		&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
-		&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
-	{
-		LCD_Printf("BLUE \n");
-		//color = START_BLUE;
-	}
-	//White
-	else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
-		&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
-		&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
-		&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
-	{
-		LCD_Printf("WHITE \n");
-		//color = START_WHITE;
-	}
+
 	else
 	{
 		LCD_Printf("OTHER \n");
-		//color = START_OTHER;
+		color = START_OTHER;
 	}
 	return color;
 }
