@@ -142,12 +142,10 @@ int creerUnCode(int code[NB_CODE_MAX])
 			for(i = 1; i < NB_CODE_MAX ; i++)
 			{
 				LCD_Printf("Le %d code est : %d \n", i, code[i]);
-
 			}
 
-			LCD_Printf("\n\nAffichage avant la fin du test 2 secondes");
+			LCD_Printf("Affichage avant la fin du test 2 secondes");
 			THREAD_MSleep(2000);
-			LCD_Printf("\nFin");
 			break;
 		}
 
