@@ -140,7 +140,6 @@ else if (j == 2)
 	FPGA_StopAll();
 
 	LCD_Printf("Fin du programme\n");
-
 	return 0;
 }
 
