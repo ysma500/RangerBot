@@ -111,11 +111,13 @@ int main()
 		{
 			LCD_Printf("Entrer dans les tests des capteurs\n");
 			j = 1;
+			break;
 		}
-		if(DIGITALIO_Read(BMP_LEFT))
+		else if(DIGITALIO_Read(BMP_LEFT))
 		{
-			LCD_Printf("Entrer dans les tests des capteurs\n");
+			LCD_Printf("Entrer dans les capteur live\n");
 			j = 2;
+			break;
 		}
 	}
 
@@ -189,10 +191,17 @@ int get_current_color()
 	color_Read(red, blue, green, clear);
 
 	//Red
+<<<<<<< HEAD
+	if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+		&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+		&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+		&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
+=======
 	if ((red >= (RED_R - LINE_HYST_PLUS)) && (red <= (RED_R + LINE_HYST_PLUS))
 		&& (blue >= (RED_B - LINE_HYST_PLUS)) && (blue <= (RED_B + LINE_HYST_PLUS))
 		&& (green >= (RED_G - LINE_HYST_PLUS)) && (green <= (RED_G + LINE_HYST_PLUS))
 		&& (clear >= (RED_C - LINE_HYST_PLUS)) && (clear <= (RED_C + LINE_HYST_PLUS)))
+>>>>>>> 044c46a062760f323d9a0628ab4db9b3404d2785
 	{
 		LCD_Printf("RED\n");
 		color = START_RED;
