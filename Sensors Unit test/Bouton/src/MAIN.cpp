@@ -35,10 +35,12 @@
 #define BTN_3 3
 #define BTN_4 4
 
+#define BON_CODE 1
 // Prototypes de fonctions de configs
 void testDeCapteurs(int code[NB_CODE_MAX]);
 int creerUnCode(int code[NB_CODE_MAX]);
 int valeurBumper(void);
+int trouverCode(int code[NB_CODE_MAX]);
 
 int main()
 {
@@ -85,6 +87,7 @@ int main()
 void testDeCapteurs(int code[NB_CODE_MAX])
 {
 	int i = 0, j = 0;
+	int code_Erreur = 0;
 
 	int Affichage = 0;
 
@@ -94,12 +97,30 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
 		{
-			LCD_ClearAndPrint("Attente de 2 secondes avant le test \n");
+			LCD_ClearAndPrint("Attente de 2 secondes Cree code \n");
 			THREAD_MSleep(2000);
 			creerUnCode(code);
 		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
+		else if(DIGITALIO_Read(BMP_REAR))	//Configuration 2 de la fonction de test des capteurs
 		{
+			LCD_ClearAndPrint("Attente de 2 secondes trouver code \n");
+			THREAD_MSleep(2000);
+			if(code[0] > 0)
+			{
+				code_Erreur = trouverCode(code);
+				if(code_Erreur = BON_CODE)
+				{
+					LCD_Printf("Bravo vous avez trouve le bon code!");
+				}
+				else
+				{
+					LCD_Printf("Ter pourri");
+				}
+			}
+			else
+			{
+				LCD_ClearAndPrint("Entree code avec BMP front");
+			}
 
 		}
 		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
@@ -176,6 +197,32 @@ int valeurBumper(void)
 	return RIEN;
 }
 
+int trouverCode(int code[NB_CODE_MAX])
+{
+	int valeur = 0;
+	int i = 1;
+	int k = 0;
+	LCD_ClearAndPrint("Section pour trouver le code\n");
+	while(i < NB_CODE_MAX)
+	{
+		valeur = valeurBumper();
 
+
+		if(valeur > 0)
+		{
+			LCD_Printf("Chiffre : %d \n", code[i]);
+			THREAD_MSleep(1500);
+			if(code[i] != valeur)
+			{
+				return 0;
+			}
+
+			i++;
+		}
+
+
+	}
+	return BON_CODE;
+}
 
 
