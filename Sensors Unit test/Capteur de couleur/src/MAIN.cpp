@@ -78,6 +78,7 @@ int adjd_dev;
 
 // Prototypes de fonctions de configs
 void testDeCapteurs(void);
+void afficher_live(void);
 
 int main()
 {
@@ -143,6 +144,23 @@ else if (j == 2)
 	return 0;
 }
 
+void afficher_live(void)
+{
+	int i = 0, j = 0;
+	int red;
+
+	while(i==0 || j==0)
+	{
+		red = get_current_color();
+		if(DIGITALIO_Read(BMP_REAR))
+		{
+			i = 1;
+			j = 1;
+			LCD_Printf("Sortie des configs\n");
+		}
+		THREAD_MSleep(1000);
+	}
+}
 //Debut de la fonction pour la modification des gains a suivre
 void testDeCapteurs(void)
 {
