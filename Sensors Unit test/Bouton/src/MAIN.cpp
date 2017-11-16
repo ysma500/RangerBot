@@ -54,7 +54,7 @@ int main()
 
 	
 	//Nouveau contenu
-	int code[NB_CODE_MAX];
+	int code[NB_CODE_MAX] = {0,0,0,0,0};
 
 
 	while (j == 0)
@@ -90,6 +90,8 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 	int code_Erreur = 0;
 
 	int Affichage = 0;
+
+	THREAD_MSleep(2000);
 
 	while(i==0 || j==0)
 	{
