@@ -112,7 +112,9 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 				code_Erreur = trouverCode(code);
 				if(code_Erreur = BON_CODE)
 				{
-					LCD_Printf("Bravo vous avez trouve le bon code!");
+
+					LCD_Printf("Bravo vous avez trouve le bon code!\n");
+					LCD_Printf("%d",code_Erreur);
 				}
 				else
 				{
@@ -212,7 +214,7 @@ int trouverCode(int code[NB_CODE_MAX])
 
 		if(valeur > 0)
 		{
-			LCD_Printf("Chiffre : %d \n", code[i]);
+			LCD_Printf("Chiffre : %d \n", valeur);
 			THREAD_MSleep(1500);
 			if(code[i] != valeur)
 			{
