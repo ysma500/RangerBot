@@ -386,7 +386,8 @@ void Rotation(float fAngle, int iDirection)
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
-void Avance(int iDistance) //Distance en mm
+
+void Avance(int iDistance, int iSens) //Distance en mm
 {
 	float fDroitSpeed = SPEED_START;
 	float fGaucheSpeed = SPEED_START;
@@ -400,63 +401,46 @@ void Avance(int iDistance) //Distance en mm
 	ENCODER_Read(1);
 
 
-	void Avance(int iDistance, int iSens) //Distance en mm
+	//Avance
+	if (iSens == AVANCE)
 	{
-		float fDroitSpeed = SPEED_START;
-		float fGaucheSpeed = SPEED_START;
-		float fTicToDo = 64 * (iDistance / Circum);//verifier calcul
-		int iTicDone = m_iTicTotalG;
-
-		int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
-
-		//Remise a 0 des encodeurs
-		ENCODER_Read(2);
-		ENCODER_Read(1);
-
-
-		//Avance
-		if (iSens == AVANCE)
+		while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
 		{
-			while((m_iTicTotalG < iTicObjectif) || (m_iTicTotalG < iTicObjectif))
-			{
-				MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
-				MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
-				fGaucheSpeed += PID_Setup();
-			}
+			MOTOR_SetSpeed(LEFT_MOTOR, fGaucheSpeed);
+			MOTOR_SetSpeed(RIGHT_MOTOR, fDroitSpeed);
+			fGaucheSpeed += PID_Setup();
 		}
-		//Recule
-		if (iSens == RECULE)
+	}
+	//Recule
+	if (iSens == RECULE)
+	{
+		while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
 		{
-			while((m_iTicTotalG < iTicObjectif) || ( m_iTicTotalG < iTicObjectif))
-			{
-				MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
-				MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
-				fGaucheSpeed += PID_Setup();
-			}
+			MOTOR_SetSpeed(LEFT_MOTOR, -1*(fGaucheSpeed));
+			MOTOR_SetSpeed(RIGHT_MOTOR, -1*(fDroitSpeed));
+			fGaucheSpeed += PID_Setup();
 		}
-		//Arreter les moteurs
-		MOTOR_SetSpeed(LEFT_MOTOR, 0);
-		MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 	}
+}
 
-	///Fonction tourne ou avance
+///Fonction tourne ou avance
 
-	void Tourne_gauche_avance()
-	{
-		Rotation(45,LEFT_ROT);
-		Avance(MIN_DISTANCE, AVANCE);
-	}
+void Tourne_gauche_avance()
+{
+	Rotation(45,LEFT_ROT);
+	Avance(MIN_DISTANCE, AVANCE);
+}
 
-	void Tourne_gauche_avance(int valeurMod)
-	{
-		Rotation(45,LEFT_ROT);
-		Avance(MIN_DISTANCE/3, AVANCE);
-	}
+void Tourne_gauche_avance(int valeurMod)
+{
+	Rotation(45,LEFT_ROT);
+	Avance(MIN_DISTANCE/3, AVANCE);
+}
 
-	void Avance_BASE()
-	{
-		Avance(MIN_DISTANCE, AVANCE);
-	}
+void Avance_BASE()
+{
+	Avance(MIN_DISTANCE, AVANCE);
+}
 
 
 
