@@ -41,13 +41,13 @@ int main()
 {
 	
 	//Configuration
-	Initialisation();
+	//Initialisation();
 	// variables locales
 	int j = 0;
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
-	
+	LCD_ClearAndPrint("Appuyer sur le bumper arriere pour commencer le programme\n");
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
@@ -87,25 +87,34 @@ int main()
 			case 1 :
 				LCD_Printf("1. Demonstration sonar\n");
 				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
+				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			case 2 : 
 				LCD_Printf("2. Demonstration detecteur de couleurs\n");
+				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
 				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			case 3 : 
 				LCD_Printf("3. Demonstration infrarouge\n");
 				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
+				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			default :
 				LCD_Printf("4. Sortie\n");
-				THREAD_MSleep(2000);
+				THREAD_MSleep(5000);
 				if(autre_test() == 1)
 				{
 					menu_option = 0;
+					LCD_Printf("Retour au menu dans 2 secondes \n");
+					THREAD_MSleep(2000);
 				}
+				
 				break;
 		}
 	}
