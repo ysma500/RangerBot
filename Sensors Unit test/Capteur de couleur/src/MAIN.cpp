@@ -190,10 +190,10 @@ int get_current_color()
 	color_Read(red, blue, green, clear);
 
 	//Red
-	else if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
-		&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
-		&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
-		&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
+	if ((red >= (RED_R - LINE_HYST_PLUS)) && (red <= (RED_R + LINE_HYST_PLUS))
+		&& (blue >= (RED_B - LINE_HYST_PLUS)) && (blue <= (RED_B + LINE_HYST_PLUS))
+		&& (green >= (RED_G - LINE_HYST_PLUS)) && (green <= (RED_G + LINE_HYST_PLUS))
+		&& (clear >= (RED_C - LINE_HYST_PLUS)) && (clear <= (RED_C + LINE_HYST_PLUS)))
 	{
 		LCD_Printf("RED\n");
 		color = START_RED;
