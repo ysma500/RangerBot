@@ -114,6 +114,7 @@ float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 int m_iFlagZoneBkp = 0;
+int m_iFlagRge = 0;
 
 //Valeur de couleur de depart
 int m_iCouleurDep = 0;
@@ -230,6 +231,7 @@ int main()
 		if (current_color == START_RED)
 		{
 			//LCD_Printf("RED\n");
+			m_iFlagRge = 1;
 			if(m_iFlagZoneBkp)
 			{
 				m_iFlagZoneBkp = 0;
@@ -250,24 +252,30 @@ int main()
 			{
 				m_iFlagZoneBkp = 1;
 			}
+			if(m_iFlagRge)
+				m_iFlagRge = 0;
+			
 			//Rotation(160, LEFT_ROT);
 		}
 		else
 		{
-			if(hauteur == 3)
-			{
-				Avance((MIN_DISTANCE/3), RECULE);
-				Rotation(45, RIGHT_ROT);
-			}
 			//lecture des infrarouges
 			switch(current_color)
 			{
 				case START_GREY:
 					LCD_Printf("GREY \n");
+					if(m_iFlagRge)
+							m_iFlagRge = 0;
 					if (hauteur == 2)
 					{
+						Avance((MIN_DISTANCE/2), RECULE);
 						Rotation(90, RIGHT_ROT);
 						Avance_BASE();
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
 					}
 					else
 					{
@@ -276,36 +284,113 @@ int main()
 					break;
 				case START_YELLOW:
 					//LCD_Printf("YELLOW \n");
-					Tourne_gauche_avance();
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else
+						Tourne_gauche_avance();
 					break;
 				case START_PINK:
-					LCD_Printf("PINK \n");	
-					Tourne_gauche_avance();
+					LCD_Printf("PINK \n");
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else					
+						Tourne_gauche_avance();
 					break;
 				case START_GREEN:
-					//LCD_Printf("GREEN \n");	
-					Tourne_gauche_avance();
+					//LCD_Printf("GREEN \n");
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}					
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else
+						Tourne_gauche_avance();
 					break;
 				case START_BLUE:
 					LCD_Printf("BLUE \n");
-					Tourne_gauche_avance();					
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else
+						Tourne_gauche_avance();					
 					break;
 				case START_WHITE:
 					LCD_Printf("WHITE \n");
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+					}
 					if(m_iFlagZoneBkp)
 					{
 						m_iFlagZoneBkp = 0;
 						Rotation(160, LEFT_ROT);
 					}
 					else
-						Avance_BASE();
+						if(hauteur == 3)
+						{
+							Avance((MIN_DISTANCE/3), RECULE);
+							Rotation(45, RIGHT_ROT);
+						}
+						else
+							Avance_BASE();
 					break;
 				case START_BLACK:
-					Avance_BASE();
+					LCD_Printf("BLACK \n");
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else
+						Avance_BASE();
 					break;
 				default:
 					LCD_Printf("I don't know where the fuck I am\n");
-					Avance(100, AVANCE);	
+					if(m_iFlagRge)
+					{
+						m_iFlagRge = 0;
+						Avance((MIN_DISTANCE), AVANCE);
+					}
+					else if(hauteur == 3)
+					{
+						Avance((MIN_DISTANCE/3), RECULE);
+						Rotation(45, RIGHT_ROT);
+					}
+					else
+						Avance(100, AVANCE);	
 					break;
 			}
 		}
