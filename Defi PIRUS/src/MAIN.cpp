@@ -86,21 +86,22 @@ int main()
 		switch(menu_option) {
 			case 1 :
 				LCD_Printf("1. Demonstration sonar\n");
-				
+				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			case 2 : 
 				LCD_Printf("2. Demonstration detecteur de couleurs\n");
-				
+				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			case 3 : 
 				LCD_Printf("3. Demonstration infrarouge\n");
-				
+				THREAD_MSleep(2000);
 				menu_option = 0; //Retour au menu de selection apres demo
 				break;
 			default :
 				LCD_Printf("4. Sortie\n");
+				THREAD_MSleep(2000);
 				if(autre_test() == 1)
 				{
 					menu_option = 0;
