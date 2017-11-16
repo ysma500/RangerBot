@@ -26,6 +26,9 @@ float GAIN_P = 1.68;
 int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 
+int autre_test();
+
+
 // Prototypes de fonctions de configs
 void Initialisation();
 
@@ -36,114 +39,77 @@ float PID_Setup(void);
 
 int main()
 {
+	
+	//Configuration
+	Initialisation();
 	// variables locales
 	int j = 0;
 
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
-
-	// affiche sur le LCD
-	LCD_ClearAndPrint("Depart du programme\n");
 	
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
 		{
-			LCD_Printf("Entrer dans les Configs\n");
+			LCD_Printf("Depart du programme");
 			j = 1;
 		}
 	}
 	
-	//Configuration
-	Initialisation();
-	
-	j = 0;
-	while(j == 0)
+	//Demo a faire
+	//Sonars
+	//Couleurs
+	//Infrarouge
+	//Demo boutons
+	int menu_option = 0;
+	while(menu_option < 4)
 	{
-		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
+		LCD_Printf("Choisir la demonstration que vous voulez \n");
+		LCD_Printf("1. Demonstration sonar\n");
+		LCD_Printf("2. Demonstration detecteur de couleurs\n");
+		LCD_Printf("3. Demonstration infrarouge\n");
+		LCD_Printf("4. Sortie\n");
+		
+		THREAD_MSleep(3000);
+		SYSTEM_ResetTimer();
+		while (SYSTEM_ReadTimerMSeconds() < 5000)
 		{
-			LCD_Printf("Depart dans 5sec\n");
-			THREAD_MSleep(5000);
-			j = 1;
+			THREAD_MSleep(100);
+			if(DIGITALIO_Read(BMP_REAR))
+			{
+				menu_option++;
+			}
+		}
+		
+		switch(menu_option) {
+			case 1 :
+				LCD_Printf("1. Demonstration sonar\n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			case 2 : 
+				LCD_Printf("2. Demonstration detecteur de couleurs\n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			case 3 : 
+				LCD_Printf("3. Demonstration infrarouge\n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			default :
+				LCD_Printf("4. Sortie\n");
+				THREAD_MSleep(2000);
+				if(autre_test() == 1)
+				{
+					menu_option = 0;
+				}
+				break;
 		}
 	}
-	// Depart du circuit
-	Avance(2200);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(85.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(420);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);	//Verifier les maths jusque ici (Ysmael)
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(86.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(370);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(45.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(355);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(82.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(620);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(52.0, RIGHT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	Avance(1150);
-
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(175.0, LEFT_ROT);
-
-	THREAD_MSleep(DELAY_STEP);
-	//AUDIO_SetVolume(50);
-	//AUDIO_PlayFile("thug.wav");
-	//THREAD_MSleep(1000);
-
-	Avance(1150);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(52.0, LEFT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(620);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(82.0, RIGHT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(355);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(45.0, LEFT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(370);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(86.0, RIGHT_ROT);
-	THREAD_MSleep(DELAY_STEP);
-	Avance(475);
-	THREAD_MSleep(DELAY_STEP);
-	Rotation(83.0, LEFT_ROT);
-
-	LCD_Printf("Le robot a termine le parcours\n");
-
-
+	
 	// Vous devez inserez un fichier audio avec ce nom sur votre cle usb
 	//		dans le repertoire armus afin que cela fonctionne
 	//AUDIO_PlayMP3File("songno1.mp3");
@@ -347,6 +313,16 @@ void Avance(int iDistance) //Distance en mm
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
-
+int autre_test()
+{
+	LCD_ClearAndPrint("Voulez vous faire une autre demo?\n Si oui, tenir le bumber arriere.\n");
+	THREAD_MSleep(500);
+	if(DIGITALIO_Read(BMP_REAR))
+	{
+			return 1;
+	}
+	return 0;
+	
+}
 
 
