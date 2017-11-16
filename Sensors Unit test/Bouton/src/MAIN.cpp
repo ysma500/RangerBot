@@ -136,7 +136,6 @@ int creerUnCode(int code[NB_CODE_MAX])
 
 		if(nb_Code >= NB_CODE_MAX - 1)
 		{
-			nb_Code = 0;
 			LCD_ClearAndPrint("Les codes entrees sont : \n");
 			LCD_Printf("Vous avez entree %d codes !\n",code[0]);
 
@@ -169,7 +168,7 @@ int valeurBumper(void)
 	{
 		return BTN_3;
 	}
-	else if(DIGITALIO_Read(BMP_RIGHT))
+	else if(DIGITALIO_Read(BMP_LEFT))
 	{
 		return BTN_4;
 	}
