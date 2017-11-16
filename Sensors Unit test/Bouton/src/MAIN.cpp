@@ -131,6 +131,7 @@ int creerUnCode(int code[NB_CODE_MAX])
 			code[nb_Code] = valeur;
 			valeur = 0;
 			LCD_Printf("Chiffre : %d \n", code[nb_Code]);
+			THREAD_MSleep(1500);
 		}
 
 		if(nb_Code >= NB_CODE_MAX - 1)
