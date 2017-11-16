@@ -21,9 +21,6 @@
 // Include Files
 #include <libarmus.h>
 
-// Prototypes de fonctions de configs
-void testDeCapteurs(int capteur[3]);
-int capteurAffichage(int capteur[3]);
 //Define
 #define IR0 0	//Capteur plus bas
 #define IR1 1	//Capteur niveau moyen
@@ -37,7 +34,11 @@ int capteurAffichage(int capteur[3]);
 #define BTN_2 2
 #define BTN_3 3
 #define BTN_4 4
-//Combinaison du multiplexeur A0,A1 et A2
+
+// Prototypes de fonctions de configs
+void testDeCapteurs(int code[NB_CODE_MAX]);
+int creerUnCode(int code[NB_CODE_MAX]);
+int valeurBumper(void);
 
 int main()
 {
@@ -51,7 +52,6 @@ int main()
 
 	
 	//Nouveau contenu
-	int capteur_Infra[3] = {0,0,0};			// 3 capteurs infra rouge utilisé pour la grande course
 	int code[NB_CODE_MAX];
 
 
@@ -96,7 +96,7 @@ void testDeCapteurs(int code[NB_CODE_MAX])
 		{
 			LCD_ClearAndPrint("Attente de 2 secondes avant le test \n");
 			THREAD_MSleep(2000);
-			creeUnCode(code);
+			creerUnCode(code);
 		}
 		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
 		{
@@ -121,7 +121,7 @@ int creerUnCode(int code[NB_CODE_MAX])
 	LCD_ClearAndPrint("Uni test pour les boutons : \n");
 	while(1)
 	{
-		valeur = valeurBumper;
+		valeur = valeurBumper();
 
 		if(valeur > 0)
 		{
@@ -165,7 +165,7 @@ int valeurBumper(void)
 	{
 		return BTN_2;
 	}
-	else if(DIGITALIO_Read(BMP_NEAR))
+	else if(DIGITALIO_Read(BMP_REAR))
 	{
 		return BTN_3;
 	}
