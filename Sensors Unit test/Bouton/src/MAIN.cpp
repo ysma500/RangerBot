@@ -31,43 +31,13 @@ int capteurAffichage(int capteur[3]);
 #define B1 1 //Analog input 1 à l'endroit B1
 #define DISTANCE_MIN 100
 
+#define NB_CODE_MAX 5
+#define RIEN 0
+#define BTN_1 1
+#define BTN_2 2
+#define BTN_3 3
+#define BTN_4 4
 //Combinaison du multiplexeur A0,A1 et A2
-int combinaison(int capteur)
-{
-	switch (capteur)
-	{
-			case 0 :
-				DIGITALIO_Write(2, 0);
-				DIGITALIO_Write(3, 0);
-				DIGITALIO_Write(4, 0);
-				break;
-
-			case 1 :
-				DIGITALIO_Write(2, 1);
-				DIGITALIO_Write(3, 0);
-				DIGITALIO_Write(4, 0);
-				break;
-
-			case 2 :
-				DIGITALIO_Write(2, 0);
-				DIGITALIO_Write(3, 1);
-				DIGITALIO_Write(4, 0);
-				break;
-	}
-	return 0;
-}
-int lireCapteur(int capteur_Infra[3])
-{
-	combinaison(IR0);
-	capteur_Infra[IR0] = ANALOG_Read(B1);
-
-	combinaison(IR1);
-	capteur_Infra[IR1] = ANALOG_Read(B1);
-
-	combinaison(IR2);
-	capteur_Infra[IR2] = ANALOG_Read(B1);
-
-}
 
 int main()
 {
@@ -82,6 +52,7 @@ int main()
 	
 	//Nouveau contenu
 	int capteur_Infra[3] = {0,0,0};			// 3 capteurs infra rouge utilisé pour la grande course
+	int code[NB_CODE_MAX];
 
 
 	while (j == 0)
@@ -95,7 +66,7 @@ int main()
 	}
 	
 	//Configuration
-	testDeCapteurs(capteur_Infra);
+	testDeCapteurs(code);
 	
 	LCD_Printf("Fin du test du capteur\n");
 
@@ -111,7 +82,7 @@ int main()
 }
 
 //Debut de la fonction pour la modification des gains a suivre 
-void testDeCapteurs(int capteur[3])
+void testDeCapteurs(int code[NB_CODE_MAX])
 {
 	int i = 0, j = 0;
 
@@ -119,23 +90,13 @@ void testDeCapteurs(int capteur[3])
 
 	while(i==0 || j==0)
 	{
-
-		lireCapteur(capteur);
-
-		/*
-		LCD_Printf("Analog IR0 = %d\n", capteur[0]);
-		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
-		LCD_Printf("Analog IR2 = %d\n", capteur[2]);
-		*/
-		LCD_ClearAndPrint("Analog IR0 = %d\n", capteur[0]);
-		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
-		LCD_Printf("Analog IR2 = %d\n\n", capteur[2]);
-		capteurAffichage(capteur);
 		
 		//Si la "bumper switch" avant de robus est enclanchee...
-		if(DIGITALIO_Read(BMP_RIGHT))	//Configuration 1 de la fonction de test des capteurs
+		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
 		{
-
+			LCD_ClearAndPrint("Attente de 2 secondes avant le test \n");
+			THREAD_MSleep(2000);
+			creeUnCode(code);
 		}
 		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
 		{
@@ -150,27 +111,70 @@ void testDeCapteurs(int capteur[3])
 		THREAD_MSleep(1000);
 	}
 }
-int capteurAffichage(int capteur[3])
+int creerUnCode(int code[NB_CODE_MAX])
 {
-	//if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
+	//Premier emplacement du tableau donne la longueur du code
 
-		if((capteur[IR0] >= capteur[IR1]) && (capteur[IR0] >= capteur[IR2]))
+	int valeur = 0;
+	int nb_Code = 0;
+	int i;
+	LCD_ClearAndPrint("Uni test pour les boutons : \n");
+	while(1)
+	{
+		valeur = valeurBumper;
+
+		if(valeur > 0)
 		{
-			LCD_Printf("Objet detecter\n");
-			LCD_Printf("L'objet a : %d\n",capteur[IR0]);
-		}
-		else if((capteur[IR1] >= capteur[IR2]) && (capteur[IR0] >= capteur[IR2]))
-		{
-			LCD_Printf("Detection de la plateforme\n");
-			LCD_Printf("La plateforme a : %d\n",capteur[IR1]);
-		}
-		else
-		{
-			LCD_Printf("Detection d'un robot\n");
-			LCD_Printf("Robot a : %d\n",capteur[IR2]);
+
+			nb_Code ++;
+			code[0] = nb_Code;
+			code[nb_Code] = valeur;
+			valeur = 0;
+			LCD_Printf("Chiffre : %d \n", code[nb_Code]);
 		}
 
-	return 0;
+		if(nb_Code >= NB_CODE_MAX - 1)
+		{
+			LCD_ClearAndPrint("Les codes entrees sont : \n");
+			LCD_Printf("Vous avez entree %d codes !\n",code[0]);
+
+			for(i = 1; i < NB_CODE_MAX ; i++)
+			{
+				LCD_Printf("Le %d code est : %d \n", i, code[i]);
+
+			}
+
+			LCD_Printf("\n\nAffichage avant la fin du test 2 secondes");
+			THREAD_MSleep(2000);
+			LCD_Printf("\nFin");
+			break;
+		}
+
+	}
+
+}
+
+int valeurBumper(void)
+{
+
+	if(DIGITALIO_Read(BMP_FRONT))
+	{
+		return BTN_1;
+	}
+	else if(DIGITALIO_Read(BMP_RIGHT))
+	{
+		return BTN_2;
+	}
+	else if(DIGITALIO_Read(BMP_NEAR))
+	{
+		return BTN_3;
+	}
+	else if(DIGITALIO_Read(BMP_RIGHT))
+	{
+		return BTN_4;
+	}
+
+	return RIEN;
 }
 
 
