@@ -12,14 +12,7 @@
 
 // Include Files
 #include <libarmus.h>
-#define PI 3.14159265358979323846264338327950288
-#define LEFT_MOTOR 7
-#define RIGHT_MOTOR 8
-#define Circum 229.33626371205490640777296697940 //Cir de la roue
-#define LEFT_ROT 1
-#define RIGHT_ROT 0
-#define SPEED_START 70
-#define DELAY_STEP 500
+
 /*
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
