@@ -69,17 +69,18 @@ int main()
 		SYSTEM_ResetTimer();
 		while (SYSTEM_ReadTimerMSeconds() < 5000)
 		{
-			THREAD_MSleep(100);
 			if(DIGITALIO_Read(BMP_REAR))
 			{
 				menu_option++;
+				LCD_Printf("Item selectionner: %i \r", menu_option);
+				THREAD_MSleep(50);
 			}
 		}
 		
 		switch(menu_option) {
 			case 1 :
 				LCD_Printf("1. Demonstration sonar\n");
-				
+				//Ajouter appel de fonction de sonar ici
 				THREAD_MSleep(2000);
 				LCD_Printf("Retour au menu dans 2 secondes \n");
 				THREAD_MSleep(2000);
