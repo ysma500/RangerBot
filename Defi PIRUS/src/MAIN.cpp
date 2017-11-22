@@ -12,6 +12,7 @@
 
 // Include Files
 #include <libarmus.h>
+#include "CapteurdeCouleur.h"
 
 /*
 float GAIN_I = 0.223;
@@ -20,7 +21,10 @@ int m_iTicTotalG = 0;
 int m_iTicTotalD = 0;
 */
 int autre_test();
-
+int sonar_test();
+int color_test();
+int infra_test();
+int boutons_test();
 
 
 int main()
@@ -73,7 +77,8 @@ int main()
 		switch(menu_option) {
 			case 1 :
 				LCD_Printf("1. Demonstration sonar\n");
-				//Ajouter appel de fonction de sonar ici
+				sonar_test();
+				
 				THREAD_MSleep(2000);
 				LCD_Printf("Retour au menu dans 2 secondes \n");
 				THREAD_MSleep(2000);
@@ -81,6 +86,7 @@ int main()
 				break;
 			case 2 : 
 				LCD_Printf("2. Demonstration detecteur de couleurs\n");
+				color_test();
 				
 				THREAD_MSleep(2000);
 				LCD_Printf("Retour au menu dans 2 secondes \n");
@@ -89,6 +95,7 @@ int main()
 				break;
 			case 3 : 
 				LCD_Printf("3. Demonstration infrarouge\n");
+				infra_test();
 				
 				THREAD_MSleep(2000);
 				LCD_Printf("Retour au menu dans 2 secondes \n");
@@ -122,7 +129,7 @@ int main()
 	return 0;
 }
 
-
+//Fonctions de demo
 int autre_test()
 {
 	int condition = 0;
@@ -140,4 +147,23 @@ int autre_test()
 	
 }
 
+int sonar_test()
+{
+	return 0;
+}
 
+int color_test()
+{
+	get_current_color();
+	return 0;
+}
+
+int infra_test()
+{
+	return 0;
+}
+
+int boutons_test()
+{
+	return 0;
+}
