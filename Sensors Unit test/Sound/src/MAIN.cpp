@@ -5,7 +5,8 @@ void Play(char music[]);
 int main(void)
 {
   AUDIO_SetVolume(50);
-  int test = 1;
+  LCD_ClearAndPrint("Départ du programme");
+  int test = 0;
   char A[] = "BOMB.wav";
   char B[] = "Tornado.wav";
   char C[] = "Siren.wav";
@@ -23,6 +24,7 @@ int main(void)
     {
       Play(C);
     }
+    THREAD_MSleep(250);
   }
   return 0;
 }
