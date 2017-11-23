@@ -1,5 +1,5 @@
 #include <libarmus.h>
-#include "master.h"
+#include "capteur_couleur.h"
 
 int adjd_dev; //Works here but not in .h (weird)
 //Get current color function
