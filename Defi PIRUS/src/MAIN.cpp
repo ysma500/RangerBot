@@ -2,13 +2,9 @@
 // Include Files
 #include <libarmus.h>
 #include "infrarouge.h"
+#include "sonar.h"
 
-/*
-float GAIN_I = 0.223;
-float GAIN_P = 1.68;
-int m_iTicTotalG = 0;
-int m_iTicTotalD = 0;
-*/
+
 int autre_test();
 int sonar_test();
 int color_test();
@@ -139,6 +135,10 @@ int autre_test()
 
 int sonar_test()
 {
+	LCD_ClearAndPrint("Depart du test des sonars\n");
+	test_de_sonar(); //Il faut appuyer sur le BUMP_REAR pour arreter.
+	
+	LCD_Printf("Le robot a termine le test\n");
 	return 0;
 }
 

@@ -6,17 +6,20 @@
 CPP_SRCS += \
 ../src/CapteurDeCouleur.cpp \
 ../src/MAIN.cpp \
-../src/infrarouge.cpp 
+../src/infrarouge.cpp \
+../src/sonar.cpp 
 
 OBJS += \
 ./src/CapteurDeCouleur.o \
 ./src/MAIN.o \
-./src/infrarouge.o 
+./src/infrarouge.o \
+./src/sonar.o 
 
 CPP_DEPS += \
 ./src/CapteurDeCouleur.d \
 ./src/MAIN.d \
-./src/infrarouge.d 
+./src/infrarouge.d \
+./src/sonar.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
