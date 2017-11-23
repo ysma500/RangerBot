@@ -1,3 +1,6 @@
+#ifndef CAPTEUR_COULEUR_H
+#define CAPTEUR_COULEUR_H
+
 //Define du capteur de couleurs
 #define ADJD_S371_QR999_SADR 	0x74
 #define CAP_RED					0x6
@@ -14,6 +17,7 @@
 #define DATA_GREEN_LO			66
 #define DATA_BLUE_LO			68
 #define DATA_CLEAR_LO			70
+#define VALEUR_INTEG			2048
 
 #define CTRL_GSSR				0
 #define CTRL_GOFS				1
@@ -70,6 +74,7 @@
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
+int adjd_dev; //Works here but not in .h (weird)
 
 //Fonction pour savoir la couleur au moment
 int get_current_color();
@@ -91,3 +96,4 @@ void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear)
 void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
 int color_Init(int& dev_handle);
 
+#endif
