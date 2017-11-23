@@ -1,3 +1,21 @@
+//POUR BOUTONS
+#define NB_CODE_MAX 5
+
+#define RIEN 0
+#define BTN_1 1
+#define BTN_2 2
+#define BTN_3 3
+#define BTN_4 4
+
+#define BON_CODE 1
+
+// Prototypes de fonctions de configs
+void test_des_boutons(int code[NB_CODE_MAX]);
+int creer_code(int code[NB_CODE_MAX]);
+int valeurBumper(void);
+int trouverCode(int code[NB_CODE_MAX]);
+
+//POUR CAPTEURS DE COULEUR
 //Define du capteur de couleurs
 #define ADJD_S371_QR999_SADR 	0x74
 #define CAP_RED					0x6
@@ -91,3 +109,27 @@ void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear)
 void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
 int color_Init(int& dev_handle);
 
+//POUR INFRAROUGE
+//Define
+#define IR0 0	//Capteur plus bas
+#define IR1 1	//Capteur niveau moyen
+#define IR2 2	//Capteur plus haut
+#define B1 1 //Analog input 1 à l'endroit B1
+#define DISTANCE_MIN 100
+
+// Prototypes de fonctions de configs
+void testDeCapteurs(int capteur[3]);
+int capteurAffichage(int capteur[3]);
+
+int combinaison(int capteur);
+int lireCapteur(int capteur_Infra[3]);
+
+//POUR SONAR
+// Include Files
+#include <libarmus.h>
+
+#define SONAR_UN 1
+#define SONAR_DEUX 2
+
+// Prototypes de fonctions de configs
+int test_de_sonar();

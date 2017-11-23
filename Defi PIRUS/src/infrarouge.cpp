@@ -1,6 +1,6 @@
 // Include Files
 #include <libarmus.h>
-#include "infrarouge.h"
+#include "master.h"
 
 
 

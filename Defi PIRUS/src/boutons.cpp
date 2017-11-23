@@ -1,6 +1,6 @@
 // Include Files
 #include <libarmus.h>
-#include "boutons.h"
+#include "master.h"
 
 //Debut de la fonction pour la modification des gains a suivre 
 void test_des_boutons(int code[NB_CODE_MAX])

@@ -1,5 +1,5 @@
 #include <libarmus.h>
-#include "sonar.h"
+#include "master.h"
 
 
 //Debut de la fonction pour la modification des gains a suivre 

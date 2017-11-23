@@ -1,10 +1,7 @@
 ///Main.cpp
 // Include Files
 #include <libarmus.h>
-#include "infrarouge.h"
-#include "sonar.h"
-#include "boutons.h"
-#include "capteur_couleur.h"
+#include "master.h"
 
 int autre_test();
 int sonar_test();
