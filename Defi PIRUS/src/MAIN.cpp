@@ -57,6 +57,8 @@ int main()
 			if(DIGITALIO_Read(BMP_REAR))
 			{
 				menu_option++;
+				if(menu_option > 4)
+					menu_option = 1;
 				LCD_Printf("Item selectionner: %i \r", menu_option);
 				THREAD_MSleep(50);
 			}
