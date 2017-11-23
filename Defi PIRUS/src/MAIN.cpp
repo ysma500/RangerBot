@@ -59,8 +59,8 @@ int main()
 				menu_option++;
 				if(menu_option > 4)
 					menu_option = 1;
-				LCD_Printf("Item selectionner: %i \r", menu_option);
-				THREAD_MSleep(50);
+				LCD_Printf("Item selectionner: %i \n", menu_option);
+				THREAD_MSleep(250);
 			}
 		}
 		
@@ -154,8 +154,9 @@ int color_test()
 {
 	int current_color;
 	int condition = 0;
-	
-	LCD_ClearAndPrint("Mesure dans 5 secondes! \n");
+	int j = 0;
+	while (j==0)
+	{
 	current_color = get_current_color();
 	switch(current_color)
 		{
@@ -184,6 +185,12 @@ int color_test()
 				LCD_Printf("I don't know where the fuck I am\n");
 				break;
 		}
+	if(DIGITALIO_Read(BMP_REAR))
+	{
+		j = 1;
+	}
+	THREAD_MSleep(500);
+}
 	LCD_Printf("Fin du test du capteur de couleurs\n");
 	
 	// Le code attent 5 secondes
