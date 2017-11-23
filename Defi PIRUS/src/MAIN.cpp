@@ -150,6 +150,20 @@ int color_test()
 {
 	int current_color;
 	int condition = 0;
+	//initialisation du capteur
+	ERROR_CHECK(color_Init(adjd_dev));
+
+	cap_SetValue(CAP_RED, 15);
+	cap_SetValue(CAP_GREEN, 15);
+	cap_SetValue(CAP_BLUE, 15);
+	cap_SetValue(CAP_CLEAR, 15);
+
+	integrationTime_SetValue(INTEGRATION_RED, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
+	//////////////////////////////////////////////////////////
+	
 	LCD_ClearAndPrint("Mesure dans 5 secondes! \n");
 	current_color = get_current_color();
 	switch(current_color)
