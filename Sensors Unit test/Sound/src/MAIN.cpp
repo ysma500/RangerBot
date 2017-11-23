@@ -34,16 +34,16 @@ void Play(char music[])
   int play = 0;
   int current = 0;
   current = AUDIO_PlayFile(music);
-  LCD_ClearAndPrint("Lecture de %s \nAppyyer sur 1 pour arreter", music);
+  LCD_ClearAndPrint("Lecture de %c \nAppyyer sur 1 pour arreter", music[0]);
   while (play == 0)
   {
     if (DIGITALIO_Read(BMP_FRONT))
     {
       play = 1;
-      THREAD_MSleep(250);
+      break;
     }
+    THREAD_MSleep(250);
   }
   AUDIO_StopPlayback(current);
-  return;
 }
 
