@@ -1,18 +1,7 @@
-/*
-============================================================================
- Name : MAIN.cpp
- Author :
- Version :0.81
- Description : Code Robus 1
-
- robot 47 P: 0,9 I:0,089
- robot 77 P: 1,70 I:0,220
-============================================================================
-*/
-
+///Main.cpp
 // Include Files
 #include <libarmus.h>
-#include "CapteurdeCouleur.h"
+#include "infrarouge.h"
 
 /*
 float GAIN_I = 0.223;
@@ -74,7 +63,8 @@ int main()
 			}
 		}
 		
-		switch(menu_option) {
+		switch(menu_option)
+		{
 			case 1 :
 				LCD_Printf("1. Demonstration sonar\n");
 				sonar_test();
@@ -154,12 +144,29 @@ int sonar_test()
 
 int color_test()
 {
-	get_current_color();
+	
 	return 0;
 }
 
 int infra_test()
 {
+	// variables locales
+	int j = 0;
+
+	// affiche sur le LCD
+	LCD_ClearAndPrint("Depart du test des infrarouge\n");
+	
+	//Nouveau contenu
+	int capteur_Infra[3] = {0,0,0}; //Les 3 capteurs utilise
+	
+	//Configuration
+	testDeCapteurs(capteur_Infra);
+	
+	LCD_Printf("Fin du test du capteur infrarouge\n");
+
+	// Le code attent 5 secondes
+	THREAD_MSleep(5000);
+	
 	return 0;
 }
 

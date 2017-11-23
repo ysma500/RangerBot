@@ -1,4 +1,8 @@
 #include "CapteurDeCouleur.h"
+#include <libarmus.h>
+
+//Valeur de couleur de depart
+int m_iCouleurDep;
 
 //Configuration du capteur de couleur
 void Init_Colors(void)

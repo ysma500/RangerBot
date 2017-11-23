@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/MAIN.cpp 
+../src/CapteurDeCouleur.cpp \
+../src/MAIN.cpp \
+../src/infrarouge.cpp 
 
 OBJS += \
-./src/MAIN.o 
+./src/CapteurDeCouleur.o \
+./src/MAIN.o \
+./src/infrarouge.o 
 
 CPP_DEPS += \
-./src/MAIN.d 
+./src/CapteurDeCouleur.d \
+./src/MAIN.d \
+./src/infrarouge.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

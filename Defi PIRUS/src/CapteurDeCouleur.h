@@ -1,3 +1,5 @@
+#include <libarmus.h>
+
 #ifndef CAPTEURDECOULEUR_H_   /* Include guard */
 #define CAPTEURDECOULEUR_H_
 
@@ -74,7 +76,7 @@
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
 //Valeur de couleur de depart
-int m_iCouleurDep;
+//int m_iCouleurDep;
 
 // Prototypes de fonctions de configs
 void Init_Colors();
