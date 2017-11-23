@@ -1,8 +1,3 @@
-#include <libarmus.h>
-
-#ifndef CAPTEURDECOULEUR_H_   /* Include guard */
-#define CAPTEURDECOULEUR_H_
-
 //Define du capteur de couleurs
 #define ADJD_S371_QR999_SADR 	0x74
 #define CAP_RED					0x6
@@ -75,16 +70,13 @@
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
-//Valeur de couleur de depart
-//int m_iCouleurDep;
-
-// Prototypes de fonctions de configs
-void Init_Colors();
 
 //Fonction pour savoir la couleur au moment
 int get_current_color();
 
+
 //Prototypes de fonctions capteur de couleur, pas besoin de comprendre
+
 void adjd_SetRegister(unsigned char reg, unsigned char val);
 void adjd_SetRegister16(unsigned char reg, int val);
 unsigned char adjd_ReadRegister(unsigned char reg);
@@ -99,6 +91,3 @@ void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear)
 void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
 int color_Init(int& dev_handle);
 
-int adjd_dev;
-
-#endif // FOO_H_

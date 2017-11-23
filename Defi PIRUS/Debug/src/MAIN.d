@@ -24,7 +24,8 @@ src/MAIN.o src/MAIN.o: ../src/MAIN.cpp \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/thread_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/map \
-  ../src/infrarouge.h ../src/sonar.h ../src/boutons.h
+  ../src/infrarouge.h ../src/sonar.h ../src/boutons.h \
+  ../src/capteur_couleur.h
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/libarmus.h:
 
@@ -81,3 +82,5 @@ C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/map:
 ../src/sonar.h:
 
 ../src/boutons.h:
+
+../src/capteur_couleur.h:

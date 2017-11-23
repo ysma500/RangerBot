@@ -1,28 +1,7 @@
-#include "CapteurDeCouleur.h"
 #include <libarmus.h>
+#include "capteur_couleur.h"
 
-//Valeur de couleur de depart
-int m_iCouleurDep;
-
-//Configuration du capteur de couleur
-void Init_Colors(void)
-{
-	//Initialisation du capteur de couleur
-	ERROR_CHECK(color_Init(adjd_dev));
-	
-	m_iCouleurDep = 0;
-
-	cap_SetValue(CAP_RED, 15);
-	cap_SetValue(CAP_GREEN, 15);
-	cap_SetValue(CAP_BLUE, 15);
-	cap_SetValue(CAP_CLEAR, 15);
-
-	integrationTime_SetValue(INTEGRATION_RED, 255);
-	integrationTime_SetValue(INTEGRATION_GREEN, 255);
-	integrationTime_SetValue(INTEGRATION_BLUE, 255);
-	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
-}
-
+int adjd_dev; //Works here but not in .h (weird)
 //Get current color function
 int get_current_color()
 {
@@ -260,3 +239,5 @@ int color_Init(int& dev_handle)
 ///****************************************************************************
 ///*********** FIN Fonctions pour le capteur de couleur ***********************
 ///****************************************************************************
+
+

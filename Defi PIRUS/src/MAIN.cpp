@@ -4,14 +4,13 @@
 #include "infrarouge.h"
 #include "sonar.h"
 #include "boutons.h"
-
+#include "capteur_couleur.h"
 
 int autre_test();
 int sonar_test();
 int color_test();
 int infra_test();
 int boutons_test();
-
 
 int main()
 {
@@ -149,7 +148,42 @@ int sonar_test()
 
 int color_test()
 {
+	int current_color;
+	int condition = 0;
+	LCD_ClearAndPrint("Mesure dans 5 secondes! \n");
+	current_color = get_current_color();
+	switch(current_color)
+		{
+			case START_RED:
+				LCD_Printf("RED \n");
+				break;
+			case START_GREY:
+				LCD_Printf("GREY \n");
+				break;
+			case START_YELLOW:
+				LCD_Printf("YELLOW \n");
+				break;
+			case START_PINK:
+				LCD_Printf("PINK \n");
+				break;
+			case START_GREEN:
+				LCD_Printf("GREEN \n");
+				break;
+			case START_BLUE:
+				LCD_Printf("BLUE \n");			
+				break;
+			case START_WHITE:
+				LCD_Printf("WHITE \n");
+				break;
+			default:
+				LCD_Printf("I don't know where the fuck I am\n");
+				break;
+		}
+	LCD_Printf("Fin du test du capteur de couleurs\n");
 	
+	// Le code attent 5 secondes
+	THREAD_MSleep(5000);
+	LCD_ClearAndPrint("");
 	return 0;
 }
 
