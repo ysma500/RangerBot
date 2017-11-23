@@ -74,10 +74,9 @@
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
 
-int adjd_dev; //Works here but not in .h (weird)
-
 //Fonction pour savoir la couleur au moment
 int get_current_color();
+void Init_Color(void);
 
 
 //Prototypes de fonctions capteur de couleur, pas besoin de comprendre
@@ -95,5 +94,8 @@ void led_TurnOn();	//Controle sortie digitale 9
 void color_Read(int& data_red, int& data_blue, int& data_green, int& data_clear);
 void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& data_clear);
 int color_Init(int& dev_handle);
+
+
+extern int adjd_dev; //Works here but not in .h (weird)
 
 #endif

@@ -1,6 +1,25 @@
 #include <libarmus.h>
 #include "capteur_couleur.h"
 
+int adjd_dev;
+
+void Init_Color(void)
+{
+	//initialisation du capteur de couleur
+	ERROR_CHECK(color_Init(adjd_dev));
+
+	cap_SetValue(CAP_RED, 15);
+	cap_SetValue(CAP_GREEN, 15);
+	cap_SetValue(CAP_BLUE, 15);
+	cap_SetValue(CAP_CLEAR, 15);
+
+	integrationTime_SetValue(INTEGRATION_RED, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
+	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
+	//////////////////////////////////////////////////////////
+}
+
 //Get current color function
 int get_current_color()
 {

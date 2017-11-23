@@ -18,19 +18,7 @@ int main()
 	int j = 0; //Condition pour rentrer dans le programme
 	int menu_option = 0; //Option de menu pour la demonstration
 	
-	//initialisation du capteur de couleur
-	ERROR_CHECK(color_Init(adjd_dev));
-
-	cap_SetValue(CAP_RED, 15);
-	cap_SetValue(CAP_GREEN, 15);
-	cap_SetValue(CAP_BLUE, 15);
-	cap_SetValue(CAP_CLEAR, 15);
-
-	integrationTime_SetValue(INTEGRATION_RED, VALEUR_INTEG);
-	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
-	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
-	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
-	//////////////////////////////////////////////////////////
+	Init_Color();
 	
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
