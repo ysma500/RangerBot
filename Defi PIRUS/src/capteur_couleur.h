@@ -36,20 +36,20 @@
 #define GREY_B 510
 #define GREY_C 1024
 
-#define YELLOW_R 955
-#define YELLOW_G 917
-#define YELLOW_B 305
-#define YELLOW_C 1016
+#define YELLOW_R 626
+#define YELLOW_G 558
+#define YELLOW_B 365
+#define YELLOW_C 910
 
 #define PINK_R 780
 #define PINK_G 475
 #define PINK_B 390
 #define PINK_C 1015
 
-#define GREEN_R 212
-#define GREEN_G 305
-#define GREEN_B 218
-#define GREEN_C 712
+#define GREEN_R 265
+#define GREEN_G 355
+#define GREEN_B 223
+#define GREEN_C 617
 
 #define BLUE_R 208
 #define BLUE_G 240

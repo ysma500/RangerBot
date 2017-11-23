@@ -41,16 +41,53 @@
 
 //Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
 //Define des couleurs pour le capteurs de couleurs
-#define RED_R 348
-#define RED_G 152
-#define RED_B 81
-#define RED_C 414
+#define RED_R 544
+#define RED_G 266
+#define RED_B 184
+#define RED_C 887
+
+#define GREY_R 560
+#define GREY_G 632
+#define GREY_B 510
+#define GREY_C 1024
+
+#define YELLOW_R 626
+#define YELLOW_G 558
+#define YELLOW_B 365
+#define YELLOW_C 910
+
+#define PINK_R 780
+#define PINK_G 475
+#define PINK_B 390
+#define PINK_C 1015
+
+#define GREEN_R 265
+#define GREEN_G 355
+#define GREEN_B 223
+#define GREEN_C 617
+
+#define BLUE_R 208
+#define BLUE_G 240
+#define BLUE_B 355
+#define BLUE_C 758
+
+#define WHITE_R 1020
+#define WHITE_G 1018
+#define WHITE_B 905
+#define WHITE_C 1023
 
 //Code de chaque couleur
 #define START_RED 1
+#define START_GREY 2
+#define START_YELLOW 3
+#define START_PINK 4
+#define START_GREEN 5
+#define START_BLUE 6
+#define START_WHITE 7
 #define START_OTHER 0
 
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge
+#define LINE_HYST 50 //Incertitude sur la detection de couleurs
 
 //Fonction pour savoir la couleur au moment
 int get_current_color();
@@ -97,44 +134,33 @@ int main()
 
 	// variables locales
 	int j = 0;
-
+	int current_color;
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
-
+	
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
 
-	while (j == 0)
-	{
-		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
+		while (j == 0)
 		{
-			LCD_Printf("Entrer dans les tests des capteurs\n");
-			j = 1;
-			break;
+			THREAD_MSleep(100);
+			if(DIGITALIO_Read(BMP_REAR))
+			{
+				LCD_Printf("Entrer dans les tests des capteurs\n");
+				j = 1;
+			}
+			THREAD_MSleep(100);
 		}
-		else if(DIGITALIO_Read(BMP_LEFT))
+
+		if (j == 1)
 		{
-			LCD_Printf("Entrer dans les capteur live\n");
-			j = 2;
-			break;
+			testDeCapteurs();
+			LCD_Printf("Fin du test du capteur\n");
 		}
-	}
-
-if (j == 1)
-{
-	//Configuration
-	testDeCapteurs();
-
-	LCD_Printf("Fin du test du capteur\n");
-}
-else if (j == 2)
-{
-	//afichage couleur actuelle
-	afficher_live();
-
-	LCD_Printf("Fin du test du capteur\n");
-}
+		if (j == 2)
+		{
+				current_color = afficher_live();
+		}
 	// Le code attent 20 secondes
 	THREAD_MSleep(20000);
 
@@ -145,20 +171,80 @@ else if (j == 2)
 	return 0;
 }
 
-void afficher_live(void)
+void afficher_live()
 {
-	int i = 0, j = 0;
-	int red;
+	int j = 0;
+	int color;
 
-	while(i==0 || j==0)
+	while(j==0)
 	{
-		red = get_current_color();
-		if(DIGITALIO_Read(BMP_REAR))
+		color = get_current_color();
+		int color;
+		int red, blue, green, clear;
+		color_Read(red, blue, green, clear);
+		//Red
+		if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+			&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+			&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+			&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 		{
-			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
+			color = START_RED;
 		}
+		//Grey
+		else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
+			&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
+			&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
+			&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
+		{
+			color = START_GREY;
+		}
+		//Yellow
+		else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+			&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+			&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+			&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
+		{
+			color = START_YELLOW;
+		}
+		//Pink
+		else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+			&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+			&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+			&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+		{
+			color = START_PINK;
+		}
+		//Green
+		else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+			&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+			&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+			&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+		{
+			color = START_GREEN;
+		}
+		//Blue
+		else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+			&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+			&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+			&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+		{
+			color = START_BLUE;
+		}
+		//White
+		else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
+			&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
+			&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
+			&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
+		{
+			color = START_WHITE;
+		}
+		else
+		{
+			color = START_OTHER;
+		}
+	return color;
+	}
+		
 		THREAD_MSleep(1000);
 	}
 }
@@ -178,7 +264,6 @@ void testDeCapteurs(void)
 			LCD_Printf("Sortie des configs\n");
 		}
 		LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d \n", red, green, blue, clear);
-		get_current_color();
 		THREAD_MSleep(1000);
 	}
 }
@@ -186,25 +271,69 @@ void testDeCapteurs(void)
 //Get current color function
 int get_current_color()
 {
-	int color = 0;
+	int color;
 	int red, blue, green, clear;
 	color_Read(red, blue, green, clear);
-
-	//Red
-	if ((red >= (RED_R - LINE_HYST_PLUS)) && (red <= (RED_R + LINE_HYST_PLUS))
-		&& (blue >= (RED_B - LINE_HYST_PLUS)) && (blue <= (RED_B + LINE_HYST_PLUS))
-		&& (green >= (RED_G - LINE_HYST_PLUS)) && (green <= (RED_G + LINE_HYST_PLUS))
-		&& (clear >= (RED_C - LINE_HYST_PLUS)) && (clear <= (RED_C + LINE_HYST_PLUS)))
-	{
-		LCD_Printf("RED\n");
-		color = START_RED;
-	}
-
-	else
-	{
-		LCD_Printf("OTHER \n");
-		color = START_OTHER;
-	}
+			//Red
+			if (red >= (RED_R - LINE_HYST_PLUS) && red <= (RED_R + LINE_HYST_PLUS)
+				&& blue >= (RED_B - LINE_HYST_PLUS) && blue <= (RED_B + LINE_HYST_PLUS)
+				&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
+				&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
+			{
+				color = START_RED;
+			}
+			//Grey
+			else if (red >= (GREY_R - LINE_HYST) && red <= (GREY_R + LINE_HYST)
+				&& blue >= (GREY_B - LINE_HYST) && blue <= (GREY_B + LINE_HYST)
+				&& green >= (GREY_G - LINE_HYST) && green <= (GREY_G + LINE_HYST)
+				&& clear >= (GREY_C - LINE_HYST) && clear <= (GREY_C + LINE_HYST))
+			{
+				color = START_GREY;
+			}
+			//Yellow
+			else if (red >= (YELLOW_R - LINE_HYST_PLUS) && red <= (YELLOW_R + LINE_HYST_PLUS)
+				&& blue >= (YELLOW_B - LINE_HYST_PLUS) && blue <= (YELLOW_B + LINE_HYST_PLUS)
+				&& green >= (YELLOW_G - LINE_HYST_PLUS) && green <= (YELLOW_G + LINE_HYST_PLUS)
+				&& clear >= (YELLOW_C - LINE_HYST_PLUS) && clear <= (YELLOW_C + LINE_HYST_PLUS))
+			{
+				color = START_YELLOW;
+			}
+			//Pink
+			else if (red >= (PINK_R - LINE_HYST) && red <= (PINK_R + LINE_HYST)
+				&& blue >= (PINK_B - LINE_HYST) && blue <= (PINK_B + LINE_HYST)
+				&& green >= (PINK_G - LINE_HYST) && green <= (PINK_G + LINE_HYST)
+				&& clear >= (PINK_C - LINE_HYST) && clear <= (PINK_C + LINE_HYST))
+			{
+				color = START_PINK;
+			}
+			//Green
+			else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
+				&& blue >= (GREEN_B - LINE_HYST) && blue <= (GREEN_B + LINE_HYST)
+				&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
+				&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
+			{
+				color = START_GREEN;
+			}
+			//Blue
+			else if (red >= (BLUE_R - LINE_HYST) && red <= (BLUE_R + LINE_HYST)
+				&& blue >= (BLUE_B - LINE_HYST) && blue <= (BLUE_B + LINE_HYST)
+				&& green >= (BLUE_G - LINE_HYST) && green <= (BLUE_G + LINE_HYST)
+				&& clear >= (BLUE_C - LINE_HYST) && clear <= (BLUE_C + LINE_HYST))
+			{
+				color = START_BLUE;
+			}
+			//White
+			else if (red >= (WHITE_R - LINE_HYST) && red <= (WHITE_R + LINE_HYST)
+				&& blue >= (WHITE_B - LINE_HYST) && blue <= (WHITE_B + LINE_HYST)
+				&& green >= (WHITE_G - LINE_HYST) && green <= (WHITE_G + LINE_HYST)
+				&& clear >= (WHITE_C - LINE_HYST) && clear <= (WHITE_C + LINE_HYST))
+			{
+				color = START_WHITE;
+			}
+			else
+			{
+				color = START_OTHER;
+			}
 	return color;
 }
 
