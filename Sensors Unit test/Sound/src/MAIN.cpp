@@ -2,7 +2,7 @@
 
 void Play(char[] music);
 
-void main(void)
+int main(void)
 {
   AUDIO_SetVolume(50);
 
@@ -24,6 +24,7 @@ void main(void)
       Play(C);
     }
   }
+  return 0;
 }
 
 void Play(char[] music)
@@ -44,5 +45,3 @@ void Play(char[] music)
   return;
 }
 
-
-}
