@@ -139,6 +139,9 @@ int sonar_test()
 	test_de_sonar(); //Il faut appuyer sur le BUMP_REAR pour arreter.
 	
 	LCD_Printf("Le robot a termine le test\n");
+	//Attendre 5 secondes et effacer ce qu'il y a a l'ecran
+	THREAD_MSleep(5000);
+	LCD_ClearAndPrint("");
 	return 0;
 }
 
@@ -166,7 +169,7 @@ int infra_test()
 
 	// Le code attent 5 secondes
 	THREAD_MSleep(5000);
-	
+	LCD_ClearAndPrint("");
 	return 0;
 }
 
