@@ -1,14 +1,14 @@
 #include <libarmus.h>
 
-void Play(char[] music);
+void Play(char music[]);
 
 int main(void)
 {
   AUDIO_SetVolume(50);
-
-  char[] A = "BOMB.wav";
-  char[] B = "Tornado.wav";
-  char[] C = "Siren.wav";
+  int test = 1;
+  char A[] = "BOMB.wav";
+  char B[] = "Tornado.wav";
+  char C[] = "Siren.wav";
   while (test == 0)
   {
     if (DIGITALIO_Read(BMP_FRONT))
@@ -27,7 +27,7 @@ int main(void)
   return 0;
 }
 
-void Play(char[] music)
+void Play(char music[])
 {
   int play = 0;
   int current = 0;
