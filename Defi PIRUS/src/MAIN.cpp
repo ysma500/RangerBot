@@ -3,6 +3,7 @@
 #include <libarmus.h>
 #include "infrarouge.h"
 #include "sonar.h"
+#include "boutons.h"
 
 
 int autre_test();
@@ -14,7 +15,6 @@ int boutons_test();
 
 int main()
 {
-	
 	// variables locales
 	int j = 0; //Condition pour rentrer dans le programme
 	int menu_option = 0; //Option de menu pour la demonstration
@@ -49,6 +49,8 @@ int main()
 		
 		THREAD_MSleep(3000);
 		SYSTEM_ResetTimer();
+		
+		//Appuyer le BUMP_REAR pour avoir le bon menu
 		while (SYSTEM_ReadTimerMSeconds() < 5000)
 		{
 			if(DIGITALIO_Read(BMP_REAR))
@@ -153,20 +155,17 @@ int color_test()
 
 int infra_test()
 {
-	// variables locales
-	int j = 0;
-
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du test des infrarouge\n");
 	
-	//Nouveau contenu
-	int capteur_Infra[3] = {0,0,0}; //Les 3 capteurs utilise
+	//Definir tes entree (les 3 capteurs utilisee)
+	int capteur_Infra[3] = {0,0,0}; 
 	
-	//Configuration
+	//Test
 	testDeCapteurs(capteur_Infra);
 	
 	LCD_Printf("Fin du test du capteur infrarouge\n");
-
+	
 	// Le code attent 5 secondes
 	THREAD_MSleep(5000);
 	LCD_ClearAndPrint("");
@@ -175,5 +174,15 @@ int infra_test()
 
 int boutons_test()
 {
+	LCD_ClearAndPrint("Depart du test des boutons\n");
+	//Nouveau contenu
+	int code[NB_CODE_MAX] = {0,0,0,0,0};
+	test_des_boutons(code);
+	
+	LCD_Printf("Fin du test des boutons\n");
+
+	// Le code attent 5 secondes
+	THREAD_MSleep(5000);
+	LCD_ClearAndPrint("");
 	return 0;
 }

@@ -6,18 +6,21 @@
 CPP_SRCS += \
 ../src/CapteurDeCouleur.cpp \
 ../src/MAIN.cpp \
+../src/boutons.cpp \
 ../src/infrarouge.cpp \
 ../src/sonar.cpp 
 
 OBJS += \
 ./src/CapteurDeCouleur.o \
 ./src/MAIN.o \
+./src/boutons.o \
 ./src/infrarouge.o \
 ./src/sonar.o 
 
 CPP_DEPS += \
 ./src/CapteurDeCouleur.d \
 ./src/MAIN.d \
+./src/boutons.d \
 ./src/infrarouge.d \
 ./src/sonar.d 
 
