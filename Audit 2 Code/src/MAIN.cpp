@@ -15,11 +15,9 @@ int boutons_test();
 int main()
 {
 	// variables locales
-	int j = 0; 			  //Condition pour rentrer dans le programme
+	int j = 0; //Condition pour rentrer dans le programme
 	int menu_option = 0; //Option de menu pour la demonstration
-	int distance_percue; //Distance lue par les sonars
-	int distance_max = 10; 	 //Distance max avant de tourner lorsqu'on arrive a un mur (en cm)
-
+	
 	Init_Color();
 	
 	//on choisit le bon mode de gestion d'erreur
@@ -35,21 +33,82 @@ int main()
 		}
 	}
 	
-	while (1)
+	//Demo a faire
+	//Sonars
+	//Couleurs
+	//Infrarouge
+	//Demo boutons
+	
+	
+	while(menu_option != 4)
 	{
-		//Mode deplacement
-		if (color_test() = START_RED)
+		LCD_Printf("Choisir la demonstration que vous voulez \n");
+		LCD_Printf("1. Demonstration sonar\n");
+		LCD_Printf("2. Demonstration detecteur de couleurs\n");
+		LCD_Printf("3. Demonstration infrarouge\n");
+		LCD_Printf("4. Sortie\n");
+		
+		THREAD_MSleep(3000);
+		SYSTEM_ResetTimer();
+		
+		//Appuyer le BUMP_REAR pour avoir le bon menu
+		while (SYSTEM_ReadTimerMSeconds() < 5000)
 		{
-			//Se promener tant qu'il n'est pas sorti
+			if(DIGITALIO_Read(BMP_REAR))
+			{
+				menu_option++;
+				if(menu_option > 4)
+					menu_option = 1;
+				LCD_Printf("Item selectionner: %i \n", menu_option);
+				THREAD_MSleep(250);
+			}
 		}
-		infra_test();
-		else if (capteur_Infra[0] < distance_max)
+		
+		switch(menu_option)
 		{
-			
-		}		
+			case 1 :
+				LCD_Printf("1. Demonstration sonar\n");
+				sonar_test();
+				
+				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			case 2 : 
+				LCD_Printf("2. Demonstration detecteur de couleurs\n");
+				color_test();
+				
+				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			case 3 : 
+				LCD_Printf("3. Demonstration infrarouge\n");
+				infra_test();
+				
+				THREAD_MSleep(2000);
+				LCD_Printf("Retour au menu dans 2 secondes \n");
+				THREAD_MSleep(2000);
+				menu_option = 0; //Retour au menu de selection apres demo
+				break;
+			default :
+				LCD_Printf("4. Sortie\n");
+				
+				THREAD_MSleep(5000);
+				if(autre_test() == 1)
+				{
+					menu_option = 0;
+					LCD_Printf("Retour au menu dans 2 secondes \n");
+					THREAD_MSleep(2000);
+				}
+				
+				break;
+		}
 	}
 	
-	
+
 	// Le code attent 10 secondes
 	THREAD_MSleep(10000);
 
@@ -76,6 +135,7 @@ int autre_test()
 		THREAD_MSleep(200);
 	}
 	return condition;
+	
 }
 
 int sonar_test()
@@ -125,13 +185,12 @@ int color_test()
 				LCD_Printf("I don't know where the fuck I am\n");
 				break;
 		}
-		
-		if(DIGITALIO_Read(BMP_REAR))
-		{
-			j = 1;
-		}
-		THREAD_MSleep(500);
+	if(DIGITALIO_Read(BMP_REAR))
+	{
+		j = 1;
 	}
+	THREAD_MSleep(500);
+}
 	LCD_Printf("Fin du test du capteur de couleurs\n");
 	
 	// Le code attent 5 secondes

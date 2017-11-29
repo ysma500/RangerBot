@@ -29,8 +29,6 @@ int combinaison(int capteur)
 	}
 	return 0;
 }
-
-//Place la valeur Analog_read dans le tableau capteur infra
 int lireCapteur(int capteur_Infra[3])
 {
 	combinaison(IR0);
@@ -41,35 +39,44 @@ int lireCapteur(int capteur_Infra[3])
 
 	combinaison(IR2);
 	capteur_Infra[IR2] = ANALOG_Read(B1);
-	return 0;
+
 }
 
 //Debut de la fonction pour la modification des gains a suivre 
 void testDeCapteurs(int capteur[3])
 {
-	int i = 0;
-	
-	while(i==0)
+	int i = 0, j = 0;
+
+	int Affichage = 0;
+
+	while(i==0 || j==0)
 	{
-		//Aller chercher les valeurs Analog read de chaque capteur infrarouge
+
 		lireCapteur(capteur);
 
-		//Afficher les valeurs analog read 
 		LCD_ClearAndPrint("Analog IR0 = %d\n", capteur[0]);
 		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
 		LCD_Printf("Analog IR2 = %d\n\n", capteur[2]);
+		capteurAffichage(capteur);
 		
-		//capteurAffichage(capteur); //Afficher la distance et quel objet est devant nous calibre pour grande course
 		
-		THREAD_MSleep(250);
-		if(DIGITALIO_Read(BMP_REAR))
+		if(DIGITALIO_Read(BMP_RIGHT))	//Configuration 1 de la fonction de test des capteurs
 		{
-			LCD_Printf("Sortie de lecture des infra");
-			i = 1;
+
 		}
+		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
+		{
+
+		}
+		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
+		{
+			i = 1;
+			j = 1;
+			LCD_Printf("Sortie des configs\n");
+		}
+		THREAD_MSleep(1000);
 	}
 }
-
 int capteurAffichage(int capteur[3])
 {
 	//if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )

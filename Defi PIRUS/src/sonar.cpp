@@ -3,27 +3,23 @@
 
 
 //Debut de la fonction pour la modification des gains a suivre 
-int test_de_sonar()
+int sonar_d()
 {
-	int i = 0;
-	float fSonarUn = 0, fSonarDeux = 0;
-	THREAD_MSleep(5000);
-	while(i==0)
-	{
-		fSonarUn = SONAR_Detect(SONAR_UN);
-		fSonarDeux = SONAR_Detect(SONAR_DEUX);
-		LCD_Printf("1: %0.4fcm 2: %0.4fcm \n", fSonarUn, fSonarDeux);
-
-		if(DIGITALIO_Read(BMP_REAR))
-		{
-			i = 1;
-			LCD_Printf("Sortie du test\n");
-		}
-		THREAD_MSleep(250);
-	}
-	return 0;
+	float sonar_droit = 0;
+	sonar_droit = SONAR_Detect(SONAR_UN);
+	LCD_Printf("%0.4fcm \n", sonar_droit);
+	THREAD_MSleep(250);
+	return sonar_droit;
 }
 
+int sonar_g()
+{
+	sonar_gauche = 0;
+	sonar_gauche = SONAR_Detect(SONAR_DEUX);
+	LCD_Printf("%0.4fcm \n", sonar_gauche);
+	THREAD_MSleep(250);
+	return sonar_gauche;
+}
 
 
 
