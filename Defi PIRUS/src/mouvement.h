@@ -1,3 +1,6 @@
+#ifndef MOUVEMENT_H
+#define MOUVEMENT_H
+
 //DEFINES
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
@@ -23,4 +26,10 @@ void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 
 //Fonctions de mouvements particuliers
+
+void Tourne_gauche_avance();
+void Tourne_gauche_avance(int valeurMod);
+void Avance_BASE();
 void Mouv_infra();
+
+#endif
