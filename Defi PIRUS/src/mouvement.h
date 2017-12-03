@@ -16,13 +16,10 @@
 //Initialisation PID
 void Initialisation();
 
-// Prototypes de fonctions (Avancer, Tourner), Fonctions de base du mouvement 
+// Prototypes de fonctions (Avancer, Tourner), Fonctions de base du mouvement
 void Avance(int iDistance, int iSens);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 
 //Fonctions de mouvements particuliers
 void Tourne_gauche_avance();
-void Tourne_gauche_avance(int valeurMod);
-void Avance_BASE();
-
