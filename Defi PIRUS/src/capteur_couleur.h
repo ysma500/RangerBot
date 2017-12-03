@@ -31,30 +31,10 @@
 #define RED_B 184
 #define RED_C 887
 
-#define GREY_R 560
-#define GREY_G 632
-#define GREY_B 510
-#define GREY_C 1024
-
-#define YELLOW_R 626
-#define YELLOW_G 558
-#define YELLOW_B 365
-#define YELLOW_C 910
-
-#define PINK_R 780
-#define PINK_G 475
-#define PINK_B 390
-#define PINK_C 1015
-
 #define GREEN_R 265
 #define GREEN_G 355
 #define GREEN_B 223
 #define GREEN_C 617
-
-#define BLUE_R 208
-#define BLUE_G 240
-#define BLUE_B 355
-#define BLUE_C 758
 
 #define WHITE_R 1020
 #define WHITE_G 1018
@@ -63,12 +43,7 @@
 
 //Code de chaque couleur
 #define START_RED 1
-#define START_GREY 2
-#define START_YELLOW 3
-#define START_PINK 4
-#define START_GREEN 5
-#define START_BLUE 6
-#define START_WHITE 7
+#define START_GREEN 2
 #define START_OTHER 0
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
