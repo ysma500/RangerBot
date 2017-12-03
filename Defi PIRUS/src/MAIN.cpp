@@ -6,18 +6,23 @@
 #include "boutons.h"
 #include "capteur_couleur.h"
 
+//Define pour les modes
 #define MODE_DEPART 0
 #define MODE_PASSIF 1
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
 
-int sonar_test();
-int color_test();
+//Define pour les boutons
+#define ORANGE_LEFT 8
+#define ORANGE_RIGHT 9
+
+
 int infra_test();
 int boutons_test();
 int passif();
 int actif();
 int code();
+int selection_mode();
 
 int main()
 {
@@ -53,17 +58,22 @@ int main()
 	
 	while (1)
 	{
-		
-		//Mode deplacement
-		if (color_test() = START_RED)
+		mode = selection_mode();
+		switch (mode)
 		{
-			//Se promener tant qu'il n'est pas sorti
+			case MODE_PASSIF : 
+				
+				break;
+			case MODE_ACTIF : 
+				
+				break;
+			case CHANGER_CODE :
+				
+				break;
+			case 4 :
+				
+				break;
 		}
-		infra_test();
-		else if (capteur_Infra[0] < distance_max)
-		{
-			
-		}		
 	}
 	
 	
@@ -75,55 +85,6 @@ int main()
 
 	LCD_Printf("Fin du programme\n");
 
-	return 0;
-}
-
-
-
-int sonar_test()
-{
-	LCD_ClearAndPrint("Depart du test des sonars\n");
-	test_de_sonar(); //Il faut appuyer sur le BUMP_REAR pour arreter.
-	
-	LCD_Printf("Le robot a termine le test\n");
-	//Attendre 5 secondes et effacer ce qu'il y a a l'ecran
-	THREAD_MSleep(5000);
-	LCD_ClearAndPrint("");
-	return 0;
-}
-
-int color_test()
-{
-	int current_color;
-	int condition = 0;
-	int j = 0;
-	while (j==0)
-	{
-	current_color = get_current_color();
-	switch(current_color)
-		{
-			case START_RED:
-				LCD_Printf("RED \n");
-				break;
-			case START_GREEN:
-				LCD_Printf("GREEN \n");
-				break;
-			default:
-				LCD_Printf("OTHER");
-				break;
-		}
-		
-		if(DIGITALIO_Read(BMP_REAR))
-		{
-			j = 1;
-		}
-	THREAD_MSleep(250);
-	}
-	LCD_Printf("Fin du test du capteur de couleurs\n");
-	
-	// Le code attent 5 secondes
-	THREAD_MSleep(5000);
-	LCD_ClearAndPrint("");
 	return 0;
 }
 
@@ -159,4 +120,94 @@ int boutons_test()
 	THREAD_MSleep(5000);
 	LCD_ClearAndPrint("");
 	return 0;
+}
+
+int selection_mode()
+{
+	int option = -1;
+	int j = 0, i = 0;
+	while (j==0)
+	{
+		LCD_ClearAndPrint("Pour entrer dans le mode passif, appuyer sur le bouton orange de droite\n");
+		LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+		while(i==0)
+		{
+			if (DIGITALIO_Read(ORANGE_RIGHT))
+			{
+				i = 1;
+				j = 1;
+				option = 1;
+			}
+			else if(DIGITALIO_Read(ORANGE_LEFT))
+			{
+				i = 1;
+			}	
+		THREAD_MSleep(100);
+		}
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour entrer dans le mode actif, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					i = 1;
+					j = 1;
+					option = 2;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour changer le mot de passe du robot, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					i = 1;
+					j = 1;
+					option = 3;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour ANNULER tout changement, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					i = 1;
+					j = 1;
+					option = 4;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+	}
+	
+	return option;
 }

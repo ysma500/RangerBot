@@ -48,6 +48,21 @@ int get_current_color()
 	return color;
 }
 
+/*
+	current_color = get_current_color();
+	switch(current_color)
+		{
+			case START_RED:
+				LCD_Printf("RED \n");
+				break;
+			case START_GREEN:
+				LCD_Printf("GREEN \n");
+				break;
+			default:
+				LCD_Printf("OTHER");
+				break;
+		}
+*/
 ///****************************************************************************
 ///*********** Fonctions pour le capteur de couleur ***************************
 ///****************************************************************************
