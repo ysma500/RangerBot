@@ -16,6 +16,9 @@
 #define MOTOR_GAUCHE 7
 #define MOTOR_DROIT 8
 #define HYST_MOV 50
+#define DEVANT_MOV 0
+#define DROIT_MOV 1
+#define GAUCHE_MOV 2
 
 //Initialisation PID
 void Initialisation();
@@ -30,4 +33,3 @@ float PID_Setup(void);
 void Mouv_infra();
 
 #endif
-
