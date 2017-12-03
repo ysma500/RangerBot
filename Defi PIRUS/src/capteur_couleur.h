@@ -74,3 +74,4 @@ int color_Init(int& dev_handle);
 extern int adjd_dev;
 
 #endif
+

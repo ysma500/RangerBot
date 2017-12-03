@@ -1,3 +1,6 @@
+#ifndef BOUTONS_H
+#define BOUTONS_H
+
 #define NB_CODE_MAX 5
 
 #define RIEN 0
@@ -22,3 +25,6 @@ void test_des_boutons(int code[NB_CODE_MAX]);
 int creer_code(int code[NB_CODE_MAX]);
 int valeurBumper(void);
 int trouverCode(int code[NB_CODE_MAX]);
+
+#endif
+

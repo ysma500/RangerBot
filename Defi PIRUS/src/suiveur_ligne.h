@@ -1,3 +1,5 @@
+#ifndef SUIVEUR_LIGNE_H
+#define SUIVEUR_LIGNE_H
 //DEFINE pour suiveur de lignes
 #define LINE_DROIT 568
 #define LINE_CENTRE 291
@@ -12,4 +14,6 @@
 // Prototypes de fonctions du suiveur de lignes
 //void testDeCapteurs(void);
 int det_ligne();
+
+#endif
 
