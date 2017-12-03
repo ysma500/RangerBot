@@ -2,7 +2,18 @@
 #include <libarmus.h>
 #include "boutons.h"
 
-//Debut de la fonction pour la modification des gains a suivre 
+int entrer_code()
+{
+	
+	return 0;
+}
+
+int nouveau_code()
+{
+	
+	return 0;
+}
+
 void test_des_boutons(int code[NB_CODE_MAX])
 {
 	int i = 0, j = 0;
@@ -48,13 +59,6 @@ void test_des_boutons(int code[NB_CODE_MAX])
 			}
 
 		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
-		{
-			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
-		}
-		THREAD_MSleep(1000);
 	}
 }
 
@@ -65,12 +69,11 @@ int creer_code(int code[NB_CODE_MAX])
 	int valeur = 0;
 	int nb_Code = 0;
 	int i;
-	LCD_ClearAndPrint("Uni test pour les boutons : \n");
 	while(1)
 	{
 		valeur = valeurBumper();
 
-		if(valeur > 0)
+		if (valeur > 0)
 		{
 
 			nb_Code ++;
@@ -81,7 +84,7 @@ int creer_code(int code[NB_CODE_MAX])
 			THREAD_MSleep(1500);
 		}
 
-		if(nb_Code >= NB_CODE_MAX - 1)
+		if (nb_Code >= NB_CODE_MAX - 1)
 		{
 			LCD_ClearAndPrint("Les codes entrees sont : \n");
 			LCD_Printf("Vous avez entree %d codes !\n",code[0]);
@@ -100,27 +103,27 @@ int creer_code(int code[NB_CODE_MAX])
 
 }
 
-int valeurBumper(void)
+int valeurBumper()
 {
 
-	if(DIGITALIO_Read(BMP_FRONT))
+	if(DIGITALIO_Read(BMP_BLEU))
 	{
 		return BTN_1;
 	}
-	else if(DIGITALIO_Read(BMP_RIGHT))
+	else if(DIGITALIO_Read(BMP_ROUGE))
 	{
 		return BTN_2;
 	}
-	else if(DIGITALIO_Read(BMP_REAR))
+	else if(DIGITALIO_Read(BMP_VERT))
 	{
 		return BTN_3;
 	}
-	else if(DIGITALIO_Read(BMP_LEFT))
+	else if(DIGITALIO_Read(BMP_ORANGEG))
 	{
 		return BTN_4;
 	}
-
-	return RIEN;
+	THREAD_MSleep(2000);
+	return BTN_0;
 }
 
 int trouverCode(int code[NB_CODE_MAX])
@@ -151,7 +154,6 @@ int trouverCode(int code[NB_CODE_MAX])
 
 
 	}
-
 	return BON_CODE;
 }
 

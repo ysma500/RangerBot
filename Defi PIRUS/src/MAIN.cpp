@@ -16,7 +16,6 @@
 #define CHANGER_CODE 3
 
 
-
 int infra_test();
 int boutons_test();
 int passif();
@@ -212,7 +211,8 @@ int selection_mode()
 //couleurs : START_RED, START_GREEN, START_OTHER
 int code()
 {
-	LCD_ClearAndPrint("Presentement dans le mode changment de code\n");
+	LCD_ClearAndPrint("Presentement dans le mode changement de code\n");
+	
 	THREAD_MSleep(3000);
 	return 0;
 }

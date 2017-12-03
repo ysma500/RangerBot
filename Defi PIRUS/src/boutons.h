@@ -1,9 +1,9 @@
 #ifndef BOUTONS_H
 #define BOUTONS_H
 
-#define NB_CODE_MAX 5
+#define LONGUEUR_CODE 5
 
-#define RIEN 0
+#define BTN_0 0
 #define BTN_1 1
 #define BTN_2 2
 #define BTN_3 3
