@@ -71,6 +71,6 @@ void color_ReadToCalibrate(int& data_red, int& data_blue, int& data_green, int& 
 int color_Init(int& dev_handle);
 
 
-extern int adjd_dev; //Works here but not in .h (weird)
+extern int adjd_dev;
 
 #endif

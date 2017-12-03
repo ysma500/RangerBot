@@ -7,7 +7,7 @@
 
 // Prototypes de fonctions de configs
 void testDeCapteurs(int capteur[3]);
-int capteurAffichage(int capteur[3]);
+//int capteurAffichage(int capteur[3]);
 
 int combinaison(int capteur);
 int lireCapteur(int capteur_Infra[3]);

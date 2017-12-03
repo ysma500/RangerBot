@@ -5,6 +5,8 @@
 #include "sonar.h"
 #include "boutons.h"
 #include "capteur_couleur.h"
+#include "mouvement.h"
+
 
 //Define pour les modes
 #define MODE_DEPART 0
@@ -55,6 +57,7 @@ int main()
 	On selectionne avec le bouton orange a gauche et on confirme avec le bouton orange a droite
 	On doit pooler apres chaque passe des capteurs pour voir si on veut changer de mode. 
 	*/
+	//Pour sonars : sonar_g() et sonar_d() retournent la distance percue par chaque capteur
 	
 	while (1)
 	{

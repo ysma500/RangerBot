@@ -2,8 +2,6 @@
 #include <libarmus.h>
 #include "infrarouge.h"
 
-
-
 //Combinaison du multiplexeur A0,A1 et A2
 int combinaison(int capteur)
 {
@@ -70,6 +68,7 @@ void testDeCapteurs(int capteur[3])
 	}
 }
 
+/*
 int capteurAffichage(int capteur[3])
 {
 	//if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
@@ -92,7 +91,7 @@ int capteurAffichage(int capteur[3])
 
 	return 0;
 }
-
+*/
 
 
 
