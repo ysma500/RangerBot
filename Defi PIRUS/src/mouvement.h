@@ -22,4 +22,4 @@ void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
 
 //Fonctions de mouvements particuliers
-void Tourne_gauche_avance();
+void Mouv_infra();
