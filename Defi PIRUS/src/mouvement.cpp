@@ -1,6 +1,7 @@
 // Include Files armus
 #include <libarmus.h>
 #include "mouvement.h"
+#include "infrarouge.h"
 
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
@@ -9,7 +10,7 @@ int m_iTicTotalD = 0;
 int m_iFlagZoneBkp = 0;
 int m_iFlagRge = 0;
 
-//Debut de la fonction pour la modification des gains a suivre 
+//Debut de la fonction pour la modification des gains a suivre
 void Initialisation()
 {
 	int i = 0, j = 0;
@@ -93,19 +94,19 @@ void Initialisation()
 float PID_Setup()
 {
 	int iCorrP = 0, iCorrI = 0, iTicGRead = 0, iTicDRead = 0, iErrorLive = 0, iErrorTotal = 0;
-	
+
 	THREAD_MSleep(50);
 	iTicDRead = ENCODER_Read(2);
 	iTicGRead = ENCODER_Read(1);
-	
+
 	m_iTicTotalD += iTicDRead;
 	m_iTicTotalG += iTicGRead;
 	iErrorLive = iTicDRead - iTicGRead;
 	iErrorTotal = m_iTicTotalD - m_iTicTotalG;
-	
+
 	iCorrP = GAIN_P * iErrorLive;
 	iCorrI = GAIN_I * iErrorTotal;
-	
+
 	return (iCorrP + iCorrI);
 }
 
@@ -115,18 +116,18 @@ void Rotation(float fAngle, int iDirection)
 	float fGaucheSpeed = SPEED_START-20;
 	float fArcRot = 0;
 	float fTicToDo = 0;
-	
+
 	//Cacul des tics a faire (encodeurs)
 	if (iDirection == RIGHT_ROT)
 		fArcRot = ((PI * 141) * ((fAngle - 5) / 360));
 	else
 		fArcRot = ((PI * 141) * ((fAngle - 4) / 360));
 	fTicToDo = (fArcRot / Circum) * 64;
-	
+
 	m_iTicTotalD = 0;
 	m_iTicTotalG = 0;
-	
-	int iTicDone = m_iTicTotalG; // égual à 0 ou à m_TicTotalG...
+
+	int iTicDone = m_iTicTotalG; // ï¿½gual ï¿½ 0 ou ï¿½ m_TicTotalG...
 	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir au total a la fin de la fonction
 
 	//Remise a 0
@@ -143,7 +144,7 @@ void Rotation(float fAngle, int iDirection)
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	
+
 	//Droite
 	if (iDirection == RIGHT_ROT)
 	{
@@ -164,9 +165,9 @@ void Avance(int iDistance, int iSens) //Distance en mm
 	float fGaucheSpeed = SPEED_START;
 	float fTicToDo = 64 * (iDistance / Circum);
 	int iTicDone = m_iTicTotalG;
-	
+
 	int iTicObjectif = iTicDone + fTicToDo; //Tic a avoir a la fin de la fonction
-	
+
 	//Remise a 0 des encodeurs
 	ENCODER_Read(2);
 	ENCODER_Read(1);
@@ -198,20 +199,18 @@ void Avance(int iDistance, int iSens) //Distance en mm
 }
 
 
+
 ///Fonction combines
-void Tourne_gauche_avance()
+void Mouv_infra()
 {
+	lireCapteur(capteur_mov);
+	if (capteur_mov[0] > (capteur_mov[1] + HYST_MOV) && capteur_mov[0] > (capteur_mov[2] + HYST_MOV))
+	{
 	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE, AVANCE);
-}
-
-void Tourne_gauche_avance(int valeurMod)
-{
+	}
 	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE/3, AVANCE);
-}
 
-void Avance_BASE()
-{
 	Avance(MIN_DISTANCE, AVANCE);
 }
