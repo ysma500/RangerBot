@@ -12,6 +12,7 @@
 #define MIN_DISTANCE 200
 #define MOTOR_GAUCHE 7
 #define MOTOR_DROIT 8
+#define HYST_MOV 50
 
 //Initialisation PID
 void Initialisation();

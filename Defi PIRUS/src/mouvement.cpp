@@ -1,6 +1,7 @@
 // Include Files armus
 #include <libarmus.h>
 #include "mouvement.h"
+#include "infrarouge.h"
 
 float GAIN_I = 0.223;
 float GAIN_P = 1.68;
@@ -201,9 +202,12 @@ void Avance(int iDistance, int iSens) //Distance en mm
 ///Fonction tourne ou avance
 void Mouv_infra()
 {
+	lireCapteur(capteur_mov);
+	if (capteur_mov[0] > (capteur_mov[1] + HYST_MOV) && capteur_mov[0] > (capteur_mov[2] + HYST_MOV))
+	{
 	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE, AVANCE);
-
+	}
 	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE/3, AVANCE);
 
