@@ -6,6 +6,7 @@
 #include "boutons.h"
 #include "capteur_couleur.h"
 #include "mouvement.h"
+#include "speaker.h"
 
 
 //Define pour les modes
@@ -14,9 +15,6 @@
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
 
-//Define pour les boutons
-#define ORANGE_LEFT 8
-#define ORANGE_RIGHT 9
 
 
 int infra_test();
@@ -34,13 +32,14 @@ int main()
 	int distance_percue; //Distance lue par les sonars
 	int distance_max = 10; 	 //Distance max avant de tourner lorsqu'on arrive a un mur (en cm)
 	int mode = MODE_DEPART; //current mode du robot 
+	int speaker_tester = 0;
 	//Initialisation du capteur de couleurs
 	Init_Color();
 	
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
-	LCD_ClearAndPrint("Appuyer sur le bumper arriere pour commencer le programme\n");
-	/*while (j == 0)
+	/*LCD_ClearAndPrint("Appuyer sur le bumper arriere pour commencer le programme\n");
+	while (j == 0)
 	{
 		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
@@ -59,7 +58,10 @@ int main()
 	On doit pooler apres chaque passe des capteurs pour voir si on veut changer de mode. 
 	*/
 	//Pour sonars : sonar_g() et sonar_d() retournent la distance percue par chaque capteur
-	
+	LCD_ClearAndPrint("Test des speakers! \n");
+	play_setup();
+	LCD_ClearAndPrint("Fin du test des speakers! \n");
+	LCD_ClearAndPrint("");
 	while (1)
 	{
 		mode = selection_mode();
@@ -139,18 +141,18 @@ int selection_mode()
 		{
 			if (DIGITALIO_Read(ORANGE_RIGHT))
 			{
-				LCD_ClearAndPrint("");
 				i = 1;
 				j = 1;
 				option = 1;
 			}
 			else if(DIGITALIO_Read(ORANGE_LEFT))
 			{
-				LCD_ClearAndPrint("");
 				i = 1;
 			}	
 			THREAD_MSleep(100);
 		}
+		
+		LCD_ClearAndPrint("");
 		
 		if (option == -1)
 		{
@@ -175,6 +177,8 @@ int selection_mode()
 			}		
 		}
 		
+		LCD_ClearAndPrint("");
+		
 		if (option == -1)
 		{
 			LCD_ClearAndPrint("Pour changer le mot de passe du robot, appuyer sur le bouton orange de droite\n");
@@ -197,7 +201,7 @@ int selection_mode()
 			THREAD_MSleep(100);
 			}		
 		}
-	}
+	}//end of while (j)
 	
 	return option;
 }

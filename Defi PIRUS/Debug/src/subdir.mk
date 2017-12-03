@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../src/infrarouge.cpp \
 ../src/mouvement.cpp \
 ../src/sonar.cpp \
+../src/speaker.cpp \
 ../src/suiveur_ligne.cpp 
 
 OBJS += \
@@ -19,6 +20,7 @@ OBJS += \
 ./src/infrarouge.o \
 ./src/mouvement.o \
 ./src/sonar.o \
+./src/speaker.o \
 ./src/suiveur_ligne.o 
 
 CPP_DEPS += \
@@ -28,6 +30,7 @@ CPP_DEPS += \
 ./src/infrarouge.d \
 ./src/mouvement.d \
 ./src/sonar.d \
+./src/speaker.d \
 ./src/suiveur_ligne.d 
 
 
