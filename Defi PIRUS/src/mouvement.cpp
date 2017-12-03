@@ -205,7 +205,6 @@ void Mouv_infra()
 	lireCapteur(capteur_mov);
 	if (capteur_mov[0] > (capteur_mov[1] + HYST_MOV) && capteur_mov[0] > (capteur_mov[2] + HYST_MOV))
 	{
-	Rotation(45,LEFT_ROT);
 	Avance(MIN_DISTANCE, AVANCE);
 	}
 	Rotation(45,LEFT_ROT);

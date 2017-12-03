@@ -9,7 +9,7 @@
 #define RECULE 3
 #define SPEED_START 70
 #define DELAY_STEP 500
-#define MIN_DISTANCE 200
+#define MIN_DISTANCE 100
 #define MOTOR_GAUCHE 7
 #define MOTOR_DROIT 8
 #define HYST_MOV 50
