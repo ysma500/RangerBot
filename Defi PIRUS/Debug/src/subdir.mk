@@ -8,21 +8,27 @@ CPP_SRCS += \
 ../src/boutons.cpp \
 ../src/capteur_couleur.cpp \
 ../src/infrarouge.cpp \
-../src/sonar.cpp 
+../src/mouvement.cpp \
+../src/sonar.cpp \
+../src/suiveur_ligne.cpp 
 
 OBJS += \
 ./src/MAIN.o \
 ./src/boutons.o \
 ./src/capteur_couleur.o \
 ./src/infrarouge.o \
-./src/sonar.o 
+./src/mouvement.o \
+./src/sonar.o \
+./src/suiveur_ligne.o 
 
 CPP_DEPS += \
 ./src/MAIN.d \
 ./src/boutons.d \
 ./src/capteur_couleur.d \
 ./src/infrarouge.d \
-./src/sonar.d 
+./src/mouvement.d \
+./src/sonar.d \
+./src/suiveur_ligne.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -28,7 +28,7 @@ int selection_mode();
 
 int main()
 {
-	// variables locales
+	// Variables locales
 	int j = 0; 			  //Condition pour rentrer dans le programme
 	int menu_option = 0; //Option de menu pour la demonstration
 	int distance_percue; //Distance lue par les sonars
@@ -65,16 +65,15 @@ int main()
 		switch (mode)
 		{
 			case MODE_PASSIF : 
-				
+				passif();
 				break;
 			case MODE_ACTIF : 
-				
+				actif();
 				break;
 			case CHANGER_CODE :
-				
+				code();
 				break;
-			case 4 :
-				
+			default :
 				break;
 		}
 	}
@@ -91,6 +90,8 @@ int main()
 	return 0;
 }
 
+
+//Fonctionnalites individuelles
 int infra_test()
 {
 	// affiche sur le LCD
@@ -100,7 +101,7 @@ int infra_test()
 	int lectures_INFRA[3] = {0,0,0}; 
 	
 	//Test
-	testDeCapteurs(lectures_INFRA);
+	afficher_IR(lectures_INFRA);
 	
 	LCD_Printf("Fin du test du capteur infrarouge\n");
 	
@@ -125,6 +126,7 @@ int boutons_test()
 	return 0;
 }
 
+//Fonctions de chaque mode
 int selection_mode()
 {
 	int option = -1;
@@ -213,4 +215,22 @@ int selection_mode()
 	}
 	
 	return option;
+}
+
+int code()
+{
+	
+	return 0;
+}
+
+int passif()
+{
+	
+	return 0;
+}
+
+int actif()
+{
+	
+	return 0;
 }

@@ -2,6 +2,13 @@
 #include <libarmus.h>
 #include "mouvement.h"
 
+float GAIN_I = 0.223;
+float GAIN_P = 1.68;
+int m_iTicTotalG = 0;
+int m_iTicTotalD = 0;
+int m_iFlagZoneBkp = 0;
+int m_iFlagRge = 0;
+
 //Debut de la fonction pour la modification des gains a suivre 
 void Initialisation()
 {
@@ -208,8 +215,3 @@ void Avance_BASE()
 {
 	Avance(MIN_DISTANCE, AVANCE);
 }
-
-
-
-
-

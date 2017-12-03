@@ -43,7 +43,7 @@ int lireCapteur(int capteur_Infra[3])
 }
 
 //Debut de la fonction pour la modification des gains a suivre 
-void testDeCapteurs(int capteur[3])
+void afficher_IR(int capteur[3])
 {
 	int i = 0;
 	

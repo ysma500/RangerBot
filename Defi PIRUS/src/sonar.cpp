@@ -14,7 +14,7 @@ int sonar_d()
 
 int sonar_g()
 {
-	sonar_gauche = 0;
+	float sonar_gauche = 0;
 	sonar_gauche = SONAR_Detect(SONAR_DEUX);
 	LCD_Printf("%0.4fcm \n", sonar_gauche);
 	THREAD_MSleep(250);

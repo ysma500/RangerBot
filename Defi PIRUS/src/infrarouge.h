@@ -6,7 +6,7 @@
 #define DISTANCE_MIN 100 //What is this
 
 // Prototypes de fonctions de configs
-void testDeCapteurs(int capteur[3]);
+void afficher_IR(int capteur[3]);
 //int capteurAffichage(int capteur[3]);
 
 int combinaison(int capteur);

@@ -10,14 +10,8 @@
 #define SPEED_START 70
 #define DELAY_STEP 500
 #define MIN_DISTANCE 200
-
-//PID
-float GAIN_I = 0.223;
-float GAIN_P = 1.68;
-int m_iTicTotalG = 0;
-int m_iTicTotalD = 0;
-int m_iFlagZoneBkp = 0;
-int m_iFlagRge = 0;
+#define MOTOR_GAUCHE 7
+#define MOTOR_DROIT 8
 
 //Initialisation PID
 void Initialisation();
@@ -31,3 +25,4 @@ float PID_Setup(void);
 void Tourne_gauche_avance();
 void Tourne_gauche_avance(int valeurMod);
 void Avance_BASE();
+
