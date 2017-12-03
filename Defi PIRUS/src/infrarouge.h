@@ -1,3 +1,5 @@
+#ifndef INFRAROUGE_H
+#define INFRAROUGE_H
 //Define
 #define IR0 0	//Capteur plus bas
 #define IR1 1	//Capteur niveau moyen
@@ -11,3 +13,6 @@ void afficher_IR(int capteur[3]);
 
 int combinaison(int capteur);
 int lireCapteur(int capteur_Infra[3]);
+
+#endif
+
