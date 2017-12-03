@@ -10,5 +10,5 @@
 float sonar_g();
 float sonar_d();
 
-#endif SONAR_H
+#endif
 

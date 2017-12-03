@@ -14,5 +14,5 @@ void afficher_IR(int capteur[3]);
 int combinaison(int capteur);
 int lireCapteur(int capteur_Infra[3]);
 
-#endif INFRAROUGE_H
+#endif
 
