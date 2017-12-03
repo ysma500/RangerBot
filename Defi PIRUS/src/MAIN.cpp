@@ -38,17 +38,17 @@ int main()
 	
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
-	/*LCD_ClearAndPrint("Appuyer sur le bumper arriere pour commencer le programme\n");
+	LCD_ClearAndPrint("Appuyer sur le bouton bleu pour commencer le programme\n");
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
+		if(DIGITALIO_Read(BMP_BLEU))
 		{
 			LCD_Printf("Depart du programme");
 			j = 1;
 		}
 	}
-	*/
+	
 	/*
 	Menu pour selectionner entre : 
 	1. Mode passif
@@ -58,10 +58,13 @@ int main()
 	On doit pooler apres chaque passe des capteurs pour voir si on veut changer de mode. 
 	*/
 	//Pour sonars : sonar_g() et sonar_d() retournent la distance percue par chaque capteur
+	
 	LCD_ClearAndPrint("Test des speakers! \n");
 	play_setup();
 	LCD_ClearAndPrint("Fin du test des speakers! \n");
+	THREAD_MSleep(3000);
 	LCD_ClearAndPrint("");
+	
 	while (1)
 	{
 		mode = selection_mode();

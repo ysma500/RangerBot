@@ -198,7 +198,7 @@ void Avance(int iDistance, int iSens) //Distance en mm
 }
 
 
-///Fonction tourne ou avance
+///Fonction combines
 void Tourne_gauche_avance()
 {
 	Rotation(45,LEFT_ROT);
