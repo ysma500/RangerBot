@@ -31,7 +31,7 @@ int get_current_color()
 				&& green >= (RED_G - LINE_HYST_PLUS) && green <= (RED_G + LINE_HYST_PLUS)
 				&& clear >= (RED_C - LINE_HYST_PLUS) && clear <= (RED_C + LINE_HYST_PLUS))
 			{
-				color = START_RED;
+				color = RED;
 			}
 			//Green
 			else if (red >= (GREEN_R - LINE_HYST) && red <= (GREEN_R + LINE_HYST)
@@ -39,11 +39,11 @@ int get_current_color()
 				&& green >= (GREEN_G - LINE_HYST) && green <= (GREEN_G + LINE_HYST)
 				&& clear >= (GREEN_C - LINE_HYST) && clear <= (GREEN_C + LINE_HYST))
 			{
-				color = START_GREEN;
+				color = GREEN;
 			}
 			else
 			{
-				color = START_OTHER;
+				color = OTHER;
 			}
 	return color;
 }

@@ -42,9 +42,9 @@
 #define WHITE_C 1023
 
 //Code de chaque couleur
-#define START_RED 1
-#define START_GREEN 2
-#define START_OTHER 0
+#define RED 1
+#define GREEN 2
+#define OTHER 0
 
 #define LINE_HYST 50 //Incertitude sur la detection de couleurs
 #define LINE_HYST_PLUS 100 //incertitude sur jaune et rouge

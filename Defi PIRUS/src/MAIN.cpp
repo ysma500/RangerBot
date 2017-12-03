@@ -40,7 +40,7 @@ int main()
 	//on choisit le bon mode de gestion d'erreur
 	ERROR_SetMode(LCD_ONLY);
 	LCD_ClearAndPrint("Appuyer sur le bumper arriere pour commencer le programme\n");
-	while (j == 0)
+	/*while (j == 0)
 	{
 		THREAD_MSleep(100);
 		if(DIGITALIO_Read(BMP_REAR))
@@ -49,6 +49,7 @@ int main()
 			j = 1;
 		}
 	}
+	*/
 	/*
 	Menu pour selectionner entre : 
 	1. Mode passif
@@ -74,6 +75,7 @@ int main()
 				code();
 				break;
 			default :
+				LCD_ClearAndPrint("Aucun cas selectionne!\n");
 				break;
 		}
 	}
@@ -102,8 +104,6 @@ int infra_test()
 	
 	//Test
 	afficher_IR(lectures_INFRA);
-	
-	LCD_Printf("Fin du test du capteur infrarouge\n");
 	
 	// Le code attent 5 secondes
 	THREAD_MSleep(5000);
@@ -139,15 +139,17 @@ int selection_mode()
 		{
 			if (DIGITALIO_Read(ORANGE_RIGHT))
 			{
+				LCD_ClearAndPrint("");
 				i = 1;
 				j = 1;
 				option = 1;
 			}
 			else if(DIGITALIO_Read(ORANGE_LEFT))
 			{
+				LCD_ClearAndPrint("");
 				i = 1;
 			}	
-		THREAD_MSleep(100);
+			THREAD_MSleep(100);
 		}
 		
 		if (option == -1)
@@ -159,12 +161,14 @@ int selection_mode()
 			{
 				if (DIGITALIO_Read(ORANGE_RIGHT))
 				{
+					LCD_ClearAndPrint("");
 					i = 1;
 					j = 1;
 					option = 2;
 				}
 				else if(DIGITALIO_Read(ORANGE_LEFT))
 				{
+					LCD_ClearAndPrint("");
 					i = 1;
 				}	
 			THREAD_MSleep(100);
@@ -180,33 +184,14 @@ int selection_mode()
 			{
 				if (DIGITALIO_Read(ORANGE_RIGHT))
 				{
+					LCD_ClearAndPrint("");
 					i = 1;
 					j = 1;
 					option = 3;
 				}
 				else if(DIGITALIO_Read(ORANGE_LEFT))
 				{
-					i = 1;
-				}	
-			THREAD_MSleep(100);
-			}		
-		}
-		
-		if (option == -1)
-		{
-			LCD_ClearAndPrint("Pour ANNULER tout changement, appuyer sur le bouton orange de droite\n");
-			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-			i = 0;
-			while(i == 0)
-			{
-				if (DIGITALIO_Read(ORANGE_RIGHT))
-				{
-					i = 1;
-					j = 1;
-					option = 4;
-				}
-				else if(DIGITALIO_Read(ORANGE_LEFT))
-				{
+					LCD_ClearAndPrint("");
 					i = 1;
 				}	
 			THREAD_MSleep(100);
@@ -217,20 +202,57 @@ int selection_mode()
 	return option;
 }
 
+//couleurs : START_RED, START_GREEN, START_OTHER
 int code()
 {
-	
+	LCD_ClearAndPrint("Presentement dans le mode changment de code\n");
+	THREAD_MSleep(3000);
 	return 0;
 }
 
 int passif()
 {
-	
+	LCD_ClearAndPrint("Presentement dans le mode passif\n");
+	int current_color;
+	int condition_mode = 0;
+	while (condition_mode == 0)
+	{
+		current_color = get_current_color();
+		switch (current_color)
+		{
+			case GREEN : 
+				
+				break;
+			case RED : 
+				
+				break;
+			case OTHER :
+				
+				break;
+		}
+	}
+	THREAD_MSleep(3000);
 	return 0;
 }
 
 int actif()
 {
-	
+	LCD_ClearAndPrint("Presentement dans le mode actif\n");
+	int current_color;
+	int condition_mode = 0;
+	while (condition_mode == 0)
+	{
+		current_color = get_current_color();
+		switch (current_color)
+		{
+			case RED :
+				LCD_ClearAndPrint("ROUGE Detecte\n");
+				break;
+			default : 
+				break;
+				
+		}
+	}
+	THREAD_MSleep(3000);
 	return 0;
 }
