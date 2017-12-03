@@ -27,9 +27,6 @@ float PID_Setup(void);
 
 //Fonctions de mouvements particuliers
 
-void Tourne_gauche_avance();
-void Tourne_gauche_avance(int valeurMod);
-void Avance_BASE();
 void Mouv_infra();
 
 #endif
