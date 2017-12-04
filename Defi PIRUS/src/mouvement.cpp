@@ -209,7 +209,7 @@ void Mouv_infra()
 {
 	int capteur_mov[3] = {0,0,0};
 	LCD_Printf("Avance infra\n");
-	lireCapteur(capteur_mov);
+	lireCapteur(&capteur_mov);
 	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
 	// si mur a droite et gauche mais pas devant avance tout droit
 	{
