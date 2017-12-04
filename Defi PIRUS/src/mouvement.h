@@ -16,6 +16,8 @@
 #define MOTOR_GAUCHE 7
 #define MOTOR_DROIT 8
 #define HYST_MOV 50
+
+//Define de mouvement pour infra PIRUS
 #define DEVANT_MOV 0
 #define DROIT_MOV 1
 #define GAUCHE_MOV 2
