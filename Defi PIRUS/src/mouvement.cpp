@@ -199,6 +199,11 @@ void Avance(int iDistance, int iSens) //Distance en mm
 	//MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
+void Brake()
+{
+	MOTOR_SetSpeed(LEFT_MOTOR, 0);
+	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
+}
 
 
 ///Fonction combines

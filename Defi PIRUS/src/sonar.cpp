@@ -33,11 +33,14 @@ void suivre_brigand()
 				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
 				{
 					//Tourner un peu a droite et avancer un peu
+					Rotation(20,RIGHT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
 				}
 			}
 			else
 			{
 				//avancer un peu
+				Avance(MIN_DISTANCE/2, AVANCE);
 			}
 		}
 		else if(lecture_gauche < lecture_droit)	//Objet a gauche
@@ -47,12 +50,19 @@ void suivre_brigand()
 				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
 				{
 					//Tourner un peu a gauche et avancer un peu
+					Rotation(20,LEFT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
 				}
 			}
 			else
 			{
 				//avancer un peu
+				Avance(MIN_DISTANCE/2, AVANCE);
 			}
+		}
+		else	//S'il y a rien en avant... DO NOTHING
+		{
+
 		}
 	}
 

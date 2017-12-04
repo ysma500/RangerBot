@@ -29,6 +29,7 @@ void Initialisation();
 void Avance(int iDistance, int iSens);
 void Rotation(float iAngle, int iDirection);
 float PID_Setup(void);
+void Brake();
 
 //Fonctions de mouvements particuliers
 
