@@ -203,7 +203,7 @@ void Brake()
 }
 
 
-/*
+
 ///Fonction combines
 void Mouv_infra()
 {
@@ -227,5 +227,4 @@ void Mouv_infra()
 		Avance(MIN_DISTANCE/2, AVANCE);
 	}
 }
-*/
 
