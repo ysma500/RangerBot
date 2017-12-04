@@ -12,7 +12,7 @@
 float sonar_g();
 float sonar_d();
 
-void suivre_brigand();
+int suivre_brigand();
 
 #endif
 

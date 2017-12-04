@@ -220,7 +220,10 @@ int passif()
 				LCD_ClearAndPrint("ROUGE Detecte\n");
 				break;
 			case OTHER :
-				
+				if(!suivre_brigand())
+				{
+					Mouv_infra();
+				}
 				break;
 		}
 	}
@@ -258,7 +261,10 @@ int actif()
 				break;
 			default :
 				//Detection d'un intrus
-				
+				if(!suivre_brigand())
+				{
+					Mouv_infra();
+				}
 				break;
 		}
 	}

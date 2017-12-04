@@ -23,7 +23,7 @@ float sonar_g()
 	
 
 	
-void suivre_brigand()
+int suivre_brigand()
 
 {
 	float lecture_droit = sonar_d();
@@ -47,6 +47,9 @@ void suivre_brigand()
 				//avancer un peu
 				Avance(MIN_DISTANCE/2, AVANCE);
 			}
+			last_sonar_d = lecture_droit;
+			last_sonar_g = lecture_gauche;
+			return 1;
 		}
 		else if(lecture_gauche < lecture_droit)	//Objet a gauche
 		{
@@ -64,14 +67,17 @@ void suivre_brigand()
 				//avancer un peu
 				Avance(MIN_DISTANCE/2, AVANCE);
 			}
+			last_sonar_d = lecture_droit;
+			last_sonar_g = lecture_gauche;
+			return 1;
 		}
 		else	//S'il y a rien en avant... DO NOTHING
 		{
-
+			last_sonar_d = lecture_droit;
+			last_sonar_g = lecture_gauche;
+			return 0;
 		}
 	}
-	last_sonar_d = lecture_droit;
-	last_sonar_g = lecture_gauche;
 }
 
 
