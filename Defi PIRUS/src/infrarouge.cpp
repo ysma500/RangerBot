@@ -29,16 +29,16 @@ int combinaison(int capteur)
 }
 
 //Place la valeur Analog_read dans le tableau capteur infra
-int lireCapteur(int* capteur_Infra[3])
+int lireCapteur(int* IR_AVANT, int* IR_RIGHT, int* IR_LEFT)
 {
 	combinaison(IR0);
-	*capteur_Infra[IR0] = ANALOG_Read(B1);
+	*IR_AVANT = ANALOG_Read(B1);
 
 	combinaison(IR1);
-	*capteur_Infra[IR1] = ANALOG_Read(B1);
+	*IR_RIGHT = ANALOG_Read(B1);
 
 	combinaison(IR2);
-	*capteur_Infra[IR2] = ANALOG_Read(B1);
+	*IR_LEFT = ANALOG_Read(B1);
 	return 0;
 }
 
@@ -50,7 +50,7 @@ void afficher_IR(int capteur[3])
 	while(i==0)
 	{
 		//Aller chercher les valeurs Analog read de chaque capteur infrarouge
-		lireCapteur(capteur);
+		lireCapteur(&capteur);
 
 		//Afficher les valeurs analog read 
 		LCD_ClearAndPrint("Analog IR0 = %d\n", capteur[0]);
