@@ -58,13 +58,13 @@ int main()
 	On doit pooler apres chaque passe des capteurs pour voir si on veut changer de mode. 
 	*/
 	//Pour sonars : sonar_g() et sonar_d() retournent la distance percue par chaque capteur
-	
+	/*
 	LCD_ClearAndPrint("Test des speakers! \n");
 	play_setup();
 	LCD_ClearAndPrint("Fin du test des speakers! \n");
 	THREAD_MSleep(3000);
 	LCD_ClearAndPrint("");
-	
+	*/
 	while (1)
 	{
 		mode = selection_mode();
@@ -208,6 +208,16 @@ int passif()
 	LCD_ClearAndPrint("Presentement dans le mode passif\n");
 	int current_color;
 	int condition_mode = 0;
+	if (entrer_code(mot_passe) == 1)
+		{
+			LCD_ClearAndPrint("Mauvais code!\n");
+			LCD_Printf("Appuyer sur le bouton bleu pour arreter l'alarme");
+			play_siren();
+		}
+		else
+		{
+			LCD_ClearAndPrint("Bon code! Bravo!");
+		}
 	while (condition_mode == 0)
 	{
 		current_color = get_current_color();
@@ -236,19 +246,8 @@ int actif()
 	LCD_ClearAndPrint("Presentement dans le mode actif\n");
 	int current_color;
 	int condition_mode = 0;
-	if (entrer_code(mot_passe) == 1)
-	{
-		LCD_ClearAndPrint("Mauvais code!\n");
-		LCD_Printf("Appuyer sur le bouton bleu pour arreter l'alarme");
-		play_siren();
-	}
-	else 
-	{
-		LCD_ClearAndPrint("Bon code! Bravo!");
-	}
 	while (condition_mode == 0)
 	{
-		condition_mode = 1;
 		current_color = get_current_color();
 		switch (current_color)
 		{
