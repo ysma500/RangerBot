@@ -207,6 +207,7 @@ void Brake()
 ///Fonction combines
 void Mouv_infra()
 {
+	int capteur_mov[3] = {0,0,0};
 	lireCapteur(capteur_mov);
 	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
 	// si mur a droite et gauche mais pas devant avance tout droit
@@ -225,7 +226,6 @@ void Mouv_infra()
 		Rotation(30,LEFT_ROT);
 		Avance(MIN_DISTANCE/2, AVANCE);
 	}
-<<<<<<< HEAD
 }
 */
 
