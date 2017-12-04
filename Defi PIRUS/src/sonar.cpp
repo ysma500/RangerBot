@@ -22,11 +22,7 @@ float sonar_g()
 	return sonar_gauche;
 }
 
-	
-
-	
 int suivre_brigand()
-
 {
 	float lecture_droit = sonar_d();
 	float lecture_gauche = sonar_g();
@@ -48,8 +44,8 @@ int suivre_brigand()
 			else
 			{
 				//avancer un peu
-				LCD_Printf("Je vois un brigand 2\n");
-				Avance(MIN_DISTANCE/2, AVANCE);
+				//LCD_Printf("Je vois un brigand 2\n");
+				return 0;
 			}
 			last_sonar_d = lecture_droit;
 			last_sonar_g = lecture_gauche;
@@ -69,9 +65,9 @@ int suivre_brigand()
 			}
 			else
 			{
-				LCD_Printf("Je vois un brigand 4\n");
+				//LCD_Printf("Je vois un brigand 4\n");
 				//avancer un peu
-				Avance(MIN_DISTANCE/2, AVANCE);
+				return 0;
 			}
 			
 			last_sonar_d = lecture_droit;
