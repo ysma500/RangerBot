@@ -5,7 +5,7 @@
 #include "sonar.h"
 #include "boutons.h"
 #include "capteur_couleur.h"
-//#include "mouvement.h"
+#include "mouvement.h"
 #include "speaker.h"
 
 
@@ -251,10 +251,15 @@ int actif()
 		{
 			case RED :
 				LCD_ClearAndPrint("ROUGE Detecte\n");
+				//Recule,tourne à gauche 90 deg. et avance
+				Avance(MIN_DISTANCE/2, RECULE);
+				Rotation(90,LEFT_ROT);
+				Avance(MIN_DISTANCE/2, AVANCE);
 				break;
-			default : 
-				break;
+			default :
+				//Detection d'un intrus
 				
+				break;
 		}
 	}
 	THREAD_MSleep(3000);

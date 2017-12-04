@@ -193,10 +193,13 @@ void Avance(int iDistance, int iSens) //Distance en mm
 			fGaucheSpeed += PID_Setup();
 		}
 	}
-	//Arreter les moteurs
-	//J'ai commenter ceci par souci de fluiditer Y.F.
-	//MOTOR_SetSpeed(LEFT_MOTOR, 0);
-	//MOTOR_SetSpeed(RIGHT_MOTOR, 0);
+}
+
+
+void Brake()
+{
+	MOTOR_SetSpeed(LEFT_MOTOR, 0);
+	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
 
@@ -222,5 +225,7 @@ void Mouv_infra()
 		Rotation(30,LEFT_ROT);
 		Avance(MIN_DISTANCE/2, AVANCE);
 	}
+<<<<<<< HEAD
 }
 */
+

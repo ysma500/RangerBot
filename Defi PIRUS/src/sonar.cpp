@@ -1,6 +1,9 @@
 #include <libarmus.h>
+#include "mouvement.h"
 #include "sonar.h"
 
+int last_sonar_d = 0;
+int last_sonar_g = 0;
 
 //Debut de la fonction pour la modification des gains a suivre 
 float sonar_d()
@@ -18,28 +21,57 @@ float sonar_g()
 }
 
 	
-/*
-int sonar_obstacle()
-{
-	float lecture_droit= sonar_d;
-	float lecture_gauche= sonar_g;
+
 	
-	if (lecture_droit < (last_sonar_d - hyst_sonar))
+void suivre_brigand()
+
+{
+	float lecture_droit = sonar_d();
+	float lecture_gauche = sonar_g();
+	
+	if((last_sonar_d != 0) && (last_sonar_g != 0))
 	{
-		return 1;
+		if(lecture_droit < lecture_gauche)	//Objet a droite
+		{
+			if(lecture_droit < (lecture_gauche - HYST_SONAR))
+			{
+				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
+				{
+					//Tourner un peu a droite et avancer un peu
+					Rotation(20,RIGHT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
+				}
+			}
+			else
+			{
+				//avancer un peu
+				Avance(MIN_DISTANCE/2, AVANCE);
+			}
+		}
+		else if(lecture_gauche < lecture_droit)	//Objet a gauche
+		{
+			if(lecture_gauche < (lecture_droit - HYST_SONAR))
+			{
+				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
+				{
+					//Tourner un peu a gauche et avancer un peu
+					Rotation(20,LEFT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
+				}
+			}
+			else
+			{
+				//avancer un peu
+				Avance(MIN_DISTANCE/2, AVANCE);
+			}
+		}
+		else	//S'il y a rien en avant... DO NOTHING
+		{
+
+		}
 	}
-	if (lecture_gauche < (last_sonar_g -hyst_sonar))
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
 	last_sonar_d = lecture_droit;
 	last_sonar_g = lecture_gauche;
 }
-*/
 
 
