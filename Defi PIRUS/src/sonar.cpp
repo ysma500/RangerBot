@@ -47,6 +47,7 @@ int suivre_brigand()
 				//avancer un peu
 				Avance(MIN_DISTANCE/2, AVANCE);
 			}
+			LCD_ClearAndPrint("Je vois un brigant\n");
 			last_sonar_d = lecture_droit;
 			last_sonar_g = lecture_gauche;
 			return 1;
@@ -67,12 +68,14 @@ int suivre_brigand()
 				//avancer un peu
 				Avance(MIN_DISTANCE/2, AVANCE);
 			}
+			LCD_ClearAndPrint("Je vois un brigant\n");
 			last_sonar_d = lecture_droit;
 			last_sonar_g = lecture_gauche;
 			return 1;
 		}
 		else	//S'il y a rien en avant... DO NOTHING
 		{
+			LCD_ClearAndPrint("Je vois pas de brigant\n");
 			last_sonar_d = lecture_droit;
 			last_sonar_g = lecture_gauche;
 			return 0;

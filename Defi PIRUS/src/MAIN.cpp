@@ -222,7 +222,7 @@ int passif()
 			case OTHER :
 				if(!suivre_brigand())
 				{
-					LCD_ClearAndPrint("Avance infra\n");
+					//LCD_ClearAndPrint("Avance infra\n");
 					Mouv_infra();
 				}
 				break;
@@ -265,7 +265,7 @@ int actif()
 				//Detection d'un intrus
 				if(!suivre_brigand())
 				{
-					LCD_ClearAndPrint("Avance infra\n");
+					
 					Mouv_infra();
 				}
 				break;
