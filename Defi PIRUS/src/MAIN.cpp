@@ -222,10 +222,12 @@ int passif()
 			case OTHER :
 				if(!suivre_brigand())
 				{
+					LCD_ClearAndPrint("Avance infra\n");
 					Mouv_infra();
 				}
 				break;
 		}
+		THREAD_MSleep(300);
 	}
 	THREAD_MSleep(3000);
 	return 0;
@@ -263,10 +265,12 @@ int actif()
 				//Detection d'un intrus
 				if(!suivre_brigand())
 				{
+					LCD_ClearAndPrint("Avance infra\n");
 					Mouv_infra();
 				}
 				break;
 		}
+		THREAD_MSleep(300);
 	}
 	THREAD_MSleep(3000);
 	return 0;

@@ -33,6 +33,6 @@ void Brake();
 
 //Fonctions de mouvements particuliers
 
-//void Mouv_infra();
+void Mouv_infra();
 
 #endif
