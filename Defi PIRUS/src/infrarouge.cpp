@@ -29,16 +29,16 @@ int combinaison(int capteur)
 }
 
 //Place la valeur Analog_read dans le tableau capteur infra
-int lireCapteur(int capteur_Infra[3])
+int lireCapteur(int* capteur_Infra[3])
 {
 	combinaison(IR0);
-	capteur_Infra[IR0] = ANALOG_Read(B1);
+	*capteur_Infra[IR0] = ANALOG_Read(B1);
 
 	combinaison(IR1);
-	capteur_Infra[IR1] = ANALOG_Read(B1);
+	*capteur_Infra[IR1] = ANALOG_Read(B1);
 
 	combinaison(IR2);
-	capteur_Infra[IR2] = ANALOG_Read(B1);
+	*capteur_Infra[IR2] = ANALOG_Read(B1);
 	return 0;
 }
 
