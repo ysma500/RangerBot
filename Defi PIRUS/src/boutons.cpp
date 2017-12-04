@@ -103,6 +103,7 @@ int creer_code(int code[NB_CODE_MAX])
 
 }
 
+//TODO logique si rien n'est pressé pour la création d'un code....
 int valeurBumper()
 {
 
