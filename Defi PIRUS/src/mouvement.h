@@ -5,7 +5,7 @@
 #define PI 3.14159265358979323846264338327950288
 #define LEFT_MOTOR 7
 #define RIGHT_MOTOR 8
-#define Circum 229.33626371205490640777296697940 //Cironference de la roue
+#define Circum 229.33626371205490640777296697940 //Circonference de la roue
 #define LEFT_ROT 1
 #define RIGHT_ROT 0
 #define AVANCE 2
