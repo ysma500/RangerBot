@@ -67,6 +67,7 @@ int main()
 	*/
 	while (1)
 	{
+		THREAD_MSleep(1230);
 		mode = selection_mode();
 		switch (mode)
 		{
@@ -97,24 +98,6 @@ int main()
 	return 0;
 }
 
-
-//Fonctionnalites individuelles
-int infra_test()
-{
-	// affiche sur le LCD
-	LCD_ClearAndPrint("Depart du test des infrarouge\n");
-	
-	//Definir tes entree (les 3 capteurs utilisee)
-	int lectures_INFRA[3] = {0,0,0}; 
-	
-	//Test
-	afficher_IR(lectures_INFRA);
-	
-	// Le code attent 5 secondes
-	THREAD_MSleep(5000);
-	LCD_ClearAndPrint("");
-	return 0;
-}
 
 //Fonctions de chaque mode
 int selection_mode()
@@ -238,6 +221,10 @@ int passif()
 				break;
 		}
 		THREAD_MSleep(300);
+		if (DIGITALIO_Read(ORANGE_RIGHT))
+		{
+			condition_mode = 1;
+		}
 	}
 	THREAD_MSleep(3000);
 	return 0;
@@ -264,12 +251,15 @@ int actif()
 				//Detection d'un intrus
 				if(!suivre_brigand())
 				{
-					
 					Mouv_infra();
 				}
 				break;
 		}
-		THREAD_MSleep(1000);
+		THREAD_MSleep(300);
+		if (DIGITALIO_Read(ORANGE_RIGHT))
+		{
+			condition_mode = 1;
+		}
 	}
 	THREAD_MSleep(3000);
 	return 0;
