@@ -17,17 +17,8 @@ float sonar_g()
 	return sonar_gauche;
 }
 
-//Fonctions gab
-int suivre_brigand()
-{
-	float lire_gauche= sonar_g();
-	float lire_droit= sonar_d();
-
-	return 0;
-}
 	
-	
-	
+/*
 int sonar_obstacle()
 {
 	float lecture_droit= sonar_d;
@@ -49,6 +40,6 @@ int sonar_obstacle()
 	last_sonar_d = lecture_droit;
 	last_sonar_g = lecture_gauche;
 }
-	
+*/
 
 

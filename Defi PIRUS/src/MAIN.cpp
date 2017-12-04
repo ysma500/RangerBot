@@ -5,16 +5,15 @@
 #include "sonar.h"
 #include "boutons.h"
 #include "capteur_couleur.h"
-#include "mouvement.h"
+//#include "mouvement.h"
 #include "speaker.h"
 
 
 //Define pour les modes
-#define MODE_DEPART 0
+#define MODE_STANDBY 0
 #define MODE_PASSIF 1
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
-
 
 int infra_test();
 int boutons_test();
@@ -23,6 +22,8 @@ int actif();
 int code();
 int selection_mode();
 
+int mot_passe[LONGUEUR_CODE];
+
 int main()
 {
 	// Variables locales
@@ -30,7 +31,7 @@ int main()
 	int menu_option = 0; //Option de menu pour la demonstration
 	int distance_percue; //Distance lue par les sonars
 	int distance_max = 10; 	 //Distance max avant de tourner lorsqu'on arrive a un mur (en cm)
-	int mode = MODE_DEPART; //current mode du robot 
+	int mode = MODE_STANDBY; //current mode du robot 
 	int speaker_tester = 0;
 	//Initialisation du capteur de couleurs
 	Init_Color();
@@ -75,10 +76,10 @@ int main()
 			case MODE_ACTIF : 
 				actif();
 				break;
-			case CHANGER_CODE :
+			case CHANGER_CODE : 
 				code();
 				break;
-			default :
+			default : 
 				LCD_ClearAndPrint("Aucun cas selectionne!\n");
 				break;
 		}
@@ -109,21 +110,6 @@ int infra_test()
 	//Test
 	afficher_IR(lectures_INFRA);
 	
-	// Le code attent 5 secondes
-	THREAD_MSleep(5000);
-	LCD_ClearAndPrint("");
-	return 0;
-}
-
-int boutons_test()
-{
-	LCD_ClearAndPrint("Depart du test des boutons\n");
-	//Nouveau contenu
-	int code[NB_CODE_MAX] = {0,0,0,0,0};
-	test_des_boutons(code);
-	
-	LCD_Printf("Fin du test des boutons\n");
-
 	// Le code attent 5 secondes
 	THREAD_MSleep(5000);
 	LCD_ClearAndPrint("");
@@ -212,7 +198,7 @@ int selection_mode()
 int code()
 {
 	LCD_ClearAndPrint("Presentement dans le mode changement de code\n");
-	
+	nouveau_code(mot_passe);
 	THREAD_MSleep(3000);
 	return 0;
 }
@@ -228,10 +214,10 @@ int passif()
 		switch (current_color)
 		{
 			case GREEN : 
-				
+				LCD_ClearAndPrint("GREEN Detecte\n");
 				break;
 			case RED : 
-				
+				LCD_ClearAndPrint("ROUGE Detecte\n");
 				break;
 			case OTHER :
 				
@@ -247,8 +233,19 @@ int actif()
 	LCD_ClearAndPrint("Presentement dans le mode actif\n");
 	int current_color;
 	int condition_mode = 0;
+	if (entrer_code(mot_passe) == 1)
+	{
+		LCD_ClearAndPrint("Mauvais code!\n");
+		LCD_Printf("Appuyer sur le bouton bleu pour arreter l'alarme");
+		play_siren();
+	}
+	else 
+	{
+		LCD_ClearAndPrint("Bon code! Bravo!");
+	}
 	while (condition_mode == 0)
 	{
+		condition_mode = 1;
 		current_color = get_current_color();
 		switch (current_color)
 		{

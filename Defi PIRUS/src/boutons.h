@@ -21,10 +21,10 @@
 #define BON_CODE 1
 
 // Prototypes de fonctions de configs
-void test_des_boutons(int code[NB_CODE_MAX]);
-int creer_code(int code[NB_CODE_MAX]);
-int valeurBumper(void);
-int trouverCode(int code[NB_CODE_MAX]);
+int entrer_code(int code[LONGUEUR_CODE]); //Fonction pour faire entrer le code a un intrus
+int nouveau_code(int code[LONGUEUR_CODE]); //Fonction pour faire choisir un nouveau code
+int show_code(int code[LONGUEUR_CODE]); //Fonction pour afficher le mot de passe present
+int get_bouton(); //Fonction appuyer sur bouton
 
 #endif
 

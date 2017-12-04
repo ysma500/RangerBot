@@ -2,7 +2,21 @@
 #include "speaker.h"
 #include "boutons.h"
 
-
+int play_siren()
+{
+	int alarm = 0;
+	AUDIO_SetVolume(50);
+	char D[] = "Siren.wav";
+	while (alarm == 0);
+	{
+		Play(D);
+		if (DIGITALIO_Read(BMP_BLEU))
+		{
+			alarm = 1;
+		}
+	}
+	return 0;
+}
 int play_setup(void)
 {
   AUDIO_SetVolume(50);

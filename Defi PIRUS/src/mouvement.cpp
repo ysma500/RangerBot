@@ -200,7 +200,7 @@ void Avance(int iDistance, int iSens) //Distance en mm
 }
 
 
-
+/*
 ///Fonction combines
 void Mouv_infra()
 {
@@ -223,3 +223,4 @@ void Mouv_infra()
 		Avance(MIN_DISTANCE/2, AVANCE);
 	}
 }
+*/
