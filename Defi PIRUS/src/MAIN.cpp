@@ -269,7 +269,7 @@ int actif()
 				}
 				break;
 		}
-		THREAD_MSleep(300);
+		THREAD_MSleep(1000);
 	}
 	THREAD_MSleep(3000);
 	return 0;
