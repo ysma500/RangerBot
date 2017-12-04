@@ -10,8 +10,8 @@
 #define BTN_4 4
 
 //Define pour les boutons
-#define ORANGE_LEFT 11
-#define ORANGE_RIGHT 9
+#define ORANGE_LEFT 9
+#define ORANGE_RIGHT 11
 #define BMP_BLEU 1
 #define BMP_ROUGE 2
 #define BMP_VERT 4
