@@ -33,6 +33,7 @@ int main()
 	int distance_max = 10; 	 //Distance max avant de tourner lorsqu'on arrive a un mur (en cm)
 	int mode = MODE_STANDBY; //current mode du robot 
 	int speaker_tester = 0;
+	int standby_standby = 0;
 	//Initialisation du capteur de couleurs
 	Init_Color();
 	
@@ -65,6 +66,7 @@ int main()
 	THREAD_MSleep(3000);
 	LCD_ClearAndPrint("");
 	*/
+	
 	while (1)
 	{
 		THREAD_MSleep(1230);
@@ -80,6 +82,16 @@ int main()
 			case CHANGER_CODE : 
 				code();
 				break;
+			case MODE_STANDBY :
+				LCD_ClearAndPrint("Presentement dans le mode standby! \n Pour retourner dans le menu de selection\n appuyer sur le bouton bleu.");
+				standby_standby = 0;
+				while (standby_standby == 0)
+				{
+					if (DIGITALIO_Read(BMP_BLEU)
+					{
+						standby_standby = 1;
+					}
+				}
 			default : 
 				LCD_ClearAndPrint("Aucun cas selectionne!\n");
 				break;
@@ -172,6 +184,29 @@ int selection_mode()
 			THREAD_MSleep(100);
 			}		
 		}
+			if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour entrer dans le mode standby, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 0;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
 	}//end of while (j)
 	
 	return option;
@@ -266,3 +301,4 @@ int actif()
 	THREAD_MSleep(3000);
 	return 0;
 }
+
