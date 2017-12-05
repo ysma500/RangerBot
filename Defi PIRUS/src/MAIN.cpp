@@ -36,6 +36,7 @@ int main()
 	int mode = MODE_STANDBY; //current mode du robot 
 	int speaker_tester = 0;
 	int standby_standby = 0;
+	
 	//Initialisation du capteur de couleurs
 	Init_Color();
 	
@@ -71,6 +72,11 @@ int main()
 	
 	while (1)
 	{
+		//Mise a zero des variables de sonars
+	last_sonar_d = 0;
+	last_sonar_g = 0;
+	flag_brigand = 0;
+	//Entree dans les menus
 		THREAD_MSleep(1230);
 		mode = selection_mode();
 		switch (mode)
