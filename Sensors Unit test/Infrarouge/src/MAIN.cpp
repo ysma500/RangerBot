@@ -69,7 +69,7 @@ int main()
 	while (j == 0)
 	{
 		THREAD_MSleep(100);
-		if(DIGITALIO_Read(BMP_REAR))
+		if(DIGITALIO_Read(BMP_FRONT))
 		{
 			LCD_Printf("Entrer dans les Tests de capteurs\n");
 			j = 1;
@@ -111,9 +111,10 @@ void testDeCapteurs(int capteur[3])
 			i = 1;
 			LCD_Printf("Sortie du test des infra\n");
 		}
-		THREAD_MSleep(1000);
+		THREAD_MSleep(500);
 	}
 }
+
 /*
 int capteurAffichage(int capteur[3])
 {
