@@ -227,6 +227,7 @@ void Mouv_infra()
 	}
 	else
 	{
+		LCD_Printf("A: %d D: %d G: %d\n", capteur_mov[DEVANT_MOV], capteur_mov[DROIT_MOV], capteur_mov[GAUCHE_MOV]);
 		LCD_Printf("Ne respecte pas les autres conditions IR\n");
 		Brake();
 	}
