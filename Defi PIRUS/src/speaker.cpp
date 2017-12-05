@@ -9,7 +9,7 @@ int play_siren()
 	while (alarm == 0);
 	{
 		AUDIO_PlayFile("Siren.wav");
-		if (DIGITALIO_Read(BMP_BLEU))
+		if (DIGITALIO_Read(ORANGE_LEFT))
 		{
 			alarm = 1;
 		}

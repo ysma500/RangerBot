@@ -22,6 +22,7 @@ int code();
 int selection_mode();
 
 int mot_passe[LONGUEUR_CODE];
+int brigand_present = 0;
 
 int main()
 {
@@ -226,16 +227,7 @@ int passif()
 	LCD_ClearAndPrint("Presentement dans le mode passif\n");
 	int current_color;
 	int condition_mode = 0;
-	if (entrer_code(mot_passe) == 1)
-		{
-			LCD_ClearAndPrint("Mauvais code!\n");
-			LCD_Printf("Appuyer sur le bouton bleu pour arreter l'alarme");
-			play_siren();
-		}
-		else
-		{
-			LCD_ClearAndPrint("Bon code! Bravo!");
-		}
+
 	while (condition_mode == 0)
 	{
 		current_color = get_current_color();
@@ -248,10 +240,26 @@ int passif()
 				LCD_ClearAndPrint("ROUGE Detecte\n");
 				break;
 			case OTHER :
-				if(!suivre_brigand())
+				brigand_present = suivre_brigand();
+				if(!brigand_present)
 				{
 					//LCD_ClearAndPrint("Avance infra\n");
 					Mouv_infra();
+				}
+				if (brigand_present == 2)
+				{
+					if (entrer_code(mot_passe) == 0)
+					{
+						LCD_ClearAndPrint("Mauvais code!\n");
+						LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme");
+						play_siren();
+						flag_brigand = 0;
+					}
+					else
+					{
+						LCD_ClearAndPrint("Bon code! Bravo!");
+						flag_brigand = 0;
+					}
 				}
 				break;
 		}
@@ -285,9 +293,27 @@ int actif()
 				break;
 			default :
 				//Detection d'un intrus
-				if(!suivre_brigand())
+				brigand_present = suivre_brigand();
+				if(!brigand_present)
 				{
 					Mouv_infra();
+				}
+				if (brigand_present == 2)
+				{
+					if (entrer_code(mot_passe) == 0)
+					{
+						LCD_ClearAndPrint("Mauvais code!\n");
+						LCD_Printf("Appuyer sur le bouton orange a gauche pour arreter l'alarme");
+						play_siren();
+						flag_brigand = 0;
+						condition_mode = 1;
+					}
+					else
+					{
+						LCD_ClearAndPrint("Bon code! Bravo!");
+						flag_brigand = 0;
+						condition_mode = 1;
+					}
 				}
 				break;
 		}

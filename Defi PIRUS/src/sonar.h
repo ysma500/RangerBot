@@ -10,6 +10,8 @@
 #define MIN_DIST_BRIGAND 25
 
 extern int flag_brigand;
+extern int last_sonar_d;
+extern int last_sonar_g;
 
 // Prototypes de fonctions de configs
 float sonar_g();

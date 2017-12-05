@@ -13,10 +13,10 @@ int entrer_code(int code[LONGUEUR_CODE])
 		code_entre = get_bouton();
 		if (code_entre != code[verification])
 		{
-			return 1;
+			return 0;
 		}
 	}
-	return 0;
+	return 1;
 }
 
 int nouveau_code(int code[LONGUEUR_CODE])
