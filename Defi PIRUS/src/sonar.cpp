@@ -51,7 +51,7 @@ int suivre_brigand()
 					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
 					{
 						Brake();
-						return 1;
+						return 2;
 					}
 					else	//Si on est pas assez pres... On avance
 					{
@@ -85,7 +85,7 @@ int suivre_brigand()
 					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
 					{
 						Brake();
-						return 1;
+						return 2;
 					}
 					else	//Si on est pas assez pres... On avance
 					{
@@ -122,7 +122,7 @@ int suivre_brigand()
 					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
 					{
 						Brake();
-						return 1;
+						return 2;
 					}
 					else	//Si on est pas assez pres... On avance
 					{
@@ -156,7 +156,7 @@ int suivre_brigand()
 					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
 					{
 						Brake();
-						return 1;
+						return 2;
 					}
 					else	//Si on est pas assez pres... On avance
 					{
