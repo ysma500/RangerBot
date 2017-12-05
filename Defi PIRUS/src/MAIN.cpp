@@ -346,7 +346,7 @@ int actif()
 				break;
 			default :
 				//Detection d'un intrus
-				brigand_present = suivre_brigand();
+				//brigand_present = suivre_brigand();
 				//if(!brigand_present)
 				//{
 					Mouv_infra();
