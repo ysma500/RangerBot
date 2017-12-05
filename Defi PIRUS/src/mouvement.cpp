@@ -206,7 +206,6 @@ void Brake()
 void Mouv_infra()
 {
 	int capteur_mov[3] = {0,0,0};
-	LCD_Printf("Avance infra\n");
 	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
 	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a un mur a droite
 	{
@@ -226,6 +225,7 @@ void Mouv_infra()
 		else // si y a un mur a droite mais pas devant
 		{
 			Avance(MIN_DISTANCE, AVANCE);
+			LCD_Printf("Mur a droite mais pas devant \n");
 		}
 	}
 	else // si y a pas de mur a droite
