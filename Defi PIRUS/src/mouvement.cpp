@@ -10,6 +10,74 @@ int m_iTicTotalD = 0;
 int m_iFlagZoneBkp = 0;
 int m_iFlagRge = 0;
 
+///Fonction combines
+void Mouv_infra()
+{
+	int capteur_mov[3] = {0,0,0};
+	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
+	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a un mur a droite
+	{
+		if(capteur_mov[DROIT_MOV] > (2*WALL_DIST))
+		{
+			Rotation(10, LEFT_ROT);
+		}
+		else if (capteur_mov[DEVANT_MOV] > (2*WALL_DIST)) // si je suis face au mur
+		{
+			if (capteur_mov[GAUCHE_MOV] > (WALL_DIST)) // si y a un mur a gauche
+			{
+				Rotation(180, LEFT_ROT);
+				Avance(MIN_DISTANCE, AVANCE);
+			}
+			else //(si y a un mur a droite et devant mais pas a gauche)
+			{
+				Rotation(90, LEFT_ROT);
+				Avance(MIN_DISTANCE, AVANCE);
+			}
+		}
+		else // si y a un mur a droite mais pas devant
+		{
+			Avance(MIN_DISTANCE, AVANCE);
+			LCD_Printf("Mur a droite mais pas devant \n");
+		}
+	}
+	else // si y a pas de mur a droite
+	{
+			Rotation(85, RIGHT_ROT);
+			Avance(MIN_DISTANCE, AVANCE);
+	}
+
+
+	/*
+	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
+	{
+		// si mur a droite et gauche mais pas devant avance tout droit
+		Avance(MIN_DISTANCE, AVANCE);
+	}
+	else if ((capteur_mov[DROIT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
+	{
+		// si mur a gauche et devant mais pas a droite tourne a droite
+		Rotation(45,RIGHT_ROT);
+		//Avance(MIN_DISTANCE/2, AVANCE);
+	}
+	else if ((capteur_mov[GAUCHE_MOV] < (capteur_mov[DEVANT_MOV] - HYST_MOV)) && (capteur_mov[GAUCHE_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)))
+	{
+		// si mur a droite et tout droit mais pas a geuche tourne a gauche
+		Rotation(45,LEFT_ROT);
+		//Avance(MIN_DISTANCE/2, AVANCE);
+	}
+	else
+	{
+		LCD_Printf("Ne respecte pas les autres conditions IR\n");
+		Brake();
+	}*/
+}
+
+////////////////////////////////////////////////////
+//Fonctions de calibration et de mouvement de base
+//**************************************************
+//////////////////////////////////////////////////////
+
+
 //Debut de la fonction pour la modification des gains a suivre
 void Initialisation()
 {
@@ -202,64 +270,3 @@ void Brake()
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
-///Fonction combines
-void Mouv_infra()
-{
-	int capteur_mov[3] = {0,0,0};
-	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
-	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a un mur a droite
-	{
-		if(capteur_mov[DROIT_MOV] > (2*WALL_DIST))
-		{
-			Rotation(10, LEFT_ROT);
-		}
-		else if (capteur_mov[DEVANT_MOV] > (2*WALL_DIST)) // si je suis face au mur
-		{
-			if (capteur_mov[GAUCHE_MOV] > (2*WALL_DIST)) // si y a un mur a gauche
-			{
-				Rotation(180, LEFT_ROT);
-				Avance(MIN_DISTANCE, AVANCE);
-			}
-			else //(si y a un mur a droite et devant mais pas a gauche)
-			{
-				Rotation(90, LEFT_ROT);
-				Avance(MIN_DISTANCE, AVANCE);
-			}
-		}
-		else // si y a un mur a droite mais pas devant
-		{
-			Avance(MIN_DISTANCE, AVANCE);
-			LCD_Printf("Mur a droite mais pas devant \n");
-		}
-	}
-	else // si y a pas de mur a droite
-	{
-			Rotation(90, RIGHT_ROT);
-			Avance(MIN_DISTANCE, AVANCE);
-	}
-
-
-	/*
-	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
-	{
-		// si mur a droite et gauche mais pas devant avance tout droit
-		Avance(MIN_DISTANCE, AVANCE);
-	}
-	else if ((capteur_mov[DROIT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
-	{
-		// si mur a gauche et devant mais pas a droite tourne a droite
-		Rotation(45,RIGHT_ROT);
-		//Avance(MIN_DISTANCE/2, AVANCE);
-	}
-	else if ((capteur_mov[GAUCHE_MOV] < (capteur_mov[DEVANT_MOV] - HYST_MOV)) && (capteur_mov[GAUCHE_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)))
-	{
-		// si mur a droite et tout droit mais pas a geuche tourne a gauche
-		Rotation(45,LEFT_ROT);
-		//Avance(MIN_DISTANCE/2, AVANCE);
-	}
-	else
-	{
-		LCD_Printf("Ne respecte pas les autres conditions IR\n");
-		Brake();
-	}*/
-}
