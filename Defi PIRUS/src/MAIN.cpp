@@ -347,10 +347,10 @@ int actif()
 			default :
 				//Detection d'un intrus
 				brigand_present = suivre_brigand();
-				if(!brigand_present)
-				{
+				//if(!brigand_present)
+				//{
 					Mouv_infra();
-				}
+				//}
 				if (brigand_present == 2)
 				{
 					if (entrer_code(mot_passe) == 0)
