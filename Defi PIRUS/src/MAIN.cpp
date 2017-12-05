@@ -14,12 +14,14 @@
 #define MODE_PASSIF 1
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
+#define TEST_ALARME 4
 
 
 int passif();
 int actif();
 int code();
 int selection_mode();
+int test_alarme();
 
 int mot_passe[LONGUEUR_CODE];
 int brigand_present = 0;
@@ -92,6 +94,9 @@ int main()
 						standby_standby = 1;
 					}
 				}
+			case TEST_ALARME :
+				test_alarme();
+				break;
 			default : 
 				LCD_ClearAndPrint("Aucun cas selectionne!\n");
 				break;
@@ -163,6 +168,31 @@ int selection_mode()
 		
 		if (option == -1)
 		{
+			LCD_ClearAndPrint("Pour tester le systeme d'alarme, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 4;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
+		{
 			LCD_ClearAndPrint("Pour changer le mot de passe du robot, appuyer sur le bouton orange de droite\n");
 			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
 			i = 0;
@@ -183,7 +213,10 @@ int selection_mode()
 			THREAD_MSleep(100);
 			}		
 		}
-			if (option == -1)
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
 		{
 			LCD_ClearAndPrint("Pour entrer dans le mode standby, appuyer sur le bouton orange de droite\n");
 			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
@@ -207,7 +240,6 @@ int selection_mode()
 		}
 		
 	}//end of while (j)
-	
 	return option;
 }
 
@@ -219,6 +251,21 @@ int code()
 	LCD_ClearAndPrint("Nouveau code recu, retour au menu dans 3 secondes");
 	THREAD_MSleep(3000);
 	LCD_ClearAndPrint("");
+	return 0;
+}
+
+int test_alarme()
+{
+	if (entrer_code(mot_passe) == 0)
+	{
+		LCD_ClearAndPrint("Mauvais code!\n");
+		LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme");
+		play_siren();
+	}
+	else
+	{
+		LCD_ClearAndPrint("Bon code! Bravo!");
+	}
 	return 0;
 }
 
