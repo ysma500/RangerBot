@@ -15,7 +15,7 @@
 #define AVANCE 2
 #define RECULE 3
 
-#define SPEED_START 70
+#define SPEED_START 55
 #define DELAY_STEP 500
 #define MIN_DISTANCE 75
 
