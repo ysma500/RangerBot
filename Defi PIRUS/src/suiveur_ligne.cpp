@@ -4,7 +4,7 @@
 #include"mouvement.h"
 
 
-//Debut de la fonction pour la modification des gains a suivre 
+//Debut de la fonction pour la modification des gains a suivre
 int det_ligne()
 {
 	int valeur_lignes = 0;
@@ -47,4 +47,52 @@ void testDeCapteurs(void)
 */
 
 
-
+int ligne_centre() // retourne 1 si centre, retourne -1 si a perdu la ligne
+{
+	int flag_centre = 0;
+	while (flag_centre == 0)
+	{
+			int position = 0;
+			position = det_ligne();
+			if ((position < LINE_DROIT + LINE_HYST) && (position > LINE_DROIT - LINE_HYST))
+			{ //Trop a droite
+				Rotation(25, );
+				Avance(100, AVANCE);
+				Rotation(25, RIGHT_ROT);
+				Avance(100, RECULE);
+			}
+			else if ((position < LINE_GAUCHE + LINE_HYST) && (position > LINE_GAUCHE - LINE_HYST))
+			{ //Trop a gauche
+				Rotation(20, RIGHT_ROT);
+				Avance(100, AVANCE);
+				Rotation(20, LEFT_ROT);
+				Avance(100, RECULE);
+			}
+			else if ((position < LINE_DROIT_CENTRE + LINE_HYST) && (position > LINE_DROIT_CENTRE - LINE_HYST))
+			{ //un peu trop a droite
+				Rotation(15, );
+				Avance(100, AVANCE);
+				Rotation(15, RIGHT_ROT);
+				Avance(100, RECULE);
+			}
+			else if ((position < LINE_GAUCHE_CENTRE + LINE_HYST) && (position > LINE_GAUCHE_CENTRE - LINE_HYST))
+			{ //un peu trop a gauche
+				Rotation(10, RIGHT_ROT);
+				Avance(100, AVANCE);
+				Rotation(10, LEFT_ROT);
+				Avance(100, RECULE);
+			}
+			else if ((position < LINE_CENTRE + LINE_HYST) && (position > LINE_CENTRE - LINE_HYST))
+			{
+				flag_centre = 1;
+				break;
+			}
+			else if (position < 50)
+			{
+				flag_centre = -1;
+				LCD_Printf ("Ligne perdue :( \n")
+				break;
+			}
+	}
+	return flag_centre;
+}

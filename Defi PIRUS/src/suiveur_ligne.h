@@ -14,6 +14,6 @@
 // Prototypes de fonctions du suiveur de lignes
 //void testDeCapteurs(void);
 int det_ligne();
+void ligne_centre();
 
 #endif
-
