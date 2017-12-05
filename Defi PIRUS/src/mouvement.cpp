@@ -208,30 +208,32 @@ void Mouv_infra()
 	int capteur_mov[3] = {0,0,0};
 	LCD_Printf("Avance infra\n");
 	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
-	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a pas de mur a droite
+	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a un mur a droite
 	{
-		Rotation(90, RIGHT_ROT);
-		Avance(MIN_DISTANCE, AVANCE);
-	}
-	else if (capteur_mov[DEVANT_MOV] > WALL_DIST) // si je suis face au mur
-	{
-		if ((capteur_mov[DROIT_MOV] > (capteur_mov[GAUCHE_MOV] + HYST_MOV))) //si y a un mur a droite
+		if (capteur_mov[DEVANT_MOV] > WALL_DIST) // si je suis face au mur
 		{
-			Rotation(90, LEFT_ROT);
+			if (capteur_mov[LEFT_MOV] > WALL_DIST) // si y a un mur a gauche
+			{
+				Rotation(180, LEFT_ROT);
+				Avance(MIN_DISTANCE, AVANCE);
+			}
+			else
+			{
+				Rotation(90, LEFT_ROT);
+				Avance(MIN_DISTANCE, AVANCE);
+			}
+		}
+		else
+		{
 			Avance(MIN_DISTANCE, AVANCE);
 		}
-		else if ((capteur_mov[DROIT_MOV] > (capteur_mov[GAUCHE_MOV] - HYST_MOV)) && (capteur_mov[DROIT_MOV] < (capteur_mov[GAUCHE_MOV] + HYST_MOV)))
-		{
-			//si y a un mur a droite et a gauche
-			Rotation(180, LEFT_ROT);
-			Avance(MIN_DISTANCE, AVANCE);
-		}
 	}
-	else // si y a juste un mur a droite
+	else
 	{
-		Avance(MIN_DISTANCE, AVANCE);
+			Rotation(90, RIGHT_ROT);
+			Avance(MIN_DISTANCE, AVANCE);
 	}
-}
+	
 
 	/*
 	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
