@@ -15,8 +15,7 @@
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
 
-int infra_test();
-int boutons_test();
+
 int passif();
 int actif();
 int code();
@@ -87,7 +86,7 @@ int main()
 				standby_standby = 0;
 				while (standby_standby == 0)
 				{
-					if (DIGITALIO_Read(BMP_BLEU)
+					if (DIGITALIO_Read(BMP_BLEU))
 					{
 						standby_standby = 1;
 					}
