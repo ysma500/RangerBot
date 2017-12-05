@@ -60,21 +60,13 @@ void testDeCapteurs(int capteur[3])
 		capteurAffichage(capteur);
 		
 		
-		if(DIGITALIO_Read(BMP_RIGHT))	//Configuration 1 de la fonction de test des capteurs
-		{
-
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
-		{
-
-		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
+		if(DIGITALIO_Read(BMP_FRONT))	//Configuration 1 de la fonction de test des capteurs
 		{
 			i = 1;
 			j = 1;
 			LCD_Printf("Sortie des configs\n");
 		}
-		THREAD_MSleep(1000);
+		THREAD_MSleep(500);
 	}
 }
 int capteurAffichage(int capteur[3])

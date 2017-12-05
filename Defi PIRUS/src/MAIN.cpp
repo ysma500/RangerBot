@@ -223,6 +223,7 @@ int passif()
 		THREAD_MSleep(300);
 		if (DIGITALIO_Read(ORANGE_RIGHT))
 		{
+			Brake();
 			condition_mode = 1;
 		}
 	}
@@ -258,6 +259,7 @@ int actif()
 		THREAD_MSleep(300);
 		if (DIGITALIO_Read(ORANGE_RIGHT))
 		{
+			Brake();
 			condition_mode = 1;
 		}
 	}
