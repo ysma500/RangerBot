@@ -114,8 +114,8 @@ int adjd_dev;
 //***************************************
 
 // Prototypes de fonctions de configs
-void testDeCapteurs(void);
-void afficher_live(void);
+int testDeCapteurs(void);
+int afficher_live(void);
 
 int main()
 {
@@ -140,11 +140,11 @@ int main()
 	
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
-
+	LCD_Printf("Appuyer sur le bouton bleu pour afficher les valeurs lues\n");
 		while (j == 0)
 		{
 			THREAD_MSleep(100);
-			if(DIGITALIO_Read(BMP_REAR))
+			if(DIGITALIO_Read(BMP_FRONT))
 			{
 				LCD_Printf("Entrer dans les tests des capteurs\n");
 				j = 1;
@@ -171,7 +171,7 @@ int main()
 	return 0;
 }
 
-void afficher_live()
+int afficher_live()
 {
 	int j = 0;
 	int color;
@@ -242,14 +242,13 @@ void afficher_live()
 		{
 			color = START_OTHER;
 		}
-	return color;
 	}
-		
 		THREAD_MSleep(1000);
-	}
+	return 0;
 }
+
 //Debut de la fonction pour la modification des gains a suivre
-void testDeCapteurs(void)
+int testDeCapteurs(void)
 {
 	int i = 0, j = 0;
 	int red, blue, green, clear;
@@ -266,6 +265,7 @@ void testDeCapteurs(void)
 		LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d \n", red, green, blue, clear);
 		THREAD_MSleep(1000);
 	}
+	return 0;
 }
 
 //Get current color function

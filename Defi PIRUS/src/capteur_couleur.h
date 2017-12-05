@@ -26,20 +26,20 @@
 
 //Couleurs des coins : Rose, vert, bleu, jaune, Centre : gris, contour : rouge
 //Define des couleurs pour le capteurs de couleurs
-#define RED_R 544
-#define RED_G 266
-#define RED_B 184
-#define RED_C 887
+#define RED_R 553
+#define RED_G 355
+#define RED_B 275
+#define RED_C 613
 
-#define GREEN_R 265
-#define GREEN_G 355
-#define GREEN_B 223
-#define GREEN_C 617
+#define GREEN_R 111
+#define GREEN_G 159
+#define GREEN_B 118
+#define GREEN_C 236
 
-#define WHITE_R 1020
-#define WHITE_G 1018
-#define WHITE_B 905
-#define WHITE_C 1023
+#define WHITE_R 818
+#define WHITE_G 891
+#define WHITE_B 718
+#define WHITE_C 896
 
 //Code de chaque couleur
 #define RED 1
