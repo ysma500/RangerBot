@@ -257,6 +257,5 @@ void Mouv_infra()
 	{
 		LCD_Printf("Ne respecte pas les autres conditions IR\n");
 		Brake();
-	}
+	}*/
 }
-*/
