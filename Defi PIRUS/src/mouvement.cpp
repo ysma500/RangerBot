@@ -45,31 +45,6 @@ void Mouv_infra()
 			Rotation(85, RIGHT_ROT);
 			Avance(MIN_DISTANCE, AVANCE);
 	}
-
-
-	/*
-	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
-	{
-		// si mur a droite et gauche mais pas devant avance tout droit
-		Avance(MIN_DISTANCE, AVANCE);
-	}
-	else if ((capteur_mov[DROIT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
-	{
-		// si mur a gauche et devant mais pas a droite tourne a droite
-		Rotation(45,RIGHT_ROT);
-		//Avance(MIN_DISTANCE/2, AVANCE);
-	}
-	else if ((capteur_mov[GAUCHE_MOV] < (capteur_mov[DEVANT_MOV] - HYST_MOV)) && (capteur_mov[GAUCHE_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)))
-	{
-		// si mur a droite et tout droit mais pas a geuche tourne a gauche
-		Rotation(45,LEFT_ROT);
-		//Avance(MIN_DISTANCE/2, AVANCE);
-	}
-	else
-	{
-		LCD_Printf("Ne respecte pas les autres conditions IR\n");
-		Brake();
-	}*/
 }
 
 ////////////////////////////////////////////////////
