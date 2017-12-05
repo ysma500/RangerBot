@@ -209,7 +209,11 @@ void Mouv_infra()
 	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
 	if (capteur_mov[DROIT_MOV] > WALL_DIST) // si y a un mur a droite
 	{
-		if (capteur_mov[DEVANT_MOV] > WALL_DIST) // si je suis face au mur
+		if(capteur_mov[DROIT_MOV] > (2*WALL_DIST))
+		{
+			Rotation(10, LEFT_ROT);
+		}
+		else if (capteur_mov[DEVANT_MOV] > WALL_DIST) // si je suis face au mur
 		{
 			if (capteur_mov[GAUCHE_MOV] > WALL_DIST) // si y a un mur a gauche
 			{
