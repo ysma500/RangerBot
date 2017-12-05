@@ -28,7 +28,7 @@ int main()
 
 	LCD_ClearAndPrint("Appuyer sur le bouton rouge pour arreter le test\n");
 	sonar_test();
-	LCD_Printf("Le robot a termine le parcours\n");
+	LCD_Printf("Le robot a termine le test\n");
 
 	// On arrete tout sur la carte d'entrees/sorties
 	FPGA_StopAll();
