@@ -90,7 +90,7 @@ int ligne_centre() // retourne 1 si centre, retourne -1 si a perdu la ligne
 			else if (position < 50)
 			{
 				flag_centre = -1;
-				LCD_Printf ("Ligne perdue :( \n")
+				LCD_Printf ("Ligne perdue :( \n");
 				break;
 			}
 	}

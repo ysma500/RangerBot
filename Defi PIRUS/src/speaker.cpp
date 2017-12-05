@@ -11,7 +11,6 @@ int play_siren()
 		AUDIO_PlayFile("Siren.wav");
 		if (DIGITALIO_Read(BMP_BLEU))
 		{
-			Audio_StopPlayback(AUDIO_PlayFile("Siren.wav");
 			alarm = 1;
 		}
 	}
