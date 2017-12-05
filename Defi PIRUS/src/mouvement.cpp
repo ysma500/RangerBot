@@ -217,23 +217,23 @@ void Mouv_infra()
 				Rotation(180, LEFT_ROT);
 				Avance(MIN_DISTANCE, AVANCE);
 			}
-			else
+			else //(si y a un mur a droite et devant mais pas a gauche)
 			{
 				Rotation(90, LEFT_ROT);
 				Avance(MIN_DISTANCE, AVANCE);
 			}
 		}
-		else
+		else // si y a un mur a droite mais pas devant
 		{
 			Avance(MIN_DISTANCE, AVANCE);
 		}
 	}
-	else
+	else // si y a pas de mur a droite
 	{
 			Rotation(90, RIGHT_ROT);
 			Avance(MIN_DISTANCE, AVANCE);
 	}
-	
+
 
 	/*
 	if ((capteur_mov[DEVANT_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)) && (capteur_mov[DEVANT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
@@ -259,3 +259,4 @@ void Mouv_infra()
 		Brake();
 	}
 }
+*/
