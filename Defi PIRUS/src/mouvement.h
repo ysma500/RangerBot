@@ -26,7 +26,7 @@
 #define DROIT_MOV 1
 #define GAUCHE_MOV 2
 
-#define WALL_DIST 300
+#define WALL_DIST 200
 
 //Initialisation PID
 void Initialisation();
