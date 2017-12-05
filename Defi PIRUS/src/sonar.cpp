@@ -4,6 +4,7 @@
 
 int last_sonar_d = 0;
 int last_sonar_g = 0;
+int flag_brigand = 0;
 
 //Debut de la fonction pour la modification des gains a suivre 
 float sonar_d()
@@ -27,14 +28,16 @@ int suivre_brigand()
 	float lecture_droit = sonar_d();
 	float lecture_gauche = sonar_g();
 	
-	if((last_sonar_d != 0) && (last_sonar_g != 0))
+	if((last_sonar_d != 0) && (last_sonar_g != 0))	//Si ce n'est pas la premiere fois que l'on passe dans la boucle
 	{
-		if(lecture_droit < lecture_gauche)	//Objet a droite
+		if(lecture_droit < lecture_gauche)	//Objet le plus pret a droite
 		{
-			if(lecture_droit < (lecture_gauche - HYST_SONAR))
+			if(lecture_droit < (lecture_gauche - HYST_SONAR))	//Si l'objet est beaucoup a droite
 			{
-				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
+				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))	//Si un objet s'est interposer depuis la derniere lecture
 				{
+					if(flag_brigand == 0)
+						flag_brigand = 1;
 					//Tourner un peu a droite et avancer un peu
 					Rotation(20,RIGHT_ROT);
 					//Avance(MIN_DISTANCE/2, AVANCE);
@@ -43,11 +46,32 @@ int suivre_brigand()
 					last_sonar_g = lecture_gauche;
 					return 1;
 				}
-			}
-			else
-			{
-				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
+				else if(flag_brigand)	//Si le flag de brigand est lever
 				{
+					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
+					{
+						Brake();
+						return 1;
+					}
+					else	//Si on est pas assez pres... On avance
+					{
+						Avance(MIN_DISTANCE/2, AVANCE);
+						return 1;
+					}
+				}
+				else	//Sinon on passe le controle aux IRs
+				{
+					//avancer un peu
+					//LCD_Printf("Je vois un brigand 2\n");
+					return 0;
+				}
+			}
+			else	//Si l'objet est moderement a droite
+			{
+				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))	//Si un objet s'est interposer depuis la derniere lecture
+				{
+					if(flag_brigand == 0)
+						flag_brigand = 1;
 					//Tourner un peu a droite et avancer un peu
 					//Rotation(20,RIGHT_ROT);
 					Avance(MIN_DISTANCE/2, AVANCE);
@@ -56,18 +80,35 @@ int suivre_brigand()
 					last_sonar_g = lecture_gauche;
 					return 1;
 				}
-				//avancer un peu
-				//LCD_Printf("Je vois un brigand 2\n");
-				return 0;
-			}
-			
-		}
-		else if(lecture_gauche < lecture_droit)	//Objet a gauche
-		{
-			if(lecture_gauche < (lecture_droit - HYST_SONAR))
-			{
-				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
+				else if(flag_brigand)	//Si le flag de brigand est lever
 				{
+					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
+					{
+						Brake();
+						return 1;
+					}
+					else	//Si on est pas assez pres... On avance
+					{
+						Avance(MIN_DISTANCE/2, AVANCE);
+						return 1;
+					}
+				}
+				else	//Sinon on passe le controle aux IRs
+				{
+					//avancer un peu
+					//LCD_Printf("Je vois un brigand 2\n");
+					return 0;
+				}
+			}
+		}
+		else if(lecture_gauche < lecture_droit)	//Objet a gauche plus pres
+		{
+			if(lecture_gauche < (lecture_droit - HYST_SONAR))	//Si l'objet est beaucoup a gauche
+			{
+				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))	//Si un objet s'est interposer depuis la derniere lecture
+				{
+					if(flag_brigand == 0)
+						flag_brigand = 1;
 					//Tourner un peu a gauche et avancer un peu
 					Rotation(20,LEFT_ROT);
 					//Avance(MIN_DISTANCE/2, AVANCE);
@@ -76,11 +117,32 @@ int suivre_brigand()
 					last_sonar_g = lecture_gauche;
 					return 1;
 				}
-			}
-			else
-			{
-				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
+				else if(flag_brigand)	//Si le flag de brigand est lever
 				{
+					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
+					{
+						Brake();
+						return 1;
+					}
+					else	//Si on est pas assez pres... On avance
+					{
+						Avance(MIN_DISTANCE/2, AVANCE);
+						return 1;
+					}
+				}
+				else	//Sinon on passe le controle aux IRs
+				{
+					//avancer un peu
+					//LCD_Printf("Je vois un brigand 2\n");
+					return 0;
+				}
+			}
+			else	//L'objet est moderement a gauche
+			{
+				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))	//Si un objet s'est interposer depuis la derniere lecture
+				{
+					if(flag_brigand == 0)
+						flag_brigand = 1;
 					//Tourner un peu a gauche et avancer un peu
 					//Rotation(20,LEFT_ROT);
 					Avance(MIN_DISTANCE/2, AVANCE);
@@ -89,16 +151,28 @@ int suivre_brigand()
 					last_sonar_g = lecture_gauche;
 					return 1;
 				}
-				//LCD_Printf("Je vois un brigand 4\n");
-				//avancer un peu
-				return 0;
+				else if(flag_brigand)	//Si le flag de brigand est lever
+				{
+					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
+					{
+						Brake();
+						return 1;
+					}
+					else	//Si on est pas assez pres... On avance
+					{
+						Avance(MIN_DISTANCE/2, AVANCE);
+						return 1;
+					}
+				}
+				else	//Sinon on passe le controle aux IRs
+				{
+					//avancer un peu
+					//LCD_Printf("Je vois un brigand 2\n");
+					return 0;
+				}
 			}
-			
-			last_sonar_d = lecture_droit;
-			last_sonar_g = lecture_gauche;
-			return 1;
 		}
-		else	//S'il y a rien en avant... DO NOTHING
+		else	//Si Sonar_droit est egal Sonar_gauche (presque impossible)
 		{
 			LCD_Printf("Je vois pas de brigand\n");
 			last_sonar_d = lecture_droit;
@@ -106,7 +180,7 @@ int suivre_brigand()
 			return 0;
 		}
 	}
-	else	//S'il y a rien en avant... DO NOTHING
+	else	//Si c'est la premiere fois que l'on passe dans la boucle
 	{
 		LCD_Printf("Je vois pas de brigand\n");
 		last_sonar_d = lecture_droit;
