@@ -106,7 +106,6 @@ int main()
 	FPGA_StopAll();
 
 	LCD_Printf("Fin du programme\n");
-
 	return 0;
 }
 
@@ -212,12 +211,14 @@ int selection_mode()
 	return option;
 }
 
-//couleurs : START_RED, START_GREEN, START_OTHER
+//couleurs : RED, GREEN, OTHER
 int code()
 {
 	LCD_ClearAndPrint("Presentement dans le mode changement de code\n");
 	nouveau_code(mot_passe);
+	LCD_ClearAndPrint("Nouveau code recu, retour au menu dans 3 secondes");
 	THREAD_MSleep(3000);
+	LCD_ClearAndPrint("");
 	return 0;
 }
 
