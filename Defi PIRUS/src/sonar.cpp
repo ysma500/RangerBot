@@ -37,19 +37,30 @@ int suivre_brigand()
 				{
 					//Tourner un peu a droite et avancer un peu
 					Rotation(20,RIGHT_ROT);
-					Avance(MIN_DISTANCE/2, AVANCE);
-					LCD_Printf("Je vois un brigand 1\n");
+					//Avance(MIN_DISTANCE/2, AVANCE);
+					LCD_Printf("Je vois un brigand a droite\n");
+					last_sonar_d = lecture_droit;
+					last_sonar_g = lecture_gauche;
+					return 1;
 				}
 			}
 			else
 			{
+				if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
+				{
+					//Tourner un peu a droite et avancer un peu
+					//Rotation(20,RIGHT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
+					LCD_Printf("Je vois un brigand 1 en avant\n");
+					last_sonar_d = lecture_droit;
+					last_sonar_g = lecture_gauche;
+					return 1;
+				}
 				//avancer un peu
 				//LCD_Printf("Je vois un brigand 2\n");
 				return 0;
 			}
-			last_sonar_d = lecture_droit;
-			last_sonar_g = lecture_gauche;
-			return 1;
+			
 		}
 		else if(lecture_gauche < lecture_droit)	//Objet a gauche
 		{
@@ -59,12 +70,25 @@ int suivre_brigand()
 				{
 					//Tourner un peu a gauche et avancer un peu
 					Rotation(20,LEFT_ROT);
-					Avance(MIN_DISTANCE/2, AVANCE);
-					LCD_Printf("Je vois un brigand 3\n");
+					//Avance(MIN_DISTANCE/2, AVANCE);
+					LCD_Printf("Je vois un brigand a gauche\n");
+					last_sonar_d = lecture_droit;
+					last_sonar_g = lecture_gauche;
+					return 1;
 				}
 			}
 			else
 			{
+				if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
+				{
+					//Tourner un peu a gauche et avancer un peu
+					//Rotation(20,LEFT_ROT);
+					Avance(MIN_DISTANCE/2, AVANCE);
+					LCD_Printf("Je vois un brigand 2 en avant\n");
+					last_sonar_d = lecture_droit;
+					last_sonar_g = lecture_gauche;
+					return 1;
+				}
 				//LCD_Printf("Je vois un brigand 4\n");
 				//avancer un peu
 				return 0;

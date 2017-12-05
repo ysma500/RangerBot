@@ -218,14 +218,14 @@ void Mouv_infra()
 	else if ((capteur_mov[DROIT_MOV] < (capteur_mov[GAUCHE_MOV] - HYST_MOV)))
 	{
 		// si mur a gauche et devant mais pas a droite tourne a droite
-		Rotation(30,RIGHT_ROT);
-		Avance(MIN_DISTANCE/2, AVANCE);
+		Rotation(90,RIGHT_ROT);
+		//Avance(MIN_DISTANCE/2, AVANCE);
 	}
 	else if ((capteur_mov[GAUCHE_MOV] < (capteur_mov[DEVANT_MOV] - HYST_MOV)) && (capteur_mov[GAUCHE_MOV] < (capteur_mov[DROIT_MOV] - HYST_MOV)))
 	{
 		// si mur a droite et tout droit mais pas a geuche tourne a gauche
-		Rotation(30,LEFT_ROT);
-		Avance(MIN_DISTANCE/2, AVANCE);
+		Rotation(90,LEFT_ROT);
+		//Avance(MIN_DISTANCE/2, AVANCE);
 	}
 	else
 	{
