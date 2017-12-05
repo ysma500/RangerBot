@@ -23,7 +23,7 @@ int code();
 int selection_mode();
 int test_alarme();
 
-int mot_passe[LONGUEUR_CODE];
+int mot_passe[LONGUEUR_CODE] = {1, 1, 1, 1};
 int brigand_present = 0;
 
 int main()
