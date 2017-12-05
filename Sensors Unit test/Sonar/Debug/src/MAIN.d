@@ -2,6 +2,8 @@ src/MAIN.o src/MAIN.o: ../src/MAIN.cpp \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/libarmus.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/analog_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/audio_api.h \
+  C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/string \
+  C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/iostream \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/capture_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/fpga_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/digitalio_api.h \
@@ -20,13 +22,18 @@ src/MAIN.o src/MAIN.o: ../src/MAIN.cpp \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/spi_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/system_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/thread_api.h \
-  C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h
+  C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h \
+  C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/map
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/libarmus.h:
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/analog_api.h:
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/audio_api.h:
+
+C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/string:
+
+C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/iostream:
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/capture_api.h:
 
@@ -65,3 +72,5 @@ C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/system_api.h:
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/thread_api.h:
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h:
+
+C:/Program\ Files\ (x86)/ArmusIDE/toolchain/sysroot/usr/include/c++/4.2.4/map:
