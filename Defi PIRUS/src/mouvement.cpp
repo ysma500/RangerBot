@@ -202,8 +202,6 @@ void Brake()
 	MOTOR_SetSpeed(RIGHT_MOTOR, 0);
 }
 
-
-
 ///Fonction combines
 void Mouv_infra()
 {

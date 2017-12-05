@@ -57,30 +57,30 @@ int ligne_centre() // retourne 1 si centre, retourne -1 si a perdu la ligne
 			if ((position < LINE_DROIT - LINE_HYST) && (position > LINE_DROIT + LINE_HYST))
 			{ //Trop a droite
 				Rotation(25, LEFT_ROT);
-				Avance(100, AVANCE);
+				Avance(MIN_DISTANCE, AVANCE);
 				Rotation(25, RIGHT_ROT);
-				Avance(100, RECULE);
+				Avance(MIN_DISTANCE, RECULE);
 			}
 			else if ((position < LINE_GAUCHE - LINE_HYST) && (position > LINE_GAUCHE + LINE_HYST))
 			{ //Trop a gauche
 				Rotation(20, RIGHT_ROT);
-				Avance(100, AVANCE);
+				Avance(MIN_DISTANCE, AVANCE);
 				Rotation(20, LEFT_ROT);
-				Avance(100, RECULE);
+				Avance(MIN_DISTANCE, RECULE);
 			}
 			else if ((position < LINE_DROIT_CENTRE - LINE_HYST) && (position > LINE_DROIT_CENTRE + LINE_HYST))
 			{ //un peu trop a droite
 				Rotation(15, LEFT_ROT);
-				Avance(100, AVANCE);
+				Avance(MIN_DISTANCE, AVANCE);
 				Rotation(15, RIGHT_ROT);
-				Avance(100, RECULE);
+				Avance(MIN_DISTANCE, RECULE);
 			}
 			else if ((position < LINE_GAUCHE_CENTRE - LINE_HYST) && (position > LINE_GAUCHE_CENTRE + LINE_HYST))
 			{ //un peu trop a gauche
 				Rotation(10, RIGHT_ROT);
-				Avance(100, AVANCE);
+				Avance(MIN_DISTANCE, AVANCE);
 				Rotation(10, LEFT_ROT);
-				Avance(100, RECULE);
+				Avance(MIN_DISTANCE, RECULE);
 			}
 			else if ((position < LINE_CENTRE - LINE_HYST) && (position > LINE_CENTRE + LINE_HYST))
 			{
