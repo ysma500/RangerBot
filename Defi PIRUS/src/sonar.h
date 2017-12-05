@@ -6,8 +6,8 @@
 #define SONAR_UN 1
 #define SONAR_DEUX 2
 #define HYST_SONAR 10
-#define HYST_LAST_SONAR 5
-#define MIN_DIST_BRIGAND 25
+#define HYST_LAST_SONAR 15
+#define MIN_DIST_BRIGAND 35
 
 extern int flag_brigand;
 extern int last_sonar_d;
