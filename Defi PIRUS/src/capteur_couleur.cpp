@@ -17,6 +17,7 @@ void Init_Color(void)
 	integrationTime_SetValue(INTEGRATION_GREEN, VALEUR_INTEG);
 	integrationTime_SetValue(INTEGRATION_BLUE, VALEUR_INTEG);
 	integrationTime_SetValue(INTEGRATION_CLEAR, VALEUR_INTEG);
+	
 }
 
 //Get current color function

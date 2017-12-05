@@ -121,134 +121,6 @@ int main()
 }
 
 
-//Fonctions de chaque mode
-int selection_mode()
-{
-	int option = -1;
-	int j = 0, i = 0;
-	while (j==0)
-	{
-		LCD_ClearAndPrint("Pour entrer dans le mode passif, appuyer sur le bouton orange de droite\n");
-		LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-		while(i == 0)
-		{
-			if (DIGITALIO_Read(ORANGE_RIGHT))
-			{
-				i = 1;
-				j = 1;
-				option = 1;
-			}
-			else if(DIGITALIO_Read(ORANGE_LEFT))
-			{
-				i = 1;
-			}
-			THREAD_MSleep(100);
-		}
-		
-		LCD_ClearAndPrint("");
-		
-		if (option == -1)
-		{
-			LCD_ClearAndPrint("Pour entrer dans le mode actif, appuyer sur le bouton orange de droite\n");
-			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-			i = 0;
-			while(i == 0)
-			{
-				if (DIGITALIO_Read(ORANGE_RIGHT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-					j = 1;
-					option = 2;
-				}
-				else if(DIGITALIO_Read(ORANGE_LEFT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-				}
-			THREAD_MSleep(100);
-			}		
-		}
-		
-		LCD_ClearAndPrint("");
-		
-		if (option == -1)
-		{
-			LCD_ClearAndPrint("Pour tester le systeme d'alarme, appuyer sur le bouton orange de droite\n");
-			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-			i = 0;
-			while(i == 0)
-			{
-				if (DIGITALIO_Read(ORANGE_RIGHT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-					j = 1;
-					option = 4;
-				}
-				else if(DIGITALIO_Read(ORANGE_LEFT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-				}	
-			THREAD_MSleep(100);
-			}		
-		}
-		
-		LCD_ClearAndPrint("");
-		
-		if (option == -1)
-		{
-			LCD_ClearAndPrint("Pour changer le mot de passe du robot, appuyer sur le bouton orange de droite\n");
-			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-			i = 0;
-			while(i == 0)
-			{
-				if (DIGITALIO_Read(ORANGE_RIGHT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-					j = 1;
-					option = 3;
-				}
-				else if(DIGITALIO_Read(ORANGE_LEFT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-				}	
-			THREAD_MSleep(100);
-			}		
-		}
-		
-		LCD_ClearAndPrint("");
-		
-		if (option == -1)
-		{
-			LCD_ClearAndPrint("Pour entrer dans le mode standby, appuyer sur le bouton orange de droite\n");
-			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-			i = 0;
-			while(i == 0)
-			{
-				if (DIGITALIO_Read(ORANGE_RIGHT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-					j = 1;
-					option = 0;
-				}
-				else if(DIGITALIO_Read(ORANGE_LEFT))
-				{
-					LCD_ClearAndPrint("");
-					i = 1;
-				}	
-			THREAD_MSleep(100);
-			}		
-		}
-		
-	}//end of while (j)
-	return option;
-}
-
 //couleurs : RED, GREEN, OTHER
 int code()
 {
@@ -379,5 +251,133 @@ int actif()
 	}
 	THREAD_MSleep(3000);
 	return 0;
+}
+
+//Fonctions de chaque mode
+int selection_mode()
+{
+	int option = -1;
+	int j = 0, i = 0;
+	while (j==0)
+	{
+		LCD_ClearAndPrint("Pour entrer dans le mode passif, appuyer sur le bouton orange de droite\n");
+		LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+		while(i == 0)
+		{
+			if (DIGITALIO_Read(ORANGE_RIGHT))
+			{
+				i = 1;
+				j = 1;
+				option = 1;
+			}
+			else if(DIGITALIO_Read(ORANGE_LEFT))
+			{
+				i = 1;
+			}
+			THREAD_MSleep(100);
+		}
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour entrer dans le mode actif, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 2;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour tester le systeme d'alarme, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 4;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour changer le mot de passe du robot, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 3;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+		LCD_ClearAndPrint("");
+		
+		if (option == -1)
+		{
+			LCD_ClearAndPrint("Pour entrer dans le mode standby, appuyer sur le bouton orange de droite\n");
+			LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
+			i = 0;
+			while(i == 0)
+			{
+				if (DIGITALIO_Read(ORANGE_RIGHT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+					j = 1;
+					option = 0;
+				}
+				else if(DIGITALIO_Read(ORANGE_LEFT))
+				{
+					LCD_ClearAndPrint("");
+					i = 1;
+				}	
+			THREAD_MSleep(100);
+			}		
+		}
+		
+	}//end of while (j)
+	return option;
 }
 
