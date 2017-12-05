@@ -40,16 +40,16 @@ int show_code(int code[LONGUEUR_CODE])
 		switch (code[i])
 		{
 			case BMP_BLEU : 
-				LCD_Printf("[BLEU]");
+				LCD_Printf(" [BLEU] ");
 				break;
 			case BMP_VERT :
-				LCD_Printf("[VERT]");
+				LCD_Printf(" [VERT] ");
 				break;
 			case BMP_ROUGE : 
-				LCD_Printf("[ROUGE]");
+				LCD_Printf(" [ROUGE] ");
 				break;
 			case BMP_ORANGE : 
-				LCD_Printf("[ORANGE]");
+				LCD_Printf(" [ORANGE] ");
 				break;
 		}
 	}

@@ -5,8 +5,11 @@
 
 #define SONAR_UN 1
 #define SONAR_DEUX 2
-#define HYST_SONAR 4
+#define HYST_SONAR 10
 #define HYST_LAST_SONAR 5
+#define MIN_DIST_BRIGAND 25
+
+extern int flag_brigand;
 
 // Prototypes de fonctions de configs
 float sonar_g();

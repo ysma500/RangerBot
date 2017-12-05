@@ -15,8 +15,7 @@
 #define MODE_ACTIF 2
 #define CHANGER_CODE 3
 
-int infra_test();
-int boutons_test();
+
 int passif();
 int actif();
 int code();
@@ -83,11 +82,11 @@ int main()
 				code();
 				break;
 			case MODE_STANDBY :
-				LCD_ClearAndPrint("Presentement dans le mode standby! \n Pour retourner dans le menu de selection\n appuyer sur le bouton bleu.");
+				LCD_ClearAndPrint("Presentement dans le mode standby! \n Pour retourner dans le menu de selection,\n appuyer sur le bouton bleu.");
 				standby_standby = 0;
 				while (standby_standby == 0)
 				{
-					if (DIGITALIO_Read(BMP_BLEU)
+					if (DIGITALIO_Read(BMP_BLEU))
 					{
 						standby_standby = 1;
 					}
@@ -119,7 +118,7 @@ int selection_mode()
 	{
 		LCD_ClearAndPrint("Pour entrer dans le mode passif, appuyer sur le bouton orange de droite\n");
 		LCD_Printf("Pour changer d'option appuyer sur le bouton orange de gauche\n");
-		while(i==0)
+		while(i == 0)
 		{
 			if (DIGITALIO_Read(ORANGE_RIGHT))
 			{
@@ -130,7 +129,7 @@ int selection_mode()
 			else if(DIGITALIO_Read(ORANGE_LEFT))
 			{
 				i = 1;
-			}	
+			}
 			THREAD_MSleep(100);
 		}
 		
@@ -154,7 +153,7 @@ int selection_mode()
 				{
 					LCD_ClearAndPrint("");
 					i = 1;
-				}	
+				}
 			THREAD_MSleep(100);
 			}		
 		}

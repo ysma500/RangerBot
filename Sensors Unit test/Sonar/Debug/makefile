@@ -14,20 +14,20 @@ RM := rm -rf
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
-ifneq ($(strip $(C++_DEPS)),)
--include $(C++_DEPS)
-endif
 ifneq ($(strip $(CC_DEPS)),)
 -include $(CC_DEPS)
 endif
-ifneq ($(strip $(CPP_DEPS)),)
--include $(CPP_DEPS)
+ifneq ($(strip $(C++_DEPS)),)
+-include $(C++_DEPS)
+endif
+ifneq ($(strip $(C_UPPER_DEPS)),)
+-include $(C_UPPER_DEPS)
 endif
 ifneq ($(strip $(CXX_DEPS)),)
 -include $(CXX_DEPS)
 endif
-ifneq ($(strip $(C_UPPER_DEPS)),)
--include $(C_UPPER_DEPS)
+ifneq ($(strip $(CPP_DEPS)),)
+-include $(CPP_DEPS)
 endif
 endif
 
@@ -42,13 +42,13 @@ all: MAIN.exe
 MAIN.exe: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking ARM-Linux Linker'
-	arm-softfloat-linux-gnueabi-g++ -L"C:/Program Files (x86)/Armus/ArmusIDE/librairie/lib" -Xlinker --unresolved-symbols=ignore-in-shared-libs --sysroot="C:/Program Files (x86)/Armus/ArmusIDE/toolchain/sysroot" -o "MAIN.exe" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-softfloat-linux-gnueabi-g++ -L"C:/Program Files (x86)/ArmusIDE/librairie/lib" -Xlinker --unresolved-symbols=ignore-in-shared-libs --sysroot="C:/Program Files (x86)/ArmusIDE/toolchain/sysroot" -o "MAIN.exe" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C++_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) MAIN.exe
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS) MAIN.exe
 	-@echo ' '
 
 .PHONY: all clean dependents
