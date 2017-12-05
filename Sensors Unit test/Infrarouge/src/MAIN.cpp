@@ -61,7 +61,6 @@ int main()
 
 	// affiche sur le LCD
 	LCD_ClearAndPrint("Depart du programme\n");
-
 	
 	//Nouveau contenu
 	int capteur_Infra[3] = {0,0,0};			// 3 capteurs infra rouge utilisé pour la grande course
@@ -96,43 +95,26 @@ int main()
 //Debut de la fonction pour la modification des gains a suivre 
 void testDeCapteurs(int capteur[3])
 {
-	int i = 0, j = 0;
-
+	int i = 0;
 	int Affichage = 0;
-
-	while(i==0 || j==0)
+	while(i==0)
 	{
-
 		lireCapteur(capteur);
-
-		/*
-		LCD_Printf("Analog IR0 = %d\n", capteur[0]);
-		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
-		LCD_Printf("Analog IR2 = %d\n", capteur[2]);
-		*/
 		LCD_ClearAndPrint("Analog IR0 = %d\n", capteur[0]);
 		LCD_Printf("Analog IR1 = %d\n", capteur[1]);
 		LCD_Printf("Analog IR2 = %d\n\n", capteur[2]);
-		capteurAffichage(capteur);
+		//capteurAffichage(capteur);
 		
 		//Si la "bumper switch" avant de robus est enclanchee...
 		if(DIGITALIO_Read(BMP_RIGHT))	//Configuration 1 de la fonction de test des capteurs
 		{
-
-		}
-		else if(DIGITALIO_Read(BMP_FRONT) && DIGITALIO_Read(BMP_RIGHT))	//Configuration 2 de la fonction de test des capteurs
-		{
-
-		}
-		if(DIGITALIO_Read(BMP_REAR) && DIGITALIO_Read(BMP_FRONT))	//Sortie de la fonction de test des capteurs
-		{
 			i = 1;
-			j = 1;
-			LCD_Printf("Sortie des configs\n");
+			LCD_Printf("Sortie du test des infra\n");
 		}
 		THREAD_MSleep(1000);
 	}
 }
+/*
 int capteurAffichage(int capteur[3])
 {
 	//if( capteur[IR0] > DISTANCE_MIN || capteur[IR1] > DISTANCE_MIN || capteur[IR2] > DISTANCE_MIN )
@@ -155,7 +137,7 @@ int capteurAffichage(int capteur[3])
 
 	return 0;
 }
-
+*/
 
 
 
