@@ -6,12 +6,12 @@ int play_siren()
 {
 	int alarm = 0;
 	AUDIO_SetVolume(50);
-	char D[] = "Siren.wav";
 	while (alarm == 0);
 	{
-		Play(D);
+		AUDIO_PlayFile("Siren.wav");
 		if (DIGITALIO_Read(BMP_BLEU))
 		{
+			Audio_StopPlayback(AUDIO_PlayFile("Siren.wav");
 			alarm = 1;
 		}
 	}
