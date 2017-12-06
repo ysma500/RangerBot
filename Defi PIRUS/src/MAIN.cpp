@@ -168,6 +168,7 @@ int test_alarme()
 		DIGITALIO_Write(DEL_BLEU, DEL_OFF);
 		DIGITALIO_Write(DEL_VERT, DEL_ON);
 		LCD_ClearAndPrint("Bon code! Bravo!");
+		THREAD_MSleep(2000);
 	}
 	return 0;
 }
