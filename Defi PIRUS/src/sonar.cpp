@@ -48,16 +48,16 @@ int suivre_brigand()
 				}
 				else if(flag_brigand)	//Si le flag de brigand est lever
 				{
-					if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
-					{
-						Brake();
-						return 2;
-					}
-					else	//Si on est pas assez pres... On avance
-					{
-						Avance(MIN_DISTANCE/2, AVANCE);
-						return 1;
-					}
+					//if(lecture_gauche < MIN_DIST_BRIGAND)	//Si on est assez pres de l'individu... on arrete
+					//{
+					Brake();
+					return 2;
+					//}
+					//else	//Si on est pas assez pres... On avance
+					//{
+					//	Avance(MIN_DISTANCE/2, AVANCE);
+					//	return 1;
+					//}
 				}
 				else	//Sinon on passe le controle aux IRs
 				{
