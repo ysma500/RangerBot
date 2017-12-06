@@ -30,7 +30,8 @@ int code();
 int selection_mode();
 int test_alarme();
 
-int mot_passe[LONGUEUR_CODE] = {1, 1, 1, 1};
+int mot_passe[LONGUEUR_CODE] = {1};
+int random_number = 0;
 
 int main()
 {
@@ -90,6 +91,7 @@ int main()
 	DIGITALIO_Write(DEL_BLEU, DEL_OFF);
 	DIGITALIO_Write(DEL_ROUGE, DEL_OFF);
 	DIGITALIO_Write(DEL_VERT, DEL_OFF);
+	LCD_ClearAndPrint("Bienvenue au menu! \n");
 	
 	Brake();
 	
@@ -153,21 +155,28 @@ int code()
 int test_alarme()
 {
 	LCD_ClearAndPrint("Presentement dans le mode de test d'alarme");
-	DIGITALIO_Write(DEL_BLEU, DEL_ON);
 	THREAD_MSleep(3000);
+	DIGITALIO_Write(DEL_BLEU, DEL_ON);
 	if (entrer_code(mot_passe) == 0)
 	{
+		random_number = SYSTEM_Random(2);
 		DIGITALIO_Write(DEL_ROUGE, DEL_ON);
 		DIGITALIO_Write(DEL_BLEU, DEL_OFF);
 		LCD_ClearAndPrint("Mauvais code!\n");
-		LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme");
-		play_setup();
+		LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme\n");
+		if (random_number == 0)
+			play_bomb();
+		if (random_number == 1)
+			play_siren();
+		if (random_number == 2)
+			play_tornado();
 	}
 	else
 	{
 		DIGITALIO_Write(DEL_BLEU, DEL_OFF);
 		DIGITALIO_Write(DEL_VERT, DEL_ON);
 		LCD_ClearAndPrint("Bon code! Bravo!");
+		THREAD_MSleep(3000);
 	}
 	return 0;
 }
@@ -184,24 +193,29 @@ int passif()
 		brigand_present = brigand_passif();
 		if (brigand_present)
 		{
-			Brake();
 			DIGITALIO_Write(DEL_BLEU, DEL_ON);
 			if (entrer_code(mot_passe) == 0)
-				{
-					LCD_ClearAndPrint("Mauvais code!\n");
-					LCD_Printf("Appuyer sur le bouton orange a gauche pour arreter l'alarme");
-					DIGITALIO_Write(DEL_ROUGE, DEL_ON);
-					DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-					play_setup();
-					condition_mode = 1;
-				}
-				else
-				{
-					DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-					DIGITALIO_Write(DEL_VERT, DEL_ON);
-					LCD_ClearAndPrint("Bon code! Bravo!");
-					condition_mode = 1;
-				}
+			{
+				random_number = SYSTEM_Random(2);
+				DIGITALIO_Write(DEL_ROUGE, DEL_ON);
+				DIGITALIO_Write(DEL_BLEU, DEL_OFF);
+				LCD_ClearAndPrint("Mauvais code!\n");
+				LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme\n");
+				if (random_number == 0)
+					play_bomb();
+				if (random_number == 1)
+					play_siren();
+				if (random_number == 2)
+					play_tornado();
+			}
+			else
+			{
+				DIGITALIO_Write(DEL_BLEU, DEL_OFF);
+				DIGITALIO_Write(DEL_VERT, DEL_ON);
+				LCD_ClearAndPrint("Bon code! Bravo!");
+				THREAD_MSleep(3000);
+			}
+			condition_mode = 1;
 		}
 		THREAD_MSleep(300);
 		if (DIGITALIO_Read(ORANGE_RIGHT))
@@ -225,7 +239,6 @@ int actif()
 		switch (current_color)
 		{
 			case RED :
-				LCD_ClearAndPrint("ROUGE Detecte\n");
 				//Recule,tourne à gauche 90 deg. et avance
 				Avance(MIN_DISTANCE*2, RECULE);
 				Rotation(105,LEFT_ROT);
@@ -245,21 +258,27 @@ int actif()
 					Brake();
 					DIGITALIO_Write(DEL_BLEU, DEL_ON);
 					if (entrer_code(mot_passe) == 0)
-						{
-							LCD_ClearAndPrint("Mauvais code!\n");
-							LCD_Printf("Appuyer sur le bouton orange a gauche pour arreter l'alarme");
-							DIGITALIO_Write(DEL_ROUGE, DEL_ON);
-							DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-							play_setup();
-							condition_mode = 1;
-						}
-						else
-						{
-							DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-							DIGITALIO_Write(DEL_VERT, DEL_ON);
-							LCD_ClearAndPrint("Bon code! Bravo!");
-							condition_mode = 1;
-						}
+					{
+						random_number = SYSTEM_Random(2);
+						DIGITALIO_Write(DEL_ROUGE, DEL_ON);
+						DIGITALIO_Write(DEL_BLEU, DEL_OFF);
+						LCD_ClearAndPrint("Mauvais code!\n");
+						LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme\n");
+						if (random_number == 0)
+							play_bomb();
+						if (random_number == 1)
+							play_siren();
+						if (random_number == 2)
+							play_tornado();
+					}
+					else
+					{
+						DIGITALIO_Write(DEL_BLEU, DEL_OFF);
+						DIGITALIO_Write(DEL_VERT, DEL_ON);
+						LCD_ClearAndPrint("Bon code! Bravo!");
+						THREAD_MSleep(3000);
+					}
+					condition_mode = 1;
 				}
 				break;
 		}
