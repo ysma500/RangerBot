@@ -154,7 +154,7 @@ int test_alarme()
 	{
 		LCD_ClearAndPrint("Mauvais code!\n");
 		LCD_Printf("Appuyer sur le bouton orange gauche pour arreter l'alarme");
-		play_siren();
+		play_setup();
 	}
 	else
 	{
@@ -182,7 +182,7 @@ int passif()
 					LCD_Printf("Appuyer sur le bouton orange a gauche pour arreter l'alarme");
 					DIGITALIO_Write(DEL_ROUGE, DEL_ON);
 					DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-					play_siren();
+					play_setup();
 					condition_mode = 1;
 				}
 				else
@@ -238,7 +238,7 @@ int actif()
 							LCD_Printf("Appuyer sur le bouton orange a gauche pour arreter l'alarme");
 							DIGITALIO_Write(DEL_ROUGE, DEL_ON);
 							DIGITALIO_Write(DEL_BLEU, DEL_OFF);
-							play_siren();
+							play_setup();
 							condition_mode = 1;
 						}
 						else

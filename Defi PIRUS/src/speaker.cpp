@@ -5,7 +5,7 @@
 int play_siren()
 {
 	int alarm = 0;
-	AUDIO_SetVolume(50);
+	AUDIO_SetVolume(100);
 	while (alarm == 0);
 	{
 		AUDIO_PlayFile("Siren.wav");
@@ -20,8 +20,6 @@ int play_siren()
 int play_setup(void)
 {
   AUDIO_SetVolume(50);
-  LCD_ClearAndPrint("Départ du test des speakers\n");
-  LCD_Printf("Appuyer sur un des boutons pour jouer un test\n");
   
   int test = 0;
   char A[] = "BOMB.wav";
@@ -29,19 +27,8 @@ int play_setup(void)
   char C[] = "Siren.wav";
   while (test == 0)
   {
-    if (DIGITALIO_Read(BMP_BLEU))
-    {
-		Play(A);
-    }
-    else if (DIGITALIO_Read(BMP_ROUGE))
-    {
-		Play(B);
-    }
-    else if (DIGITALIO_Read(BMP_VERT))
-    {
-		Play(C);
-    }
-	else if(DIGITALIO_Read(BMP_ORANGE))
+	Play(C);
+	if(DIGITALIO_Read(ORANGE_LEFT))
 	{
 		test = 1;
 	}

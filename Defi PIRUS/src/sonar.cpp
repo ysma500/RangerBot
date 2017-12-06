@@ -11,7 +11,6 @@ float sonar_d()
 {
 	float sonar_droit = 0;
 	sonar_droit = SONAR_Detect(SONAR_UN);
-	LCD_Printf("Lecture sonar droit\n");
 	return sonar_droit;
 }
 
@@ -19,20 +18,31 @@ float sonar_g()
 {
 	float sonar_gauche = 0;
 	sonar_gauche = SONAR_Detect(SONAR_DEUX);
-	LCD_Printf("Lecture sonar gauche\n");
 	return sonar_gauche;
 }
 
 int brigand_passif()
 {
 	float lecture_gauche = sonar_g();
+	float lecture_droit = sonar_d();
 	if (lecture_gauche < (last_sonar_g - 10))
 	{
+		if (lecture_droit < (last_sonar_d - 10))
+		{
 		last_sonar_g = lecture_gauche;
+		last_sonar_d = lecture_droit;
 		return 1;
+		}
+		else 
+		{
+		last_sonar_g = lecture_gauche;
+		last_sonar_d = lecture_droit;
+		return 0;
+		}
 	}
 	else
 	{
+		last_sonar_d = lecture_droit;
 		last_sonar_g = lecture_gauche;
 		return 0;
 	}
@@ -42,15 +52,25 @@ int brigand_passif()
 int suivre_brigand()
 {
 	float lecture_gauche = sonar_g();
-	
+	float lecture_droit = sonar_d();
 	if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
 	{
-		Brake();
-		last_sonar_g = lecture_gauche;
-		return 1;
+		if (lecture_droit < (last_sonar_d - HYST_LAST_SONAR))
+		{
+			last_sonar_g = lecture_gauche;
+			last_sonar_d = lecture_droit;
+			return 1;
+		}
+		else 
+		{
+			last_sonar_g = lecture_gauche;
+			last_sonar_d = lecture_droit;
+			return 0;
+		}
 	}
 	else
 	{
+		last_sonar_d = lecture_droit;
 		last_sonar_g = lecture_gauche;
 		return 0;
 	}
