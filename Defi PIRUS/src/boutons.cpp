@@ -28,6 +28,7 @@ int nouveau_code(int code[LONGUEUR_CODE])
 		THREAD_MSleep(700);
 		if (code[i] == 0) break;
 	}
+	
 	return 0;
 }
 
@@ -53,6 +54,7 @@ int show_code(int code[LONGUEUR_CODE])
 				break;
 		}
 	}
+	THREAD_MSleep(3000);
 	return 0;
 }
 

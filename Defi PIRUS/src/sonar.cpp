@@ -23,6 +23,41 @@ float sonar_g()
 	return sonar_gauche;
 }
 
+int brigand_passif()
+{
+	float lecture_gauche = sonar_g();
+	if (lecture_gauche < (last_sonar_g - 10))
+	{
+		last_sonar_g = lecture_gauche;
+		return 1;
+	}
+	else
+	{
+		last_sonar_g = lecture_gauche;
+		return 0;
+	}
+	return 0;
+}
+
+int suivre_brigand()
+{
+	float lecture_gauche = sonar_g();
+	
+	if (lecture_gauche < (last_sonar_g - HYST_LAST_SONAR))
+	{
+		Brake();
+		last_sonar_g = lecture_gauche;
+		return 1;
+	}
+	else
+	{
+		last_sonar_g = lecture_gauche;
+		return 0;
+	}
+	return 0;
+}
+
+/*
 int suivre_brigand()
 {
 	float lecture_droit = sonar_d();
@@ -188,5 +223,5 @@ int suivre_brigand()
 		return 0;
 	}
 }
-
+*/
 

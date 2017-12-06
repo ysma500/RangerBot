@@ -16,6 +16,7 @@ int play_siren()
 	}
 	return 0;
 }
+
 int play_setup(void)
 {
   AUDIO_SetVolume(50);
