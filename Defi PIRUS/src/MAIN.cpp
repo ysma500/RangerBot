@@ -212,9 +212,9 @@ int actif()
 			case RED :
 				LCD_ClearAndPrint("ROUGE Detecte\n");
 				//Recule,tourne à gauche 90 deg. et avance
-				Avance(MIN_DISTANCE, RECULE);
+				Avance(MIN_DISTANCE*2, RECULE);
 				Rotation(90,LEFT_ROT);
-				Avance(MIN_DISTANCE, AVANCE);
+				Avance(550, AVANCE);
 				break;
 			default :
 				//Detection d'un intrus
