@@ -19,7 +19,7 @@ void Mouv_infra()
 	{
 		if(capteur_mov[DROIT_MOV] > (2*WALL_DIST))
 		{
-			Rotation(25, LEFT_ROT);
+			Rotation(20, LEFT_ROT);
 		}
 		else if (capteur_mov[DEVANT_MOV] > (2*WALL_DIST)) // si je suis face au mur
 		{
@@ -44,7 +44,7 @@ void Mouv_infra()
 	{
 		if(capteur_mov[DROIT_MOV] < (WALL_DIST/2))
 		{
-			Rotation(10, RIGHT_ROT);
+			Rotation(15, RIGHT_ROT);
 		}
 		else
 		{
