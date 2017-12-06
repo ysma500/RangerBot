@@ -1,7 +1,7 @@
 #ifndef BOUTONS_H
 #define BOUTONS_H
 
-#define LONGUEUR_CODE 5
+#define LONGUEUR_CODE 1
 
 #define BTN_0 0
 #define BTN_1 1

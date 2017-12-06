@@ -30,7 +30,7 @@ int code();
 int selection_mode();
 int test_alarme();
 
-int mot_passe[LONGUEUR_CODE] = {1, 1, 1, 1};
+int mot_passe[LONGUEUR_CODE] = {BMP_BLEU};
 
 int main()
 {
