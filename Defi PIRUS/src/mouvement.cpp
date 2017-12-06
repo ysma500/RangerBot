@@ -40,14 +40,17 @@ void Mouv_infra()
 			LCD_Printf("Mur a droite mais pas devant \n");
 		}
 	}
-	else if (capteur_mov[GAUCHE_MOV] > WALL_DIST)
+	else if(capteur_mov[DROIT_MOV] < ((WALL_DIST/3)*2))
 	{
-		
-	}
-	else // si y a pas de mur a droite
-	{
+		if(capteur_mov[DROIT_MOV] < (WALL_DIST/2))
+		{
+			Rotation(10, RIGHT_ROT);
+		}
+		else
+		{
 			Rotation(85, RIGHT_ROT);
 			Avance(MIN_DISTANCE, AVANCE);
+		}
 	}
 }
 
