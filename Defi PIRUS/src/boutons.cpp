@@ -7,8 +7,12 @@ int entrer_code(int code[LONGUEUR_CODE])
 	int verification;
 	int code_entre;
 	LCD_ClearAndPrint("Entrer le code du robot pour desactiver l'alarme!\n");
+	LCD_Printf("Declenchement automatique de l'alarme dans 10 secondes!\n");
+	SYSTEM_ResetTimer();
 	for (verification = 0; code[verification]; verification++)
 	{
+		//if (SYSTEM_ReadTimerMSeconds() > 10000) //Timer de l'alarme, mis en commentaire pour PIRUS
+		//	return 0;
 		code_entre = get_bouton();
 		if (code_entre != code[verification])
 		{
