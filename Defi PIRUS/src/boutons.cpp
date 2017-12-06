@@ -25,7 +25,6 @@ int nouveau_code(int code[LONGUEUR_CODE])
 	{
 		code[i] = get_bouton();
 		THREAD_MSleep(700);
-		if (code[i] == 0) break;
 	}
 	
 	return 0;

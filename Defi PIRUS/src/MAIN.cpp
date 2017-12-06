@@ -37,8 +37,8 @@ int main()
 {
 	// Variables locales
 	int j = 0; 			  //Condition pour rentrer dans le programme
-	int menu_option = 0; //Option de menu pour la demonstration
-	int distance_percue; //Distance lue par les sonars
+	int menu_option = 0;  //Option de menu pour la demonstration
+	int distance_percue;  //Distance lue par les sonars
 	int distance_max = 10; 	 //Distance max avant de tourner lorsqu'on arrive a un mur (en cm)
 	int mode = MODE_STANDBY; //current mode du robot 
 	int speaker_tester = 0;
@@ -67,14 +67,6 @@ int main()
 	3. Changer de code / parametres
 	On selectionne avec le bouton orange a gauche et on confirme avec le bouton orange a droite
 	On doit pooler apres chaque passe des capteurs pour voir si on veut changer de mode. 
-	*/
-	//Pour sonars : sonar_g() et sonar_d() retournent la distance percue par chaque capteur
-	/*
-	LCD_ClearAndPrint("Test des speakers! \n");
-	play_setup();
-	LCD_ClearAndPrint("Fin du test des speakers! \n");
-	THREAD_MSleep(3000);
-	LCD_ClearAndPrint("");
 	*/
 	//DELS
 	//ROUGE : 11
