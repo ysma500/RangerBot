@@ -3,9 +3,7 @@
 
 //Declaration des fonctions
 void Play(char music[]);
-
-int play_tornado();
-int play_bomb();
+int play_setup();
 int play_siren();
 
 #endif

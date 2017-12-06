@@ -2,45 +2,22 @@
 #include "speaker.h"
 #include "boutons.h"
 
-int play_bomb(void)
+int play_siren()
 {
-  AUDIO_SetVolume(50);
-  
-  int test = 0;
-  char A[] = "BOMB.wav";
-  char B[] = "Tornado.wav";
-  char C[] = "Siren.wav";
-  while (test == 0)
-  {
-	Play(A);
-	if(DIGITALIO_Read(ORANGE_LEFT))
+	int alarm = 0;
+	AUDIO_SetVolume(100);
+	while (alarm == 0);
 	{
-		test = 1;
+		AUDIO_PlayFile("Siren.wav");
+		if (DIGITALIO_Read(ORANGE_LEFT))
+		{
+			alarm = 1;
+		}
 	}
-  }
-  return 0;
+	return 0;
 }
 
-int play_tornado(void)
-{
-  AUDIO_SetVolume(50);
-  
-  int test = 0;
-  char A[] = "BOMB.wav";
-  char B[] = "Tornado.wav";
-  char C[] = "Siren.wav";
-  while (test == 0)
-  {
-	Play(C);
-	if(DIGITALIO_Read(ORANGE_LEFT))
-	{
-		test = 1;
-	}
-  }
-  return 0;
-}
-
-int play_siren(void)
+int play_setup(void)
 {
   AUDIO_SetVolume(50);
   
