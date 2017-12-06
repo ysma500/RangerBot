@@ -7,7 +7,6 @@ int entrer_code(int code[LONGUEUR_CODE])
 	int verification;
 	int code_entre;
 	LCD_ClearAndPrint("Entrer le code du robot pour desactiver l'alarme!\n");
-	LCD_Printf("L'alarme va sonner dans 10 secondes!");
 	for (verification = 0; code[verification]; verification++)
 	{
 		code_entre = get_bouton();
@@ -62,7 +61,7 @@ int show_code(int code[LONGUEUR_CODE])
 int get_bouton()
 {
 	int i = 0;
-	LCD_ClearAndPrint("\n Appuyer sur un bouton \n");
+	LCD_Printf("Appuyer sur un bouton \n");
 	while (i == 0)
 	{
 		if(DIGITALIO_Read(BMP_BLEU))
