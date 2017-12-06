@@ -242,7 +242,7 @@ int actif()
 				}
 				break;
 		}
-		THREAD_MSleep(300);
+		THREAD_MSleep(100);
 		if (DIGITALIO_Read(ORANGE_RIGHT))
 		{
 			Brake();

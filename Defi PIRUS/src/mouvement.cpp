@@ -15,7 +15,7 @@ void Mouv_infra()
 {
 	int capteur_mov[3] = {0,0,0};
 	lireCapteur(&capteur_mov[0], &capteur_mov[1], &capteur_mov[2]);
-	if (capteur_mov[DEVANT_MOV] > 450) //Mur en avant, on compare les valeurs des capteurs de chaque cote pour savoir ou tourner
+	if (capteur_mov[DEVANT_MOV] > 400) //Mur en avant, on compare les valeurs des capteurs de chaque cote pour savoir ou tourner
 	{
 		if (capteur_mov[DROIT_MOV] > capteur_mov[GAUCHE_MOV])
 		{
@@ -26,15 +26,15 @@ void Mouv_infra()
 			Rotation(90, RIGHT_ROT);
 		}
 	}
-	else if (capteur_mov[DROIT_MOV] > 450) //Trop proche du mur a droite, dans la 1ere zone tampon
+	else if (capteur_mov[DROIT_MOV] > 400) //Trop proche du mur a droite, dans la 1ere zone tampon
 	{
-		Rotation(10, LEFT_ROT);
+		Rotation(15, LEFT_ROT);
 		Avance(MIN_DISTANCE, AVANCE);
 		Rotation(10, RIGHT_ROT);
 	}
 	else if ((capteur_mov[DROIT_MOV] > 170) && (capteur_mov[DROIT_MOV] <= 240)) //Dans la 2e zone tampon
 	{
-		Rotation(10, RIGHT_ROT);
+		Rotation(15, RIGHT_ROT);
 		Avance(MIN_DISTANCE, AVANCE);
 		Rotation(10, LEFT_ROT);
 	}
