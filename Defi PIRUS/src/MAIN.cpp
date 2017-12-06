@@ -214,9 +214,9 @@ int actif()
 				//Recule,tourne à gauche 90 deg. et avance
 				Avance(MIN_DISTANCE*2, RECULE);
 				Rotation(105,LEFT_ROT);
-				Avance(550, AVANCE);
+				Avance(520, AVANCE);
 				Rotation(90,RIGHT_ROT);
-				Avance(110, AVANCE);
+				Avance(200, AVANCE);
 				break;
 			default :
 				//Detection d'un intrus
