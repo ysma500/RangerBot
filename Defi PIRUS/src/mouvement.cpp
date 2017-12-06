@@ -30,7 +30,7 @@ void Mouv_infra()
 	{
 		Rotation(15, LEFT_ROT);
 		Avance(MIN_DISTANCE, AVANCE);
-		Rotation(10, RIGHT_ROT);
+		Rotation(5, RIGHT_ROT);
 		Brake();
 	}
 	else if ((capteur_mov[DROIT_MOV] > 170) && (capteur_mov[DROIT_MOV] <= 240)) //Dans la 2e zone tampon
